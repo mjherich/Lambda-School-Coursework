@@ -1,0 +1,17 @@
+.technical-skills .my-box,
+.soft-skills .my-box {
+    display: flex;
+    margin-bottom: 35px;
+}
+.technical-skills .my-box ul,
+.soft-skills .my-box ul {
+    margin: 0 25px;
+}
+.soft-skills ul {
+    text-align: left;
+}
+
+.features a.image {
+    height: 200px;
+    overflow: hidden;
+}
