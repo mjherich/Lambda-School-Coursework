@@ -20,12 +20,8 @@
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(data => {
-        console.log('SUCCESS: ', data)
         const articleCategories = data.data.articles
-        console.log('Article Categories: ', articleCategories)
         for (let articleCategory in articleCategories) {
-            console.log('category', articleCategory)
-            console.log(articleCategories[articleCategory])
             articleCategories[articleCategory].forEach(article => {
                 const card = Card(article)
                 card.dataset.topic = articleCategory
@@ -64,6 +60,5 @@ function Card(articleData) {
     authorContainer.appendChild(imgContainer)
     imgContainer.appendChild(authorImg)
     authorContainer.appendChild(authorName)
-    console.log('card: ', card)
     return card
 }
