@@ -28,6 +28,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
             console.log(articleCategories[articleCategory])
             articleCategories[articleCategory].forEach(article => {
                 const card = Card(article)
+                card.dataset.topic = articleCategory
                 // Append each article card to .cards-container
                 document.querySelector('.cards-container').appendChild(card)
             })
