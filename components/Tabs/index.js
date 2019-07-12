@@ -10,9 +10,7 @@
 
 axios.get('https://lambda-times-backend.herokuapp.com/topics')
     .then(data => {
-        console.log('SUCCESS: ', data)
         const topics = document.querySelector('.topics')
-        console.log(data.data.topics)
         data.data.topics.forEach(topic => {
             // Create topic tab component and add to .topics element
             const topicTab = document.createElement('div')
@@ -20,7 +18,6 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
             topicTab.textContent = topic
             topicTab.dataset.topic = topic
             if (topic==="node.js") {topicTab.dataset.topic = "node"}
-            console.log(topicTab)
             topicTab.addEventListener('click', e => {
                 const topicClicked = e.target.dataset.topic
                 // Hide all topics that don't match topicClicked

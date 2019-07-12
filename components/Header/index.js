@@ -35,4 +35,5 @@ function Header() {
 }
 
 // Add header to .header-container component
+console.log(document.querySelector('.header-container'))
 document.querySelector('.header-container').appendChild(Header())

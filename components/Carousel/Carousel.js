@@ -66,7 +66,6 @@ function Carousel(images) {
     activeSlide.classList.remove('active')
     // Add active class to next index
     if (activeIdx === 0) { // If at start of carousel, the previous index is the last index
-      console.log('at beginning')
       const nextActiveSlide = document.querySelector(`[data-slide="${images.length-1}"]`)
       nextActiveSlide.classList.add('active')
     } else {
@@ -85,7 +84,6 @@ function Carousel(images) {
     activeSlide.classList.remove('active')
     // Add active class to next index
     if (activeIdx === images.length-1) { // If at end of carousel, the next index is the first index
-      console.log('at end')
       const nextActiveSlide = document.querySelector(`[data-slide="0"]`)
       nextActiveSlide.classList.add('active')
     } else {
@@ -100,4 +98,3 @@ function Carousel(images) {
 
   return carousel
 }
-console.log('firstoftype',document.querySelector('.carousel img:first-of-type'))
