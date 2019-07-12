@@ -57,8 +57,6 @@ function Carousel(images) {
     carousel.appendChild(img)
   })
   carousel.appendChild(rightBtn)
-  
-  // document.querySelector('.carousel img:first-of-type').style.display = 'block'
 
   // Add event listeners to navigation buttons
   leftBtn.addEventListener('click', e => {
@@ -75,6 +73,10 @@ function Carousel(images) {
       const nextActiveSlide = document.querySelector(`[data-slide="${activeIdx-1}"]`)
       nextActiveSlide.classList.add('active')
     }
+    // GSAP
+    TweenMax.fromTo(document.querySelector('.active'), 0.6, {x:-100, opacity: 0}, {x:0, opacity: 1})
+    leftBtn.style.zIndex = 9001
+    rightBtn.style.zIndex = 9001
   })
   rightBtn.addEventListener('click', e => {
     const activeSlide = document.querySelector('.active')
@@ -90,6 +92,10 @@ function Carousel(images) {
       const nextActiveSlide = document.querySelector(`[data-slide="${activeIdx+1}"]`)
       nextActiveSlide.classList.add('active')
     }
+    // GSAP
+    TweenMax.fromTo(document.querySelector('.active'), 0.6, {x:100, opacity: 0}, {x:0, opacity: 1})
+    leftBtn.style.zIndex = 9001
+    rightBtn.style.zIndex = 9001
   })
 
   return carousel
