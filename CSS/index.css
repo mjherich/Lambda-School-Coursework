@@ -270,6 +270,7 @@ body {
 }
 .carousel .left-button,
 .carousel .right-button {
+  user-select: none;
   display: flex;
   justify-content: center;
   align-items: none;
@@ -302,4 +303,7 @@ body {
 .carousel img {
   width: 100%;
   display: none;
+}
+.carousel img.active {
+  display: block;
 }
