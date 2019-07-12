@@ -9,6 +9,7 @@
     width: 1200px;
   }
   .left-button, .right-button {
+    user-select: none;
     .flex(center);
     color: @lambda-times-color-white;
     background-color: @lambda-times-color-primary;
@@ -37,5 +38,8 @@
   img {
     .width-100();
     display: none;
+  }
+  img.active {
+    display: block;
   }
 }
