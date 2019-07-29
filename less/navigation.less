@@ -1,0 +1,70 @@
+header {
+  width: 100%;
+  height: 100vh;
+
+  nav {
+    background: @grey;
+    padding: 0 2rem;
+    height: 56px;
+    .flex(row, space-between, center);
+    width: 100%;
+
+    a {
+      font-family: @sub-font;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .links {
+      .flex(row, space-between, center);
+
+      a {
+        padding-right: 2.5rem;
+
+        &:last-of-type {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}
+
+#Hero {
+  background: @black;
+  .Hero-content {
+    .flex(row, space-between, center);
+
+    h1 {
+      color: #fff;
+      font-family: @sub-font;
+      font-size: 5rem;
+      font-weight: 600;
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      color: #fff;
+      font-family: @main-font;
+    }
+
+    .Hero-img {
+      width: 50%;
+      padding-right: 2.5rem;
+
+      @media @phone {
+        padding-right: 0;
+      }
+
+      img {
+        width: 100%;
+        max-width: 453px;
+      }
+    }
+
+    .Hero-text {
+      width: 50%;
+    }
+  }
+}
