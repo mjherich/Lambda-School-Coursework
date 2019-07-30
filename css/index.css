@@ -221,7 +221,7 @@ header nav {
 }
 header nav a {
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 500;
   color: #fff;
   text-decoration: none;
@@ -234,6 +234,8 @@ header nav .links {
   flex-wrap: nowrap;
 }
 header nav .links a {
+  font-size: 1.8rem;
+  text-transform: uppercase;
   padding-right: 2.5rem;
 }
 header nav .links a:last-of-type {
@@ -376,4 +378,9 @@ footer {
 #Info .Info-content .Info-icon img {
   width: 100%;
   max-width: 230px;
+}
+#About {
+  background: #2f303a;
+  height: 500px;
+  width: 100%;
 }
