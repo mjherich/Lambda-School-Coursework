@@ -158,10 +158,11 @@ p {
 .container {
   max-width: 1024px;
   width: 100%;
+  padding: 0 1rem;
   margin: 0 auto;
 }
 section {
-  padding: 5rem 0;
+  padding: 8rem 0;
 }
 .btn {
   display: flex;
@@ -171,11 +172,6 @@ section {
   flex-wrap: nowrap;
   width: 10em;
   margin: 2.5rem 0 0;
-}
-@media screen and (max-width: 500px) {
-  .btn {
-    width: 100%;
-  }
 }
 .btn a {
   display: flex;
@@ -204,7 +200,13 @@ section {
 }
 header {
   width: 100%;
-  height: 100vh;
+}
+header .fixed {
+  position: fixed;
+  top: 0;
+}
+header .nav-spacer {
+  height: 56px;
 }
 header nav {
   background: #555454;
@@ -219,7 +221,7 @@ header nav {
 }
 header nav a {
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 500;
   color: #fff;
   text-decoration: none;
@@ -237,6 +239,10 @@ header nav .links a {
 header nav .links a:last-of-type {
   padding-right: 0;
 }
+header nav .links a:hover {
+  transition: all 0.2s ease-in-out;
+  color: #ff0000;
+}
 #Hero {
   background: #2f303a;
 }
@@ -246,6 +252,15 @@ header nav .links a:last-of-type {
   justify-content: space-between;
   align-items: center;
   flex-wrap: nowrap;
+}
+@media screen and (max-width: 500px) {
+  #Hero .Hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
 }
 #Hero .Hero-content h1 {
   color: #fff;
@@ -264,7 +279,7 @@ header nav .links a:last-of-type {
 }
 @media screen and (max-width: 500px) {
   #Hero .Hero-content .Hero-img {
-    padding-right: 0;
+    display: none;
   }
 }
 #Hero .Hero-content .Hero-img img {
@@ -274,6 +289,14 @@ header nav .links a:last-of-type {
 #Hero .Hero-content .Hero-text {
   width: 50%;
 }
+@media screen and (max-width: 500px) {
+  #Hero .Hero-content .Hero-text {
+    width: 80%;
+  }
+}
+#Hero .Hero-content .Hero-text .btn a {
+  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.5);
+}
 footer {
   color: #f4f4f4;
   background: #22283b;
@@ -281,4 +304,76 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#Info .Info-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-bottom: 16rem;
+}
+@media screen and (max-width: 500px) {
+  #Info .Info-content {
+    margin-bottom: 8rem;
+  }
+}
+#Info .Info-content:last-of-type {
+  margin-bottom: 0;
+}
+@media screen and (max-width: 800px) {
+  #Info .Info-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  #Info .Info-content:first-of-type {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+}
+#Info .Info-content .Info-text {
+  width: 70%;
+}
+@media screen and (max-width: 800px) {
+  #Info .Info-content .Info-text {
+    width: 100%;
+    text-align: center;
+  }
+}
+#Info .Info-content .Info-text h2 {
+  font-size: 5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+@media screen and (max-width: 500px) {
+  #Info .Info-content .Info-text h2 {
+    font-size: 3rem;
+  }
+}
+#Info .Info-content .Info-text p {
+  font-size: 2.5rem;
+}
+@media screen and (max-width: 500px) {
+  #Info .Info-content .Info-text p {
+    font-size: 1.6rem;
+  }
+}
+#Info .Info-content .Info-icon {
+  width: 25%;
+  max-width: 230px;
+}
+@media screen and (max-width: 800px) {
+  #Info .Info-content .Info-icon {
+    margin-bottom: 2.5rem;
+  }
+}
+#Info .Info-content .Info-icon img {
+  width: 100%;
+  max-width: 230px;
 }
