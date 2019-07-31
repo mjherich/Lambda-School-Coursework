@@ -6,4 +6,4 @@ topics, descriptions and transcriptions. The methods used will be a combination 
 
 ## Files that will reside here:
 - Curated Dataset
-- Python files that contain Predictive Modules and APIs
+- Python files that contain predictive models and APIs
