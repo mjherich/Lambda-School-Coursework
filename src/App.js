@@ -14,7 +14,24 @@ function App() {
 	const [cart, setCart] = useState([]);
 
 	const addItem = item => {
-		setCart([...cart, item]);
+		if (cart.length>0) {
+			const cartCopy = cart
+			let flag = true
+			for (let cartItem of cartCopy) {
+				if (cartItem.id===item.id) {
+					cartItem.quantity++
+					flag = false
+				}
+			}
+			if (flag) {
+				item.quantity = 1
+				cartCopy.push(item)
+			}
+			setCart(cartCopy)
+		} else {
+			item.quantity = 1
+			setCart([item]);
+		}
 	};
 	const removeItem = itemId => {
 		const newCart = cart.filter(item => item.id!==itemId)
