@@ -10,8 +10,21 @@ import Products from './components/Products';
 import ShoppingCart from './components/ShoppingCart';
 
 function App() {
+	// Local Storage Implementation
+	const useLocalStorage = cartInit => {
+		const [cart, setCart] = useState(() => {
+			const localCart = window.localStorage.getItem('cart')
+			return localCart ? JSON.parse(localCart) : cartInit
+		});
+		const setValue = value => {
+			setCart(value)
+			window.localStorage.setItem('cart', JSON.stringify(value))
+		}
+		return [cart, setValue]
+	}
+	const [cart, setCart] = useLocalStorage([])
 	const [products] = useState(data);
-	const [cart, setCart] = useState([]);
+
 
 	const addItem = item => {
 		if (cart.length>0) {
