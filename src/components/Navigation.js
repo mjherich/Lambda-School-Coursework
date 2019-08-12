@@ -4,11 +4,14 @@ import CartContext from '../contexts/CartContext';
 
 const Navigation = () => {
 	const { cart } = useContext(CartContext);
+	const qty = cart.reduce( (total, curr) => {
+		return total+curr.quantity
+	}, 0)
 	return (
 		<div className="navigation">
 			<NavLink to="/">Products</NavLink>
 			<NavLink to="/cart">
-				Cart <span>{cart.length}</span>
+				Cart <span>{qty}</span>
 			</NavLink>
 		</div>
 	);
