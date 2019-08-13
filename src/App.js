@@ -11,7 +11,7 @@ function App() {
   const addTask = task => {
     const newTodo = {
       item: task,
-      complete: false,
+      completed: false,
       id: Date.now()
     }
     dispatchTodos({ type: 'ADD_TASK', payload: newTodo })
@@ -20,57 +20,18 @@ function App() {
   const toggleCompleted = id => {
     dispatchTodos({ type: 'TOGGLE_COMPLETED', payload: id })
   }
-  // setTodos({
-  //   todos: todos.map(todo => {
-  //     if (todo.id === id) {
-  //       return {
-  //         ...todo,
-  //         completed: !todo.completed
-  //       };
-  //     } else {
-  //       return todo;
-  //     }
-  //   })
-  // })
-  // FIX BELOW FUNCTIONS LATER
-  // clearCompleted = () => {
-  //   setTodos({
-  //     todos: todos.filter(todo => todo.completed === false)
-  //   })
-  // }
+
+  const clearCompleted = () => {
+    dispatchTodos({ type: 'CLEAR_COMPLETED' })
+  }
+
   return (
     <div className="App">
       <h1>Todo App featuring Reducers!</h1>
       <TodoList todos={stateTodos.todos} toggleCompleted={toggleCompleted} />
-      <TodoForm addTask={addTask} />
-      {/* clearCompleted={this.clearCompleted} */}
+      <TodoForm addTask={addTask} clearCompleted={clearCompleted} />
     </div>
   );
 }
 
 export default App;
-
-
-// const initTodos = [
-//   {
-//     task: 'Organize Garage',
-//     id: 1528817077286,
-//     completed: false
-//   },
-//   {
-//     task: 'Bake Cookies',
-//     id: 1528817084358,
-//     completed: false
-//   }
-// ];
-
-// class App extends React.Component {
-//   // you will need a place to store your state in this component.
-//   // design `App` to be the parent component of your application.
-//   // this component is going to take care of state, and any change handlers you need to work with your state
-//   constructor() {
-//     super();
-//     this.state = {
-//       todos: initTodos
-//     }
-//   }

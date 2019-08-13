@@ -14,7 +14,6 @@ export const initialTodos = {
 }
 
 const todoReducer = (stateTodos, action) => {
-  console.log('reducer stateTodos: ', stateTodos)
   switch (action.type) {
     case 'ADD_TASK':
       return {
@@ -37,20 +36,12 @@ const todoReducer = (stateTodos, action) => {
       })
       return { todos: newTodosState }
     case 'CLEAR_COMPLETED':
+      const stateTodosCopy2 = { todos: [...stateTodos.todos] }
+      const clearedTodosState = stateTodosCopy2.todos.filter(todo => todo.completed === false)
+      return {
+        todos: clearedTodosState
+      }
     default: return { todos: [...stateTodos.todos] }
   }
 }
 export default todoReducer
-
-  // setTodos({
-  //   todos: todos.map(todo => {
-  //     if (todo.id === id) {
-  //       return {
-  //         ...todo,
-  //         completed: !todo.completed
-  //       };
-  //     } else {
-  //       return todo;
-  //     }
-  //   })
-  // })
