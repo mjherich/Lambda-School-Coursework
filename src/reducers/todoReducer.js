@@ -8,12 +8,22 @@ export const initialTodos = {
     {
       item: 'Second initial todo',
       completed: false,
-      id: Date.now()
+      id: 1565733539163
     }
   ]
 }
 
 const todoReducer = (stateTodos, action) => {
-  return { ...stateTodos.todos }
+  console.log('reducer stateTodos: ', stateTodos)
+  switch (action.type) {
+    case 'ADD_TASK':
+      return {
+        todos: [
+          ...stateTodos.todos,
+          action.payload
+        ]}
+    default:
+      return { ...stateTodos.todos }
+  }
 }
 export default todoReducer

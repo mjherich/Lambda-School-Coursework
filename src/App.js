@@ -8,16 +8,23 @@ import './App.css';
 function App() {
   const [stateTodos, dispatchTodos] = useReducer(todoReducer, initialTodos)
 
+  const addTask = task => {
+    const newTodo = {
+      item: task,
+      complete: false,
+      id: Date.now()
+    }
+    dispatchTodos({ type: 'ADD_TASK', payload: newTodo })
+  }
+    // setTodos({
+    //   todos: [...todos, {
+    //     item: task,
+    //     completed: false,
+    //     id: Date.now()
+    //   }]
+    // })
+  
   // FIX BELOW FUNCTIONS LATER
-  // addTask = task => {
-  //   setTodos({
-  //     todos: [...todos, {
-  //       task: task,
-  //       id: Date.now(),
-  //       completed: false
-  //     }]
-  //   })
-  // }
   // toggleCompleted = id => {
   //   setTodos({
   //     todos: todos.map(todo => {
@@ -42,8 +49,8 @@ function App() {
       <h1>Todo App featuring Reducers!</h1>
       <TodoList todos={stateTodos.todos} />
       {/* toggleCompleted={this.toggleCompleted} */}
-      <TodoForm />
-      {/* addTask={this.addTask} clearCompleted={this.clearCompleted} */}
+      <TodoForm addTask={addTask} />
+      {/* clearCompleted={this.clearCompleted} */}
     </div>
   );
 }
