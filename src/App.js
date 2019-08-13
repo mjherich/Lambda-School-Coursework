@@ -28,7 +28,10 @@ function App() {
 
 	const addItem = item => {
 		if (cart.length>0) {
-			const cartCopy = cart
+      // const cartCopy = { ...cart }; THIS DOES NOT WORK
+      // const cartCopy = Object.assign({}, cart); NOR DOES THIS
+      const cartCopy = JSON.parse(JSON.stringify(cart)); // THIS DOES WORK, BUT Y DOESN'T ABOVE WORK?
+      console.log('cartCopy in addItem', cartCopy)
 			let flag = true
 			for (let cartItem of cartCopy) {
 				if (cartItem.id===item.id) {
