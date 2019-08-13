@@ -21,9 +21,36 @@ const todoReducer = (stateTodos, action) => {
         todos: [
           ...stateTodos.todos,
           action.payload
-        ]}
-    default:
-      return { ...stateTodos.todos }
+        ]
+      }
+    case 'TOGGLE_COMPLETED':
+      const stateTodosCopy = { todos: [...stateTodos.todos] }
+      const newTodosState = stateTodosCopy.todos.map(todo => {
+        if (todo.id === action.payload) {
+          return {
+            ...todo,
+            completed: !todo.completed
+          };
+        } else {
+          return todo;
+        }
+      })
+      return { todos: newTodosState }
+    case 'CLEAR_COMPLETED':
+    default: return { todos: [...stateTodos.todos] }
   }
 }
 export default todoReducer
+
+  // setTodos({
+  //   todos: todos.map(todo => {
+  //     if (todo.id === id) {
+  //       return {
+  //         ...todo,
+  //         completed: !todo.completed
+  //       };
+  //     } else {
+  //       return todo;
+  //     }
+  //   })
+  // })

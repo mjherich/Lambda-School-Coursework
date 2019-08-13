@@ -16,29 +16,23 @@ function App() {
     }
     dispatchTodos({ type: 'ADD_TASK', payload: newTodo })
   }
-    // setTodos({
-    //   todos: [...todos, {
-    //     item: task,
-    //     completed: false,
-    //     id: Date.now()
-    //   }]
-    // })
-  
-  // FIX BELOW FUNCTIONS LATER
-  // toggleCompleted = id => {
-  //   setTodos({
-  //     todos: todos.map(todo => {
-  //       if (todo.id === id) {
-  //         return {
-  //           ...todo,
-  //           completed: !todo.completed
-  //         };
-  //       } else {
-  //         return todo;
-  //       }
-  //     })
+
+  const toggleCompleted = id => {
+    dispatchTodos({ type: 'TOGGLE_COMPLETED', payload: id })
+  }
+  // setTodos({
+  //   todos: todos.map(todo => {
+  //     if (todo.id === id) {
+  //       return {
+  //         ...todo,
+  //         completed: !todo.completed
+  //       };
+  //     } else {
+  //       return todo;
+  //     }
   //   })
-  // }
+  // })
+  // FIX BELOW FUNCTIONS LATER
   // clearCompleted = () => {
   //   setTodos({
   //     todos: todos.filter(todo => todo.completed === false)
@@ -47,8 +41,7 @@ function App() {
   return (
     <div className="App">
       <h1>Todo App featuring Reducers!</h1>
-      <TodoList todos={stateTodos.todos} />
-      {/* toggleCompleted={this.toggleCompleted} */}
+      <TodoList todos={stateTodos.todos} toggleCompleted={toggleCompleted} />
       <TodoForm addTask={addTask} />
       {/* clearCompleted={this.clearCompleted} */}
     </div>

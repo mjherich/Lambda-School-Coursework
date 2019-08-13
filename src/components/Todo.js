@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Todo({ idx, todo, toggleCompleted }) {
+export default function Todo({ todo, toggleCompleted }) {
   return (
     <li
-      key={idx}
+      key={todo.id}
       style={todo.completed ? { textDecoration: 'line-through' } : {}}
       onClick={() => toggleCompleted(todo.id)}
     >
