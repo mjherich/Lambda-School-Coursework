@@ -1,9 +1,12 @@
 import React from 'react';
 import { Button, Message } from 'semantic-ui-react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { connect } from 'react-redux';
 
-export default function UserInput() {
-  // const [strToConvert, setStrToConvert] = React.useState('')
+import { createQrCode } from '../actions';
+import { tsPropertySignature } from '@babel/types';
+
+function UserInput(props) {
 
   const submitHandler = e => {
     e.preventDefault()
@@ -22,10 +25,10 @@ export default function UserInput() {
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
+          props.createQrCode(values)
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
-          }, 400);
+          }, 1000)
         }}
       >
         {({ isSubmitting }) => (
@@ -41,3 +44,5 @@ export default function UserInput() {
     </div>
   )
 }
+
+export default connect(null, { createQrCode } )(UserInput)
