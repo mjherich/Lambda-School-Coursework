@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>SMURFS!</h1>
-        <p style={{marginTop:'-20px'}}>Using Contexts and Custom Reducers</p>
+        <p style={{ marginTop: '-20px' }}>Using Contexts and Custom Reducers</p>
         <AddNewSmurf />
         <DisplaySmurfs />
       </div>
