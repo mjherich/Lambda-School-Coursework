@@ -13,9 +13,8 @@ export default function DisplaySmurfs() {
           if (appState.state.smurfs.length < 1) {
             return <p>Loading Smurfs...</p>
           } else {
-            console.log('length of smurfs', appState.state.smurfs[0])
             return appState.state.smurfs.map(smurf => {
-              return <Smurf key={smurf.id} smurf={smurf} />
+              return <Smurf key={smurf.id} smurf={smurf} dispatch={appState.dispatch} />
             })
           }
         }}

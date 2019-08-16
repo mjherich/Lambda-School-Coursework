@@ -23,7 +23,6 @@ const SmurfForm = ({ dispatch }) => {
     axios
       .post('http://localhost:3333/smurfs', newSmurf)
       .then(res => {
-        console.log(res)
         dispatch({
           type: 'UPDATE_SMURFS',
           payload: res.data

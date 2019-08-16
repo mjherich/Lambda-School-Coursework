@@ -27,8 +27,10 @@ export const appStateReducer = (state, action) => {
         smurfs: action.payload
       }
     case 'REMOVE_SMURF':
+      console.log('removing smurf with id: ', action.payload)
       return {
-        ...state
+        ...state,
+        smurfs: action.payload
       }
     default:
       return state;

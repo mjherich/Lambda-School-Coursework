@@ -66,7 +66,7 @@ Follow these steps to set up your project:
 Using Context with custom reducers
 
 - [x] Once you have planned out your state management system, fetch data from the smurf server
-- [ ] Add a form to collect info for a new smurf, and make a POST request to the server to add a new smurf to your village
+- [x] Add a form to collect info for a new smurf, and make a POST request to the server to add a new smurf to your village
 
 ## API documentation
 
@@ -164,7 +164,7 @@ For this endpoint to work, all you need is an id sent up as part of the request 
 
 If your delete worked, you'll get a an array back with all of the smurfs but with your requested smurf removed.
 
-- [ ] You don't need any input beyond the url parameter of the smurf, so if we send up a delete request to `/smurfs/123` then you'll remove the smurf by that id.
+- [x] You don't need any input beyond the url parameter of the smurf, so if we send up a delete request to `/smurfs/123` then you'll remove the smurf by that id.
 
 Example:
 
