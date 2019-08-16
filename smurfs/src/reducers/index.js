@@ -22,9 +22,11 @@ export const appStateReducer = (state, action) => {
                 ...state,
                 isLoading: false
             }
-        case 'ADD_SMURF':
+        case 'UPDATE_SMURFS':
+            console.log('updating smurfs')
             return {
-                ...state
+                ...state,
+                smurfs: action.payload
             }
         case 'REMOVE_SMURF':
             return {

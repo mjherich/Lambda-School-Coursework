@@ -65,15 +65,15 @@ Follow these steps to set up your project:
 
 Using Context with custom reducers
 
-- [ ] Once you have planned out your state management system, fetch data from the smurf server
+- [x] Once you have planned out your state management system, fetch data from the smurf server
 - [ ] Add a form to collect info for a new smurf, and make a POST request to the server to add a new smurf to your village
 
 ## API documentation
 
 ### GET '/smurfs'
 
-- [ ] Retrieve an array all the Smurfs in the Smurf DB by writing a `GET` to the endpoint `/smurfs`.
-- [ ] Double check that your response from the server is an array of smurfs.
+- [x] Retrieve an array all the Smurfs in the Smurf DB by writing a `GET` to the endpoint `/smurfs`.
+- [x] Double check that your response from the server is an array of smurfs.
 
 ```js
 [

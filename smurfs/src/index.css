@@ -3,3 +3,11 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+form {
+  display: flex;
+  justify-content: center;
+}
+.field {
+  margin: 20px;
+}
