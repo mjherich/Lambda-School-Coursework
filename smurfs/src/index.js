@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./components/App";
+import AppStateContainer from "./contexts";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+
+ReactDOM.render(<AppStateContainer />, document.getElementById("root"));
