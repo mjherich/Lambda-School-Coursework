@@ -13,7 +13,9 @@ const resultRenderer = ({ username, saltyScore }) => (
 export default class UserSearch extends Component {
   state = initialState
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.username })
+  handleResultSelect = (e, { result }) => {
+    window.location.href = `/users/${result.username}`
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
