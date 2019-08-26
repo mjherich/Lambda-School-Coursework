@@ -1,0 +1,14 @@
+mode,name,type,description
+NULLABLE,by,STRING,Username of commenter or submitter
+NULLABLE,score,INTEGER,Story score
+NULLABLE,time,INTEGER,Unix time
+NULLABLE,title,STRING,Story title
+NULLABLE,type,STRING,"Type of details (comment, comment_ranking, poll, story, job, pollopt)"
+NULLABLE,url,STRING,Story url
+NULLABLE,text,STRING,Story or comment text
+NULLABLE,parent,INTEGER,Parent comment ID
+NULLABLE,deleted,BOOLEAN,Is deleted?
+NULLABLE,dead,BOOLEAN,Is dead?
+NULLABLE,descendants,INTEGER,Number of story or poll descendants
+NULLABLE,id,INTEGER,Unique type ID
+NULLABLE,ranking,INTEGER,Comment ranking

@@ -1,0 +1,15 @@
+mode,name,type,description
+NULLABLE,title,STRING,Story title
+NULLABLE,url,STRING,Story url
+NULLABLE,text,STRING,Story or comment text
+NULLABLE,dead,BOOLEAN,Is dead?
+NULLABLE,by,STRING,The username of the item's author.
+NULLABLE,score,INTEGER,Story score
+NULLABLE,time,INTEGER,Unix time
+NULLABLE,timestamp,TIMESTAMP,Timestamp for the unix time
+NULLABLE,type,STRING,"Type of details (comment, comment_ranking, poll, story, job, pollopt)"
+NULLABLE,id,INTEGER,The item's unique id.
+NULLABLE,parent,INTEGER,Parent comment ID
+NULLABLE,descendants,INTEGER,Number of story or poll descendants
+NULLABLE,ranking,INTEGER,Comment ranking
+NULLABLE,deleted,BOOLEAN,Is deleted?
