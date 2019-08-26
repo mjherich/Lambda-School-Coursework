@@ -10,6 +10,7 @@ import { Header, Container } from 'semantic-ui-react';
 
 //Custom Components
 import NavBar from './components/NavBar';
+import { TimeChart } from './components/Charts';
 
 const StyledContainer = styled(Container)`
     padding-top: 48px;
