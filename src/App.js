@@ -11,6 +11,7 @@ import { Header, Container } from 'semantic-ui-react';
 //Custom Components
 import NavBar from './components/NavBar';
 import { TimeChart } from './components/Charts';
+import UserProfile from './components/UserProfile';
 
 const StyledContainer = styled(Container)`
     padding-top: 48px;
@@ -36,6 +37,10 @@ const App = () => {
                     render={() => <Top100Comments />}
                 />
                 <Route path="/about-us" render={() => <About />} />
+                <Route
+                    path="/users/:username"
+                    render={props => <UserProfile {...props} />}
+                />
             </StyledContainer>
         </BrowserRouter>
     );
