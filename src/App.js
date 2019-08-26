@@ -3,7 +3,7 @@ import React from 'react';
 //Import Styles
 import 'semantic-ui-css/semantic.min.css';
 import styled from 'styled-components';
-import './App.css';
+import './App.scss';
 
 //Import Components
 import { BrowserRouter, Route } from 'react-router-dom';
