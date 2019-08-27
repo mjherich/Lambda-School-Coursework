@@ -3,6 +3,7 @@ import React from 'react';
 //Import Styles
 import 'semantic-ui-css/semantic.min.css';
 import styled from 'styled-components';
+import './App.scss';
 
 //Import Components
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -12,6 +13,7 @@ import { Header, Container } from 'semantic-ui-react';
 import NavBar from './components/NavBar';
 import { TimeChart } from './components/Charts';
 import UserProfile from './components/UserProfile';
+import UserList from './components/users/userList';
 
 const StyledContainer = styled(Container)`
     padding-top: 48px;
@@ -31,7 +33,10 @@ const App = () => {
             <StyledContainer fluid>
                 <NavBar />
                 <Route exact path="/" render={() => <Home />} />
-                <Route path="/top-100-users" render={() => <Top100Users />} />
+                <Route
+                    path="/top-100-users"
+                    render={props => <UserList {...props} />}
+                />
                 <Route
                     path="/top-100-comments"
                     render={() => <Top100Comments />}
