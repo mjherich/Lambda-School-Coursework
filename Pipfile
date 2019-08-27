@@ -13,9 +13,7 @@ google-cloud-bigquery = "*"
 click = "*"
 tqdm = "*"
 flask = "*"
-wordcloud = "*"
 gunicorn = "*"
-pillow = "*"
 matplotlib = "*"
 
 [requires]

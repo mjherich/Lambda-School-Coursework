@@ -3,14 +3,15 @@ import numpy as np
 import json
 import psycopg2
 from flask import Flask, json, jsonify, request, send_file
-from wordcloud import WordCloud
-from PIL import Image
-#from io import StringIO
-from io import BytesIO
 
 
 app = Flask(__name__)
 
+# ElephantDB connection information
+dbname = 'mrbekufe'
+user = 'mrbekufe'
+password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
+host = 'isilo.db.elephantsql.com'
 
 
 def user_salt():
@@ -29,7 +30,7 @@ def user_salt():
     
     print(conn.closed)
     curs = conn.cursor()
-    
+     
     query = '''
             SELECT ranking, author, text FROM comments
             ORDER BY ranking
@@ -49,14 +50,16 @@ def user_salt():
     
 def user_wordcloud():    
     """
-    Querying the database for ranking, user, text, and salt score.
+    Querying the database for ranking, user, text, and salt score. Returns
+    top N highest salt score comments from user.
     
     Parameters:
     -----------
+    user: user_id
     
     Output:
     -----------
-    pd.Dataframe: dataframe table with everything.
+    results: json format stream with in format {"userID": "", "texts": ""}
     """
     conn = psycopg2.connect(dbname=dbname, user=user,
                             password=password, host=host)
@@ -79,16 +82,21 @@ def user_wordcloud():
     #print(text)
     #df = pd.DataFrame(data, columns=['ranking', 'text'])
     # appending a placeholder row for salt score
-    wordcloud = WordCloud(max_font_size=40).generate(text)
-    img = wordcloud.to_image()
+    #wordcloud = WordCloud(max_font_size=40).generate(text)
+    #img = wordcloud.to_image()
     #img.show()
+    result_dict = {"userID": "pg", "text": text}
+    print(result_dict)
     curs.close()
     conn.close()
 
-    return img
+    return json.dumps(result_dict)
     
 def serve_pil_image(pil_img):
-    #img_io = StringIO()
+    """
+    *** NOT USED ***
+    Retun a send_file image in ByteStreamIO.
+    """
     img_io = BytesIO()
     pil_img.save(img_io, 'JPEG', quality=70)
     img_io.seek(0)
@@ -120,11 +128,18 @@ def serve_results():
 
 @app.route("/cloud", methods=['POST'])
 def serve_wordcloud():
-    img = user_wordcloud()
-    return serve_pil_image(img)
+    if request.method != 'POST':
+        return app.response_class(response=json.dump({}),
+                                  status=400,
+                                  mimetype='application/json')
+    
+    input_json = request.get_json(force=True)
+    
+    result_json = user_wordcloud()
+    return result_json
 
 if __name__ == "__main__":
     #foo = user_salt()
     #print(foo)
-    #user_wordcloud()
-    app.run(debug=True)
+    user_wordcloud()
+    #app.run(debug=True)
