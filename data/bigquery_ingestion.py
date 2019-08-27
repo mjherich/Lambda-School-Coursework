@@ -1,5 +1,9 @@
-# ingestion HackerNews dataset on Kaggle using Google bigquery 
-# to be stored in a postgreSQL dB on ElephantDB.
+######################################################################
+# Data ingestion from Google Bigquery HackerNews dataset to be stored
+# in a postgreSQL dB.
+# 
+######################################################################
+
 from google.cloud import bigquery
 import pandas as pd
 import psycopg2
@@ -8,12 +12,25 @@ import click
 
 
 # ElephantDB connection information
+"""
+dbname = 'mrbekufe'
+user = 'mrbekufe'
+password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
+host = 'isilo.db.elephantsql.com'
+"""
 
+# AWS RDS connection information
+#"""
+dbname = 'postgres'
+user = 'hacker'
+password = 'tFbCRNUZpMeYyhYB4ht'
+host = 'hackernews.c6st0zcwf68q.us-east-2.rds.amazonaws.com'
+#"""
 
 # Google Cloud bigquery API setup information:
 # https://cloud.google.com/docs/authentication/getting-started
 
-def pull_rows(client, dset, table_name, start_index=10100, count=10000):
+def pull_rows(client, dset, table_name, start_index=0, count=40000):
     """
     Query {count} rows starting at index {start_index} from {table_name} in {dset} from the established bigquery client.
     
@@ -87,7 +104,9 @@ def get_tables(client, dset):
     
 def ingest(table_name, rows):
     """
-    Ingest list of bigquery Row instances into postgreSQL dB
+    Ingest list of bigquery Row instances into postgreSQL dB. 
+    
+    *** Only tested on comments table in the hacker news dataset. ***
     
     Parameters:
     -----------
@@ -98,7 +117,7 @@ def ingest(table_name, rows):
     None
     """
     conn = psycopg2.connect(dbname=dbname, user=user,
-                        password=password, host=host)
+                            password=password, host=host)
 
     curs = conn.cursor()
     
@@ -140,8 +159,9 @@ def ingest(table_name, rows):
 
 @click.command()
 @click.option('--schema', default=False, help='Generate schema files from tables and columns')
-@click.option('--rows', default=10, help='Numbers of rows to ingest from bigquery api')
-def run(schema, rows):
+@click.option('--start', default=0, help='starting row of the data to be pulled')
+@click.option('--rows', default=10000, help='Numbers of rows to ingest from bigquery api')
+def run(schema, start, rows):
     """
     kaggle reference to using bigquery https://www.kaggle.com/sohier/beyond-queries-exploring-the-bigquery-api
     """
@@ -159,7 +179,7 @@ def run(schema, rows):
             get_schema(client, hn_dset, t)
         
     hn_comments = client.get_table(hn_dset.table('comments'))
-    db_rows = pull_rows(client, hn_comments, 'comments', 10100, rows)
+    db_rows = pull_rows(client, hn_comments, 'comments', start, rows)
     ingest('comments', db_rows)
 
 
