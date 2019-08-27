@@ -1,6 +1,5 @@
-'''Includes the information and connections for connecting to ElephantSQL
-database. ElephantSQL will most likely not be used for the MVP,
-but will be used to get a basic database up for machine learning engineers.'''
+'''Includes the information and connections for connecting to PostgreSQL
+database. ElephantSQL used initially, AWS set up for larger storage.'''
 
 # Imports
 import psycopg2
