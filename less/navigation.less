@@ -1,0 +1,51 @@
+/*
+Will be styling logo and nav bar from this file. that is located in header section of the page.
+*/
+header{
+    width: 100%;
+    .flexboxSetting();
+
+    div{
+        .flexboxSetting();
+
+        h1{
+            text-align: center;
+            color: @logoHeading;
+            font-family: @logoText;
+            font-size: 6rem;
+            padding: 25px 0px;
+            border-bottom: 1px dotted @secondaryHeading;
+            text-shadow: 3px 3px 10px black;
+        }
+    }
+
+    ul{
+        .flexboxSetting();
+
+        @media @desktop{
+            width: 100%;
+            .flexboxSetting(row, space-between, center);
+            border-bottom: 1px dotted @secondaryHeading;
+        }
+
+        li{
+            text-align: center;
+            padding: 15px 0px;
+            border-bottom: 1px dotted @secondaryHeading;
+
+            @media @desktop{
+                width: 20%;
+                border: none;
+            }
+
+        
+            a{
+                text-decoration: none;
+                color: @mainText;
+                font-size: 2rem;
+                font-weight: bold;
+                text-shadow: 3px 3px 10px black;
+            }
+        }
+    }
+}
