@@ -36,7 +36,7 @@ const UserProfile = props => {
     };
 
     return (
-        <div>
+        <>
             <Header as="h1" content="User Profile" />
             {isLoading ? (
                 <Header as="h1" content="Loading" />
@@ -62,7 +62,7 @@ const UserProfile = props => {
             ) : (
                 <Header as="h2" content="Not a user" />
             )}
-        </div>
+        </>
     );
 };
 
