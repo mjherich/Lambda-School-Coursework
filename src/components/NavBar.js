@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, Input } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import UserSearch from './UserSearch'
 
 const NavBar = () => {
     return (
@@ -26,11 +27,7 @@ const NavBar = () => {
             />
             <Menu.Menu position="right">
                 <Menu.Item>
-                    <Input
-                        icon="search"
-                        label="Hacker News Username:"
-                        placeholder="Search users"
-                    />
+                    <UserSearch />
                 </Menu.Item>
             </Menu.Menu>
         </Menu>
