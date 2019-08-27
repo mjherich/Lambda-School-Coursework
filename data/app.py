@@ -128,5 +128,5 @@ def serve_wordcloud():
 if __name__ == "__main__":
     #foo = user_salt()
     #print(foo)
-    user_wordcloud()
-    #app.run(debug=True)
+    #user_wordcloud()
+    app.run(debug=True)
