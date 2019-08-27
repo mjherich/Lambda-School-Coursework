@@ -5,7 +5,7 @@ article{
     .flexboxSetting();
 
     @media @desktop{
-        .flexboxSetting(row, center, center);
+        //border: 3px solid red;
     }
 
     #application{
@@ -13,12 +13,23 @@ article{
         padding: 0% 0%;
         .flexboxSetting();
 
+        @media @desktop{
+            width: 100%;
+            .flexboxSetting(row, center, center);
+            flex-wrap: wrap;
+        }
+
         img{
             .flexboxSetting();
             width: 85%;
             margin: 10% auto;
             border-radius: 20px;
             .box-shadow(9px, 9px, 10px, 0.5);
+
+            @media @desktop{
+                width: 49%;
+                margin: 5% auto;
+            }
         }
 
         .appHeader{
@@ -27,6 +38,14 @@ article{
             font-family: @headerText;
             padding: 5% 0%;
             margin-left: 13%;
+
+            @media @desktop{
+                order: -1;
+                width: 100%;
+                text-align: center;
+                padding: 2% 0%;
+                margin-left: 0%;
+            }
         }
 
         .appText{
@@ -37,6 +56,15 @@ article{
             border-radius: 20px;
             border: 1px dotted @mainText;
             .box-shadow(9px, 9px, 10px, 0.5);
+
+            @media @desktop{
+                width: 47%;
+                padding: 2%;
+                font-size: 1.3rem;
+                background: none;
+                border: none;
+                .box-shadow(0px, 0px, 0px, 0);
+            }
         }
 
         .saltyButton{
@@ -99,6 +127,8 @@ article{
             font-size: 1.2rem;
             padding: 2%;
             border-radius: 20px;
+            color: @mainText;
+            background: @secondaryBG;
         }
     }
 }
@@ -202,5 +232,9 @@ article{
         color: @logoHeading;
         background: @secondaryBG;
         .box-shadow(9px, 9px, 10px, 0.5);
+    }
+
+    @media @desktop{
+        display: none;
     }
 }

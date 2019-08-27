@@ -247,12 +247,6 @@ article {
   align-content: center;
 }
 @media (min-width: 1000px) {
-  article {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-  }
 }
 article #application {
   width: 100%;
@@ -261,6 +255,16 @@ article #application {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+}
+@media (min-width: 1000px) {
+  article #application {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+  }
 }
 article #application img {
   display: flex;
@@ -274,12 +278,27 @@ article #application img {
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
 }
+@media (min-width: 1000px) {
+  article #application img {
+    width: 49%;
+    margin: 5% auto;
+  }
+}
 article #application .appHeader {
   color: #AEADD7;
   font-size: 2rem;
   font-family: 'Patua One', cursive;
   padding: 5% 0%;
   margin-left: 13%;
+}
+@media (min-width: 1000px) {
+  article #application .appHeader {
+    order: -1;
+    width: 100%;
+    text-align: center;
+    padding: 2% 0%;
+    margin-left: 0%;
+  }
 }
 article #application .appText {
   width: 85%;
@@ -291,6 +310,18 @@ article #application .appText {
   -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+@media (min-width: 1000px) {
+  article #application .appText {
+    width: 47%;
+    padding: 2%;
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+  }
 }
 article #application .saltyButton {
   width: 45%;
@@ -354,6 +385,8 @@ article #contact button {
   font-size: 1.2rem;
   padding: 2%;
   border-radius: 20px;
+  color: #FAFEFD;
+  background: #6D6E7B;
 }
 /* --------------- Main Page - .socialMediaLinks --------------- */
 .socialMediaLinks {
@@ -444,4 +477,9 @@ article #contact button {
   -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+@media (min-width: 1000px) {
+  .backTop {
+    display: none;
+  }
 }
