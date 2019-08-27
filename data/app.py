@@ -5,6 +5,7 @@ import psycopg2
 from flask import Flask, json, jsonify, request, send_file
 from wordcloud import WordCloud
 from PIL import Image
+from io import StringIO
 
 
 app = Flask(__name__)
