@@ -3,61 +3,38 @@ Will be styling logo and nav bar from this file. that is located in header secti
 */
 header{
     width: 100%;
-    display: flexbox;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    .flexboxSetting();
 
     div{
-        display: flexbox;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
+        .flexboxSetting();
 
         h1{
-            display: flexbox;
-            flex-direction: column;
-            justify-content: center;
-            align-content: center;
             text-align: center;
             color: @logoHeading;
             font-family: @logoText;
             font-size: 6rem;
             padding: 25px 0px;
             border-bottom: 1px dotted @secondaryHeading;
+            text-shadow: 3px 3px 10px black;
         }
     }
 
     ul{
-        display: flexbox;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
+        .flexboxSetting();
 
         @media @desktop{
-            border: 2px solid red;
             width: 100%;
-            display: flexbox;
-            flex-direction: row;
-            justify-content: center;
-            align-content: center;
+            .flexboxSetting(row, space-between, center);
+            border-bottom: 1px dotted @secondaryHeading;
         }
 
         li{
-            display: flexbox;
-            flex-direction: column;
-            justify-content: center;
-            align-content: center;
             text-align: center;
             padding: 15px 0px;
             border-bottom: 1px dotted @secondaryHeading;
 
             @media @desktop{
                 width: 20%;
-                display: flexbox;
-                flex-direction: row;
-                justify-content: center;
-                align-content: space-between;
                 border: none;
             }
 
@@ -66,6 +43,7 @@ header{
                 text-decoration: none;
                 color: @mainText;
                 font-size: 2rem;
+                text-shadow: 3px 3px 10px black;
             }
         }
     }

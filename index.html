@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Damion|Patua+One|Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Salty</title>
 </head>
 <body>
@@ -16,15 +17,38 @@
         <ul class="nav">
             <li><a class="navLinks" href="index.html">Home</a></li>
             <li><a class="navLinks" href="about.html">About</a></li>
-            <li><a class="navLinks" href="#">Application</a></li>
-            <li><a class="navLinks" href="#">Contact</a></li>
+            <li><a class="navLinks" href="index.html#application">Application</a></li>
+            <li><a class="navLinks" href="index.html#contact">Contact</a></li>
         </ul>
     </header>
     <article>
-
+        <div id="application">
+            <img src="/media/applications.jpg" alt="Photo of Applications on Phone">
+            <h2>Application</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum magni debitis atque repudiandae voluptate, quaerat eveniet vitae asperiores sunt, exercitationem necessitatibus dicta aliquid distinctio. Rem, ut beatae. Ipsa, ipsam id.</p>
+        </div>
+        <div id="contact">
+            <img src="/media/contact.jpg" alt="Photo of Person Making a Phone Call">
+            <h2 id='contact'>Contact</h2>
+            <form class="contactForm">
+                <p>Full Name:</p><br>
+                <input type="text" name="fullname" value="John Doe"><br>
+                <p>Email:</p><br>
+                <input type="email" name="email" value="someone@somewhere.com"><br>
+                <p>Comment:</p><br>
+                <input type="comment" name="comment" value="Type your comment here."><br><br>
+                <button id='contactButton'>Submit</button>
+            </form>
+            <div class='socialMediaLinks'>
+                <a href="https://www.facebook.com/" class="fa fa-facebook" target="_blank"></a>
+                <a href="https://twitter.com" class="fa fa-twitter" target="_blank"></a>
+                <a href="https://www.instagram.com" class="fa fa-instagram" target="_blank"></a>
+                <a href="https://www.linkedin.com" class="fa fa-linkedin" target="_blank"></a>
+            </div>
+        </div> 
     </article>
     <footer>
-        <p>© <script type="text/javascript">document.write(new Date().getFullYear())</script> Salty. All rights reserved.</p>
+        <p class="copyrightText">© <script type="text/javascript">document.write(new Date().getFullYear())</script> Salty. All rights reserved.</p>
     </footer>
 </body>
 </html>
