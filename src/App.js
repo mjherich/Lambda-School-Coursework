@@ -12,6 +12,7 @@ import { Header, Container } from 'semantic-ui-react';
 //Custom Components
 import NavBar from './components/NavBar';
 import { TimeChart } from './components/Charts';
+import UserProfile from './components/UserProfile';
 import UserList from './components/users/userList';
 
 const StyledContainer = styled(Container)`
@@ -32,12 +33,19 @@ const App = () => {
             <StyledContainer fluid>
                 <NavBar />
                 <Route exact path="/" render={() => <Home />} />
-                <Route path="/top-100-users" render={(props) => <UserList {...props}/>} />
+                <Route
+                    path="/top-100-users"
+                    render={props => <UserList {...props} />}
+                />
                 <Route
                     path="/top-100-comments"
                     render={() => <Top100Comments />}
                 />
                 <Route path="/about-us" render={() => <About />} />
+                <Route
+                    path="/users/:username"
+                    render={props => <UserProfile {...props} />}
+                />
             </StyledContainer>
         </BrowserRouter>
     );
