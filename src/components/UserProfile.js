@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Header } from 'semantic-ui-react';
+import WordCloud from './WordCloud'
 
 const UserProfile = props => {
     const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +61,10 @@ const UserProfile = props => {
                     />
                 </div>
             ) : (
-                <Header as="h2" content="Not a user" />
+                <div>
+                    <Header as="h2" content="Not a user" />
+                    <WordCloud />
+                </div>
             )}
         </>
     );
