@@ -14,6 +14,7 @@ import NavBar from './components/NavBar';
 import { TimeChart } from './components/Charts';
 import UserProfile from './components/UserProfile';
 import UserList from './components/users/userList';
+import CommentList from './components/comments/commentList';
 
 const StyledContainer = styled(Container)`
     padding-top: 48px;
@@ -39,7 +40,7 @@ const App = () => {
                 />
                 <Route
                     path="/top-100-comments"
-                    render={() => <Top100Comments />}
+                    render={(props) => <CommentList {...props} />}
                 />
                 <Route path="/about-us" render={() => <About />} />
                 <Route
