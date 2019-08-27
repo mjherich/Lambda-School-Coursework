@@ -7,11 +7,6 @@ from flask import Flask, json, jsonify, request
 
 app = Flask(__name__)
 
-# ElephantDB connection information
-dbname = 'mrbekufe'
-user = 'mrbekufe'
-password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
-host = 'isilo.db.elephantsql.com'
 
 
 def user_salt():
@@ -69,7 +64,7 @@ def serve_results():
         foo = json.loads(result_json)
     except ValueError as e:
         print("NOT JSON")
-        
+
     return jsonify(result_json)
 
 @app.route("/cloud", methods=['POST'])

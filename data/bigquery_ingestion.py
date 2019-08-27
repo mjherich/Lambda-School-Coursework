@@ -11,21 +11,6 @@ from tqdm import tqdm
 import click
 
 
-# ElephantDB connection information
-"""
-dbname = 'mrbekufe'
-user = 'mrbekufe'
-password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
-host = 'isilo.db.elephantsql.com'
-"""
-
-# AWS RDS connection information
-#"""
-dbname = 'postgres'
-user = 'hacker'
-password = 'tFbCRNUZpMeYyhYB4ht'
-host = 'hackernews.c6st0zcwf68q.us-east-2.rds.amazonaws.com'
-#"""
 
 # Google Cloud bigquery API setup information:
 # https://cloud.google.com/docs/authentication/getting-started
