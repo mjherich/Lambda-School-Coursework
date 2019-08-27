@@ -11,6 +11,7 @@ pandas = "*"
 psycopg2 = "*"
 google-cloud-bigquery = "*"
 click = "*"
+tqdm = "*"
 
 [requires]
 python_version = "3.7"
