@@ -14,11 +14,11 @@ import WC from 'react-d3-cloud'
 const fontSizeMapper = word => Math.log2(word.value) * 5;
 const rotate = word => word.value % 360;
 
-export default function WordCloud() {
+export default function WordCloud({ username }) {
   const [data, setData] = useState([])
   useEffect(() => {
-    axios.get('https://my.api.mockaroo.com/wordcloud.json?key=917e1550')
-      .then(res => setData(res.data))
+    axios.post('https://cors-anywhere.herokuapp.com/hackernews-serving.herokuapp.com/cloud', {userID: username})
+      .then(res => setData(JSON.parse(res.data.text)))
       .catch(err => console.log(err))
   }, [])
   return (

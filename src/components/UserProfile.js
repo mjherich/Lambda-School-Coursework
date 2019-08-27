@@ -59,11 +59,11 @@ const UserProfile = props => {
                         as="h3"
                         content={`Created: ${formatDate(user.created)}`}
                     />
+                    <WordCloud username={user.id} />
                 </div>
             ) : (
                 <div>
                     <Header as="h2" content="Not a user" />
-                    <WordCloud />
                 </div>
             )}
         </>
