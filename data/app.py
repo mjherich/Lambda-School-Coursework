@@ -3,6 +3,10 @@ import numpy as np
 import json
 import psycopg2
 from flask import Flask, json, jsonify, request, send_file
+from collections import Counter
+import re, string
+#from nltk.corpus import stopwords
+import nltk
 
 
 app = Flask(__name__)
@@ -50,8 +54,9 @@ def user_salt():
     
 def user_wordcloud():    
     """
-    Querying the database for ranking, user, text, and salt score. Returns
-    top N highest salt score comments from user.
+    Querying the database for ranking, user, text, and salt score. Removes
+    stopwords and common words in the process, and returns {'text': "", 'value': int}
+    from the top N highest salt score comments from user.
     
     Parameters:
     -----------
@@ -59,7 +64,7 @@ def user_wordcloud():
     
     Output:
     -----------
-    results: json format stream with in format {"userID": "", "texts": ""}
+    results: json format stream with in format {"userID": "", "texts": {text: str, values:int}}
     """
     conn = psycopg2.connect(dbname=dbname, user=user,
                             password=password, host=host)
@@ -78,15 +83,22 @@ def user_wordcloud():
             '''
     curs.execute(query)
     text = curs.fetchall()
-    text = ' '.join(map(str, text))
-    #print(text)
-    #df = pd.DataFrame(data, columns=['ranking', 'text'])
-    # appending a placeholder row for salt score
-    #wordcloud = WordCloud(max_font_size=40).generate(text)
-    #img = wordcloud.to_image()
-    #img.show()
-    result_dict = {"userID": "pg", "text": text}
-    print(result_dict)
+    text = ' '.join(map(str, text)).lower()
+    regex = re.compile('[%s]' % re.escape(string.punctuation))
+    regetext = regex.sub(' ', text)#.split()
+    
+    stopwords = nltk.corpus.stopwords.words('english')
+    new_words = ['i', 'p', 'com', 'http', 'we', 'that', 'get', 'n', 'rel', 'much', 'like']
+    stopwords.extend(new_words)
+    s=set(stopwords)
+    
+    foo = filter(lambda w: not w in s, regetext.split())
+    
+    wordcount = dict(Counter(foo))
+    wc_df = pd.DataFrame(list(wordcount.items()), columns=['text', 'value'])
+    #print(wc_df.head(10))
+    result_dict = {"userID": "pg", "text": wc_df.to_json(orient='records')}
+    #print(wc_df)
     curs.close()
     conn.close()
 
@@ -141,5 +153,6 @@ def serve_wordcloud():
 if __name__ == "__main__":
     #foo = user_salt()
     #print(foo)
-    user_wordcloud()
-    #app.run(debug=True)
+    #foo = user_wordcloud()
+    #print(foo)
+    app.run(debug=True)

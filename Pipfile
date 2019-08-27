@@ -15,6 +15,7 @@ tqdm = "*"
 flask = "*"
 gunicorn = "*"
 matplotlib = "*"
+nltk = "*"
 
 [requires]
 python_version = "3.7"
