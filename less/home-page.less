@@ -1,18 +1,111 @@
+/* --------------- Main Page - <article> --------------- */
 article{
     width: 90%;
-    margin: auto;
-    div{
+    margin: 5% auto;
+    .flexboxSetting();
+
+    @media @desktop{
+        .flexboxSetting(row, center, center);
+    }
+
+    #application{
+        width: 100%;
         padding: 0% 0%;
+        .flexboxSetting();
+
+        img{
+            .flexboxSetting();
+            width: 85%;
+            margin: 10% auto;
+            border-radius: 20px;
+            .box-shadow(9px, 9px, 10px, 0.5);
+        }
+
+        .appHeader{
+            color: @secondaryHeading;
+            font-size: 2rem;
+            font-family: @headerText;
+            padding: 5% 0%;
+            margin-left: 13%;
+        }
+
+        .appText{
+            width: 85%;
+            background: @secondaryBG;
+            padding: 5%;
+            margin: auto;
+            border-radius: 20px;
+            border: 1px dotted @mainText;
+            .box-shadow(9px, 9px, 10px, 0.5);
+        }
+
+        .saltyButton{
+            width: 45%;
+            background: @secondaryBG;
+            text-align: center;
+            color: @logoHeading;
+            font-family: @logoText;
+            font-size: 3rem;
+            padding: 2%;
+            border: 1px dotted @mainText;
+            border-radius: 20px;
+            margin: 5% auto;
+            text-shadow: 3px 3px 10px black;
+            text-decoration: none;
+            .box-shadow(9px, 9px, 10px, 0.5);
+        }
+    }
+
+    #contact{
+        width: 100%;
+        padding: 0% 0%;
+        .flexboxSetting();
+
+        img{
+            .flexboxSetting();
+            width: 85%;
+            margin: 10% auto;
+            border-radius: 20px;
+            .box-shadow(9px, 9px, 10px, 0.5);
+        }
+
+        .contactHeader{
+            color: @secondaryHeading;
+            font-size: 2rem;
+            font-family: @headerText;
+            padding: 5% 0%;
+            margin-left: 13%;
+        }
+    
+
+        .contactForm{
+            width: 100%;
+            padding: 5%;
+            margin: 2% 0% 2% 0%;
+            border: 1px dotted @mainText;
+            border-radius: 20px;
+
+            p{
+                margin: 5% 0 1% 0;
+            }
+        }
+
+        input{
+            font-size: 1.2rem;
+            width: 100%;
+        }
+
+        button{
+            font-size: 1.2rem;
+            padding: 2%;
+            border-radius: 20px;
+        }
     }
 }
 
-img{
-    .flexboxSetting();
-    width: 75%;
-    margin: auto;
-    border-radius: 50px;
-}
 
+
+/* --------------- Main Page - .socialMediaLinks --------------- */
 .socialMediaLinks {
     width: 75%;
     padding: 5% 0%;
@@ -59,4 +152,55 @@ img{
 .fa-linkedin {
     background: #007bb5;
     color: white;
+}
+
+/* --------------- About Page ---------------*/
+.teamCardSection{
+    width: 85%;
+    margin: auto;
+    .flexboxSetting(row, space-evenly, center);
+    flex-wrap: wrap;
+}
+
+.teamCard{
+    width: 45%;
+    border: 1px solid white;
+    border-radius: 20px;
+    margin: 5% auto;
+
+    .teamPhoto{
+        width: 100%;
+        border-radius: 20px;
+        padding: 5%;
+    }
+
+    .name{
+        padding: 5%;
+    }
+
+    .role{
+        padding: 5%;
+    }
+}
+
+
+
+
+
+
+
+.backTop{
+    width: 90px;
+    align-self: flex-end;
+    text-decoration: none;
+    color: @mainText;
+    text-align: right;
+    padding: 2%;
+    border-radius: 20px;
+
+    &:hover{
+        color: @logoHeading;
+        background: @secondaryBG;
+        .box-shadow(9px, 9px, 10px, 0.5);
+    }
 }

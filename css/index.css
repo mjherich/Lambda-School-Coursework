@@ -222,9 +222,11 @@ header ul li a {
   text-decoration: none;
   color: #FAFEFD;
   font-size: 2rem;
+  font-weight: bold;
   text-shadow: 3px 3px 10px black;
 }
 footer {
+  border-top: 1px dotted #6D6E7B;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -235,22 +237,125 @@ footer p {
   padding: 20px 0px;
   font-size: 0.8rem;
 }
+/* --------------- Main Page - <article> --------------- */
 article {
   width: 90%;
-  margin: auto;
-}
-article div {
-  padding: 0% 0%;
-}
-img {
+  margin: 5% auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  width: 75%;
-  margin: auto;
-  border-radius: 50px;
 }
+@media (min-width: 1000px) {
+  article {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+  }
+}
+article #application {
+  width: 100%;
+  padding: 0% 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+article #application img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 85%;
+  margin: 10% auto;
+  border-radius: 20px;
+  -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+article #application .appHeader {
+  color: #AEADD7;
+  font-size: 2rem;
+  font-family: 'Patua One', cursive;
+  padding: 5% 0%;
+  margin-left: 13%;
+}
+article #application .appText {
+  width: 85%;
+  background: #6D6E7B;
+  padding: 5%;
+  margin: auto;
+  border-radius: 20px;
+  border: 1px dotted #FAFEFD;
+  -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+article #application .saltyButton {
+  width: 45%;
+  background: #6D6E7B;
+  text-align: center;
+  color: #FECE02;
+  font-family: 'Damion', cursive;
+  font-size: 3rem;
+  padding: 2%;
+  border: 1px dotted #FAFEFD;
+  border-radius: 20px;
+  margin: 5% auto;
+  text-shadow: 3px 3px 10px black;
+  text-decoration: none;
+  -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+article #contact {
+  width: 100%;
+  padding: 0% 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+article #contact img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 85%;
+  margin: 10% auto;
+  border-radius: 20px;
+  -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+article #contact .contactHeader {
+  color: #AEADD7;
+  font-size: 2rem;
+  font-family: 'Patua One', cursive;
+  padding: 5% 0%;
+  margin-left: 13%;
+}
+article #contact .contactForm {
+  width: 100%;
+  padding: 5%;
+  margin: 2% 0% 2% 0%;
+  border: 1px dotted #FAFEFD;
+  border-radius: 20px;
+}
+article #contact .contactForm p {
+  margin: 5% 0 1% 0;
+}
+article #contact input {
+  font-size: 1.2rem;
+  width: 100%;
+}
+article #contact button {
+  font-size: 1.2rem;
+  padding: 2%;
+  border-radius: 20px;
+}
+/* --------------- Main Page - .socialMediaLinks --------------- */
 .socialMediaLinks {
   width: 75%;
   padding: 5% 0%;
@@ -296,4 +401,47 @@ img {
 .fa-linkedin {
   background: #007bb5;
   color: white;
+}
+/* --------------- About Page ---------------*/
+.teamCardSection {
+  width: 85%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
+  flex-wrap: wrap;
+}
+.teamCard {
+  width: 45%;
+  border: 1px solid white;
+  border-radius: 20px;
+  margin: 5% auto;
+}
+.teamCard .teamPhoto {
+  width: 100%;
+  border-radius: 20px;
+  padding: 5%;
+}
+.teamCard .name {
+  padding: 5%;
+}
+.teamCard .role {
+  padding: 5%;
+}
+.backTop {
+  width: 90px;
+  align-self: flex-end;
+  text-decoration: none;
+  color: #FAFEFD;
+  text-align: right;
+  padding: 2%;
+  border-radius: 20px;
+}
+.backTop:hover {
+  color: #FECE02;
+  background: #6D6E7B;
+  -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
 }
