@@ -16,7 +16,7 @@ const NavBar = () => {
                 as={Link}
                 to="/top-100-comments"
                 name="top100comments"
-                content="Saltiest 100 Comments"
+                content="🧂 Saltiest 100 Comments"
             />
             <Menu.Item
                 as={Link}
