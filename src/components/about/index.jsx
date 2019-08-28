@@ -10,13 +10,13 @@ import lucas from "../../assets/images/lucas.jpg";
 import oliver from "../../assets/images/oliver.jpg";
 import virg from "../../assets/images/virg.jpeg";
 import darien from "../../assets/images/darien.jpg";
+import nik from "../../assets/images/nik.jpg"
 
 
 
 const About = () => {
     var team = teamData();
-    /* util function for bothering people */
-    // console.log(danny);
+    // /* util function for bothering people */
     // var status = (function iNeedABioAndPictureGuys(){
     //     var people = "";
     //     for (let i = 0, count = 1; i < team.length; ++i){       
@@ -61,7 +61,7 @@ function teamData(){
         {img:han, role: "Data Engineering/Backend", name: "Han Lee", bio:"Deep Learning Engineer. Reformed professional investment manager. Organic home farmer. EX World of Warcraft top 10 classic guild co-GM."},
         {img:oliver, role: "Data Engineering/Backend", name: "Oliver Ash", bio:"Data Science Student at Lambda School. Former philosophy student and combat medic. Enjoys classic novels and critical rationalist philosophy."},
         {img:null,role:"Machine Learning", name: "Darek Tidwell", bio:""},
-        {img:null,role:"Machine Learning", name: "Nicolae Dubenco", bio:""},
+        {img:nik,role:"Machine Learning", name: "Nicolae Dubenco", bio:"Data Scientist & ML Engineer. SME entrepreneur. Student. Generalist with interests in Startups, Management & Marketing, Data and Human Behaviour. Books and online courses are my everyday 'food'."},
         {img:darien, role:"Project Lead", name:"Darien Payton", bio:"Team Lead at Lambda School. Former marketing consultant. Enjoys playing piano, writing and playing basketball."},
     ].sort(function sortByRole(a, b){
         if(a.role < b.role) return -1; 
