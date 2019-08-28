@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CommentCard from "./commentCard";
-import { Card, Icon } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 
 const CommentList = props => {
@@ -12,14 +12,14 @@ const CommentList = props => {
   // axios inside useEffect to get list of users, and inside .then sorts this array by saltiness and does setUsers with result
   useEffect(() => {
     axios
-      .get("https://my.api.mockaroo.com/usercomments.json?key=917e1550")
+      .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/comment", {"username": "swombat"})
       .then(response => {
-        console.log("Comments get response", response.data);
-        let sortedBySalt = response.data.sort((a, b) => {
-          return b.saltyScore - a.saltyScore;
-        });
-        console.log("sortedBySalt", sortedBySalt);
-        setComments(sortedBySalt);
+        console.log("Comments post response", response.data);
+        // let sortedBySalt = response.data.sort((a, b) => {
+        //   return b.saltyScore - a.saltyScore;
+        // });
+        // console.log("sortedBySalt", sortedBySalt);
+        setComments(response.data);
       });
   }, []);
 

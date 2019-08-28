@@ -52,7 +52,7 @@ const UserCard = props => {
             <div>Number of Comments: {hnUserData.submitted.length}</div>
           )}
           <div>Karma: {hnUserData.karma}</div> */}
-          <div>Salty Score: {props.user.salt_score}</div>
+          <div>Salty Score: {props.user.score}</div>
         </div>
       </div>
     </Card>

@@ -18,6 +18,11 @@ const CommentCard = props => {
     else return "red";
   };
 
+  function strip(html) {
+    var doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  }
+
   //   useEffect(() => {
   //     axios
   //       .get("https://hacker-news.firebaseio.com/v0/user/okket.json?print=pretty")
@@ -28,15 +33,16 @@ const CommentCard = props => {
   //   }, []);
 
   return (
-    <Card color={color(props.comment.saltyScore)} fluid>
+    <Card       as={Link}
+    to={`/users/${props.comment.username}`} color={color(props.comment.saltyScore)} fluid>
+    <Card.Meta id="meta"><div>{"  "}</div>{props.comment.username}</Card.Meta>
       <div className="userCard">
-        <div>
+        <Card.Content>
           <Icon name="quote left" size="small" />
-          {props.comment.comment}{'  '}
-          <Icon name="quote right" size="small" />
-        </div>
+          {strip(props.comment.text)}{'  '}
+        </Card.Content>
         <div>
-          <div>{props.comment.saltyScore}% Salty</div>
+          <div>Salty Score: {props.comment.score}</div>
         </div>
       </div>
     </Card>
