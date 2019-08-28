@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import './App.scss';
 
 //Import Components
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { Header, Container } from 'semantic-ui-react';
 
 //Custom Components
@@ -19,7 +19,14 @@ import { StateProvider } from './state';
 
 import About from "./components/about";
 //Temp Components
-const Home = () => <Header as="h1" content="Home" />;
+const Home = () => {
+ return (
+   <>
+    <div className="hero">
+      <Link className="cta" to="/top-100-users">Let's Go!</Link>
+    </div>
+  </>
+ )};
 const Top100Comments = () => (
     <Header as="h1" content="Top 100 Saltiest Comments" />
 );
@@ -27,7 +34,7 @@ const Top100Comments = () => (
 
 const App = () => {
     const initialState = {
-        theme: true,
+        theme: window.localStorage.getItem('theme') || 'dark',
     };
 
     const reducer = (state, action) => {
@@ -35,15 +42,29 @@ const App = () => {
         switch (action.type) {
             case 'updateTheme':
                 console.log(action);
+                window.localStorage.setItem('theme', action.payload)
                 return {
                     ...state,
                     theme: action.payload,
                 };
+            case 'toggleTheme':
+                if (state.theme==="dark") {
+                  window.localStorage.setItem('theme', 'light')
+                  return {
+                    ...state,
+                    theme: 'light',
+                  }
+                } else {
+                  window.localStorage.setItem('theme', 'dark')
+                  return {
+                    ...state,
+                    theme: 'dark',
+                  }                  
+                }
             default:
                 return state;
         }
     };
-
     return (
         <StateProvider initialState={initialState} reducer={reducer}>
             <BrowserRouter>
