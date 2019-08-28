@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import WordCloud from './WordCloud'
 import {
     Card,
     Header,
@@ -300,7 +301,12 @@ const UserProfile = ({ user }) => {
     };
 
     return (
-        <Container>
+        <>
+            <Header as="h1" content="User Profile" />
+            {isLoading ? (
+                <Header as="h1" content="Loading" />
+            ) : user !== null ? (
+                <Container>
             <Grid stackable>
                 <Grid.Column width={5}>
                     <CardContainer>
@@ -351,6 +357,7 @@ const UserProfile = ({ user }) => {
                     </CardContainer>
                 </Grid.Column>
                 <Grid.Column width={11}>
+                    <WordCloud username={user.id} />
                     <Header as="h1" content="Saltiness vs Non-Salty" />
                     <div style={{ display: 'flex' }}>
                         <TwoLevelPieChart />
@@ -387,6 +394,12 @@ const UserProfile = ({ user }) => {
                 </Grid.Column>
             </Grid>
         </Container>
+            ) : (
+                <div>
+                    <Header as="h2" content="Not a user" />
+                </div>
+            )}
+        </>   
     );
 };
 export default UserProfile;
