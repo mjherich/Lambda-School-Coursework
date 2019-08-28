@@ -10,6 +10,12 @@ import nltk
 
 app = Flask(__name__)
 
+# ElephantDB connection information
+dbname = 'mrbekufe'
+user = 'mrbekufe'
+password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
+host = 'isilo.db.elephantsql.com'
+
 
 def salt_rank():
     """
@@ -37,22 +43,27 @@ def salt_rank():
     curs = conn.cursor()
      
     query = '''
-            SELECT b.avg, a.author, a.text, b.min
+            SELECT b.avg, b.posts, a.author, a.text, b.min
             FROM 
             (
-                SELECT author, AVG(score) AS avg, MIN(score) AS min
+                SELECT author, 
+                       COUNT(DISTINCT id) as posts, 
+                       AVG(score) AS avg, 
+                       MIN(score) AS min
                 FROM comments
                 GROUP BY author
             ) AS b 
             JOIN comments a 
             ON a.author = b.author AND b.min = a.score
+            WHERE posts > 10
             ORDER BY avg ASC
             LIMIT 100;
             '''
     curs.execute(query)
     data = curs.fetchall()
     
-    df = pd.DataFrame(data, columns=['salt_score', 'username', 'text', 'score'])
+    df = pd.DataFrame(data, columns=['salt_score', 'num_posts', 
+                                     'username', 'text', 'score'])
     
     result = df.to_json(orient='records')
     
@@ -203,6 +214,46 @@ def user_salt(user_id):
 
     return results
     
+def comments_rank():
+    """
+    Querying the database for 100 most negative comment in json format
+    
+    Parameters:
+    -----------
+    
+    Output:
+    -----------
+    results: json string in the format:
+    {'score': str, 'text' : int, 'username' : str, 'id' : int, 'parent': str}}
+    """
+    conn = psycopg2.connect(dbname=dbname, user=user,
+                            password=password, host=host)
+    
+    # throw an error response when connection is not open
+    if conn.closed != 0:
+        return app.response_class(response=json.dumps({}),
+                                  status=400,
+                                  mimetype='application/json')
+    curs = conn.cursor()
+    
+    # check if user_id exists in the database
+    query_text = f'''
+                  SELECT score, text, by, id, parent FROM comments
+                  ORDER BY score ASC
+                  LIMIT 100;
+                  '''
+    curs.execute(query_text)
+    comments_rank = curs.fetchall()
+    
+    text_df = pd.DataFrame(comments_rank, 
+                          columns=['score', 'text', 'username', 'id', 'parent'])
+    results = text_df.to_json(orient='records')
+    
+    curs.close()
+    conn.close()
+
+    return results
+
 @app.route("/salt", methods=['POST'])
 def serve_ranks():
     """
@@ -264,6 +315,27 @@ def serve_user():
     
     return result_json
 
+@app.route("/comment", methods=['POST'])
+def serve_comments():
+    """
+    This endpoint serves the top 100 saltest comments 
+    Calls serve_comments
+    """
+    input_json = request.get_json(force=True)
+    # error checking if the json file has username input, if not, return error
+    try:
+        user_id = str(input_json['username'])
+    except:
+        return app.response_class(response=json.dumps({}),
+                                  status=400,
+                                  mimetype='application/json')
+    
+    result_json = comments_rank()
+    
+    return result_json
+
 
 if __name__ == "__main__":
+    #foo = salt_rank()
+    #print(foo)
     app.run(debug=True)
