@@ -5,7 +5,6 @@ import psycopg2
 from flask import Flask, json, jsonify, request, send_file
 from collections import Counter
 import re, string
-#from nltk.corpus import stopwords
 import nltk
 
 
@@ -18,7 +17,7 @@ password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
 host = 'isilo.db.elephantsql.com'
 
 
-def user_salt():
+def salt_rank():
     """
     Querying the database for ranking, user, text, and salt score.
     
@@ -27,12 +26,20 @@ def user_salt():
     
     Output:
     -----------
-    pd.Dataframe: dataframe table with everything.
+    results: json format string with format 
+             {"salt_score": float,
+              "username": string,
+              "text": string,
+              "score": float
+              }
     """
     conn = psycopg2.connect(dbname=dbname, user=user,
                             password=password, host=host)
     
-    print(conn.closed)
+    if conn.closed != 0:
+        return app.response_class(response=json.dump({}),
+                                  status=400,
+                                  mimetype='application/json')
     curs = conn.cursor()
      
     query = '''
@@ -43,20 +50,22 @@ def user_salt():
     curs.execute(query)
     data = curs.fetchall()
     
-    df = pd.DataFrame(data, columns=['ranking', 'username', 'text'])
+    df = pd.DataFrame(data, columns=['salt_score', 'username', 'text'])
     # appending a placeholder row for salt score
-    df['salt_score'] = 100
+    df['score'] = 100
+    
+    result = df.to_json(orient='records')
     
     curs.close()
     conn.close()
 
-    return df.to_json(orient='records')
+    return result
     
-def user_wordcloud():    
+def user_wordcloud(user_id):
     """
-    Querying the database for ranking, user, text, and salt score. Removes
-    stopwords and common words in the process, and returns {'text': "", 'value': int}
-    from the top N highest salt score comments from user.
+    Querying the database for username, texts with negative sentiment. Removing
+    all stop and common words, and returns a json string from the top N lowest 
+    salt score comments from user.
     
     Parameters:
     -----------
@@ -64,7 +73,9 @@ def user_wordcloud():
     
     Output:
     -----------
-    results: json format stream with in format {"userID": "", "texts": {text: str, values:int}}
+    results: json format stream with in format 
+             {"username": str,
+              "texts": {text: str, values:int}}
     """
     conn = psycopg2.connect(dbname=dbname, user=user,
                             password=password, host=host)
@@ -79,7 +90,7 @@ def user_wordcloud():
     # Using author = 'pg' as placeholder
     query = '''
             SELECT text FROM comments
-            WHERE author = 'pg';
+            WHERE author = 'pg' AND score < 0;
             '''
     curs.execute(query)
     text = curs.fetchall()
@@ -88,7 +99,8 @@ def user_wordcloud():
     regetext = regex.sub(' ', text)#.split()
     
     stopwords = nltk.corpus.stopwords.words('english')
-    new_words = ['i', 'p', 'com', 'http', 'we', 'that', 'get', 'n', 'rel', 'much', 'like']
+    new_words = ['i', 'p', 'com', 'http', 'we', 'that', 
+                 'get', 'n', 'rel', 'much', 'like']
     stopwords.extend(new_words)
     s=set(stopwords)
     
@@ -96,24 +108,79 @@ def user_wordcloud():
     
     wordcount = dict(Counter(foo))
     wc_df = pd.DataFrame(list(wordcount.items()), columns=['text', 'value'])
-    #print(wc_df.head(10))
-    result_dict = {"userID": "pg", "text": wc_df.to_json(orient='records')}
-    #print(wc_df)
+    result_dict = {"username": "pg", "texts": wc_df.to_json(orient='records')}
+    
     curs.close()
     conn.close()
 
     return json.dumps(result_dict)
     
-def serve_pil_image(pil_img):
+def user_salt(user_id):
     """
-    *** NOT USED ***
-    Retun a send_file image in ByteStreamIO.
+    Querying the database for user and returns the top 10 highest salt score 
+    comments in the format of 
+    
+    
+    Parameters:
+    -----------
+    user: user_id
+    
+    Output:
+    -----------
+    results: json string in the format:
+             {'username': str, 'comments': {'parent' : int,
+                                            'id' : int,
+                                            'time' : int,
+                                            'username' : str,
+                                            'text': str, 
+                                            'score': float}}
     """
-    img_io = BytesIO()
-    pil_img.save(img_io, 'JPEG', quality=70)
-    img_io.seek(0)
-    return send_file(img_io, mimetype='image/jpeg')
+    conn = psycopg2.connect(dbname=dbname, user=user,
+                            password=password, host=host)
+    
+    # throw an error response when connection is not open
+    if conn.closed != 0:
+        return app.response_class(response=json.dump({}),
+                                  status=400,
+                                  mimetype='application/json')
+    curs = conn.cursor()
+    
+    # Using author = 'pg' as placeholder
+    query_text = '''
+                 SELECT parent, id, time, by, text, score FROM comments
+                 WHERE author = 'pg' AND score < 0
+                 ORDER BY score ASC
+                 LIMIT 100;
+                 '''
+    curs.execute(query_text)
+    user_text = curs.fetchall()
+    
+    text_df = pd.DataFrame(user_text, 
+                           columns=['parent', 'id', 'time', 
+                                    'username', 'text', 'score'])
+    text_json = text_df.to_json(orient='records')
+    
+    # querying for user's salt score.
+    query_user_score = '''
+                       SELECT author, SUM(score) FROM comments
+                       WHERE author = 'pg'
+                       GROUP BY author
+                       '''
+    curs.execute(query_user_score)
+    user_score = curs.fetchall()
+    
+    # Convert user score sql data into a dataframe and append text_json in 
+    # a comments column
+    score_df = pd.DataFrame(user_score, columns=['username', 'salt_score'])
+    score_df['comments'] = text_json
+    
+    results = score_df.to_json(orient='records')
+    
+    curs.close()
+    conn.close()
 
+    return results
+    
 @app.route("/salt", methods=['POST'])
 def serve_results():
     """
@@ -129,7 +196,7 @@ def serve_results():
     input_json = request.get_json(force=True)
     #print(f'Input request {input_json}')
     
-    result_json = user_salt()
+    result_json = salt_rank()
 
     try:
         foo = json.loads(result_json)
@@ -150,9 +217,22 @@ def serve_wordcloud():
     result_json = user_wordcloud()
     return result_json
 
+@app.route("/user", methods=['POST'])
+def serve_user():
+    if request.method != 'POST':
+        return app.response_class(response=json.dump({}),
+                                  status=400,
+                                  mimetype='application/json')
+    
+    input_json = request.get_json(force=True)
+    
+    result_json = user_salt()
+    return result_json
+
+
 if __name__ == "__main__":
-    #foo = user_salt()
+    #foo = user_salt('asdf')
     #print(foo)
-    #foo = user_wordcloud()
+    #foo = user_wordcloud('asdf')
     #print(foo)
     app.run(debug=True)
