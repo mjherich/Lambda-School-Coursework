@@ -12,6 +12,15 @@ import click
 
 
 # ElephantDB connection information
+#"""
+dbname = 'arivhzfv'
+user = 'arivhzfv'
+password = 'ycbiFPXILJyycloIBA2SnXhj-JCGbR7w'
+host = 'isilo.db.elephantsql.com'
+#"""
+
+
+# ElephantDB connection information
 """
 dbname = 'mrbekufe'
 user = 'mrbekufe'
@@ -20,12 +29,12 @@ host = 'isilo.db.elephantsql.com'
 """
 
 # AWS RDS connection information
-#"""
+"""
 dbname = 'postgres'
 user = 'hacker'
 password = 'tFbCRNUZpMeYyhYB4ht'
 host = 'hackernews.c6st0zcwf68q.us-east-2.rds.amazonaws.com'
-#"""
+"""
 
 # Google Cloud bigquery API setup information:
 # https://cloud.google.com/docs/authentication/getting-started
@@ -102,6 +111,26 @@ def get_tables(client, dset):
     
     return [x.table_id for x in client.list_tables(dset)]
     
+def get_row_count(client, dset, table_name):
+    """
+    Get numer of rows in a bigquery table
+    
+    Parameters:
+    -----------
+    client: a google.cloud bigquery connection
+    dset: a conected bigquery dataset
+    table_name: name of the table
+    
+    Output:
+    -----------
+    row_count: a count of the number of rows in a table
+    """
+    
+    table = client.get_table(dset.table(table_name))
+    row_count = table.num_rows
+    
+    return row_count
+
 def ingest(table_name, rows):
     """
     Ingest list of bigquery Row instances into postgreSQL dB. 
@@ -159,9 +188,10 @@ def ingest(table_name, rows):
 
 @click.command()
 @click.option('--schema', default=False, help='Generate schema files from tables and columns')
-@click.option('--start', default=0, help='starting row of the data to be pulled')
+@click.option('--counts', default=False, help='Returns total number of rows in a table')
+@click.option('--start', default=0, help='Starting row of the data to be pulled')
 @click.option('--rows', default=10000, help='Numbers of rows to ingest from bigquery api')
-def run(schema, start, rows):
+def run(schema, counts, start, rows):
     """
     kaggle reference to using bigquery https://www.kaggle.com/sohier/beyond-queries-exploring-the-bigquery-api
     """
@@ -177,10 +207,14 @@ def run(schema, start, rows):
         for t in tables:
             table = client.get_table(hn_dset.table(t))
             get_schema(client, hn_dset, t)
+            
+    if counts:
+        row_count = get_row_count(client, hn_dset, 'comments')
+        print(f"There are {row_count} in 'comments' table.")
         
-    hn_comments = client.get_table(hn_dset.table('comments'))
-    db_rows = pull_rows(client, hn_comments, 'comments', start, rows)
-    ingest('comments', db_rows)
+    #hn_comments = client.get_table(hn_dset.table('comments'))
+    #db_rows = pull_rows(client, hn_comments, 'comments', start, rows)
+    #ingest('comments', db_rows)
 
 
 if __name__ == "__main__":
