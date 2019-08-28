@@ -10,12 +10,6 @@ import nltk
 
 app = Flask(__name__)
 
-# ElephantDB connection information
-dbname = 'mrbekufe'
-user = 'mrbekufe'
-password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
-host = 'isilo.db.elephantsql.com'
-
 
 def salt_rank():
     """
@@ -101,7 +95,8 @@ def user_wordcloud(user_id):
     
     query = f'''
             SELECT text FROM comments
-            WHERE author = '{user_id}' AND score < 0;
+            WHERE author = '{user_id}' AND score < 0
+            LIMIT 500;
             '''
     curs.execute(query)
     text = curs.fetchall()
@@ -167,7 +162,6 @@ def user_salt(user_id):
                                   status=400,
                                   mimetype='application/json')
 
-    # Using author = 'pg' as placeholder
     query_text = f'''
                  SELECT parent, id, time, by, text, score FROM comments
                  WHERE author = '{user_id}' AND score < 0
@@ -184,7 +178,7 @@ def user_salt(user_id):
     
     # querying for user's salt score.
     query_user_score = f'''
-                       SELECT author, SUM(score) FROM comments
+                       SELECT author, AVG(score) FROM comments
                        WHERE author = '{user_id}'
                        GROUP BY author
                        '''
@@ -208,6 +202,7 @@ def serve_results():
     """
     Pulling user salt ranking from database(s) and returns the results in
     json format.
+    Calls salt_rank.
     """
     if request.method != 'POST':
         return app.response_class(response=json.dump({}),
@@ -216,7 +211,6 @@ def serve_results():
     
     # right now this is a dummy
     input_json = request.get_json(force=True)
-    #print(f'Input request {input_json}')
     
     result_json = salt_rank()
 
@@ -229,6 +223,10 @@ def serve_results():
 
 @app.route("/cloud", methods=['POST'])
 def serve_wordcloud():
+    """
+    This endpoint serves a user with all its salty comments. 
+    Calls user_wordcloud
+    """
     input_json = request.get_json(force=True)
     # error checking if the json file has username input, if not, return error
     try:
@@ -243,7 +241,10 @@ def serve_wordcloud():
 
 @app.route("/user", methods=['POST'])
 def serve_user():
-
+    """
+    This endpoint serves a user with its salt score and its most salty comments.
+    Calls user_salt
+    """
     input_json = request.get_json(force=True)
     # error checking if the json file has username input, if not, return error
     try:
