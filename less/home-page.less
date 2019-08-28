@@ -17,6 +17,7 @@ article{
             width: 100%;
             .flexboxSetting(row, center, center);
             flex-wrap: wrap;
+            border-bottom: 1px dotted White;
         }
 
         img{
@@ -89,12 +90,23 @@ article{
         padding: 0% 0%;
         .flexboxSetting();
 
+        @media @desktop{
+            width: 100%;
+            .flexboxSetting(row, center, center);
+            flex-wrap: wrap;
+        }
+
         img{
             .flexboxSetting();
             width: 85%;
             margin: 10% auto;
             border-radius: 20px;
             .box-shadow(9px, 9px, 10px, 0.5);
+
+            @media @desktop{
+                width: 49%;
+                margin: 5% auto;
+            }
         }
 
         .contactHeader{
@@ -103,6 +115,14 @@ article{
             font-family: @headerText;
             padding: 5% 0%;
             margin-left: 13%;
+
+            @media @desktop{
+                order: -2;
+                width: 100%;
+                text-align: center;
+                padding: 2% 0%;
+                margin-left: 0%;
+            }
         }
     
 
@@ -112,6 +132,13 @@ article{
             margin: 2% 0% 2% 0%;
             border: 1px dotted @mainText;
             border-radius: 20px;
+
+            @media @desktop{
+                width: 45%;
+                padding: 2% 1%;
+                order: -1;
+                border: none;
+            }
 
             p{
                 margin: 5% 0 1% 0;
@@ -188,15 +215,23 @@ article{
 .teamCardSection{
     width: 85%;
     margin: auto;
-    .flexboxSetting(row, space-evenly, center);
-    flex-wrap: wrap;
+    .flexboxSetting();
+
+    @media @desktop{
+        .flexboxSetting(row, space-evenly, center);
+        flex-wrap: wrap;
+    }
 }
 
 .teamCard{
-    width: 45%;
+    width: 100%;
     border: 1px solid white;
     border-radius: 20px;
     margin: 5% auto;
+
+    @media @desktop{
+        width: 45%;
+    }
 
     .teamPhoto{
         width: 100%;
@@ -205,24 +240,29 @@ article{
     }
 
     .name{
-        padding: 5%;
+        padding: 1%;
+        font-family: @headerText;
+        color: @secondaryHeading;
+        text-align: center;
+        font-size: 3rem;
     }
 
     .role{
-        padding: 5%;
+        padding: 3%;
+        font-family: @regText;
+        color: @mainText;
+        text-align: center;
+        font-size: 2rem;
     }
 }
 
 
-
-
-
-
-
+/* --------------- Back to Top Link Mobile View ---------------*/
 .backTop{
-    width: 90px;
+    width: 100px;
     align-self: flex-end;
     text-decoration: none;
+    font-size: 1rem;
     color: @mainText;
     text-align: right;
     padding: 2%;
