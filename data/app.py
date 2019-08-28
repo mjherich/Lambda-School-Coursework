@@ -214,7 +214,7 @@ def serve_wordcloud():
     
     input_json = request.get_json(force=True)
     
-    result_json = user_wordcloud()
+    result_json = user_wordcloud('asdf')
     return result_json
 
 @app.route("/user", methods=['POST'])
@@ -226,7 +226,7 @@ def serve_user():
     
     input_json = request.get_json(force=True)
     
-    result_json = user_salt()
+    result_json = user_salt("asdf")
     return result_json
 
 
