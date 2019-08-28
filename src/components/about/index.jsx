@@ -16,18 +16,18 @@ import nik from "../../assets/images/nik.jpg"
 
 const About = () => {
     var team = teamData();
-    /* util function for bothering people */
-    var status = (function iNeedABioAndPictureGuys(){
-        var people = "";
-        for (let i = 0, count = 1; i < team.length; ++i){       
-            if (team[i].bio  == 0){
-                people += `${count} ${team[i].name} `;
-                count++;
-            }
-        }
-        return ` I still need a picture and or bio from the following people ${people}`
-    })()
-    console.log(status);
+    // /* util function for bothering people */
+    // var status = (function iNeedABioAndPictureGuys(){
+    //     var people = "";
+    //     for (let i = 0, count = 1; i < team.length; ++i){       
+    //         if (team[i].bio  == 0){
+    //             people += `${count} ${team[i].name} `;
+    //             count++;
+    //         }
+    //     }
+    //     return ` I still need a picture and or bio from the following people ${people}`
+    // })()
+    // console.log(status);
     return ( 
         <div >
             <h1> Meet our Team</h1>
