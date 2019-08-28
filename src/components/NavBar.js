@@ -65,7 +65,7 @@ const NavBarDesktop = () => {
     const [{ theme }, dispatch] = useStateValue();
 
     return (
-        <Menu inverted={theme ? 'inverted' : null} fixed="top" size="large">
+        <Menu inverted={theme==='dark' ? 'inverted' : null} fixed="top" size="large">
             <Menu.Item as={Link} to="/" className="site-title" name="home" content="Salty Hackers" />
             <Menu.Item
                 as={Link}
@@ -111,6 +111,7 @@ const NavBarChildren = ({ children }) => {
     return (
         <Container
             fluid
+            className={theme}
             style={{ paddingTop: 80, backgroundColor: theme==='dark' && '#041f42' }}
         >
             {children}

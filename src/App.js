@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import './App.scss';
 
 //Import Components
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { Header, Container } from 'semantic-ui-react';
 
 //Custom Components
@@ -19,7 +19,14 @@ import { StateProvider } from './state';
 
 import About from "./components/about";
 //Temp Components
-const Home = () => <Header as="h1" content="Home" />;
+const Home = () => {
+ return (
+   <>
+    <div className="hero">
+      <Link className="cta" to="/top-100-users">Let's Go!</Link>
+    </div>
+  </>
+ )};
 const Top100Comments = () => (
     <Header as="h1" content="Top 100 Saltiest Comments" />
 );
@@ -58,7 +65,6 @@ const App = () => {
                 return state;
         }
     };
-
     return (
         <StateProvider initialState={initialState} reducer={reducer}>
             <BrowserRouter>
