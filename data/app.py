@@ -334,13 +334,6 @@ def serve_comments():
     Calls serve_comments
     """
     input_json = request.get_json(force=True)
-    # error checking if the json file has username input, if not, return error
-    try:
-        user_id = str(input_json['username'])
-    except:
-        return app.response_class(response=json.dumps({}),
-                                  status=400,
-                                  mimetype='application/json')
     
     result_json = comments_rank()
     
