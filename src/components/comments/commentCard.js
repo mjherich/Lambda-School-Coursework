@@ -33,7 +33,8 @@ const CommentCard = props => {
   //   }, []);
 
   return (
-    <Card color={color(props.comment.saltyScore)} fluid>
+    <Card       as={Link}
+    to={`/users/${props.comment.username}`} color={color(props.comment.saltyScore)} fluid>
     <Card.Meta id="meta"><div>{"  "}</div>{props.comment.username}</Card.Meta>
       <div className="userCard">
         <Card.Content>

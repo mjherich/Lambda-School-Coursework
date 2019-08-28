@@ -5,9 +5,12 @@ import { Header, Grid } from 'semantic-ui-react';
 import { TimeChart } from './Charts';
 import UserProfile from './UserProfile';
 
+import axios from 'axios';
+
 const UserProfileContainer = props => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState({});
+    const [saltiUser, setSaltiUser] = useState({});
 
     let username = props.match.params.username || 'pg';
 
@@ -23,12 +26,25 @@ const UserProfileContainer = props => {
             })
             .then(data => {
                 setUser(data);
-                setIsLoading(false);
                 console.log(data);
             })
             .catch(err => {
                 console.log(err);
             });
+        axios
+            .post(
+                'https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/user',
+                { username: `${username}` }
+            )
+            .then(response => {
+                if (!response.status == 200) {
+                    throw new Error('failed to axios');
+                }
+                setSaltiUser(response.data[0]);
+                console.log(response.data[0]);
+                setIsLoading(false);
+            })
+            .catch(err => console.log(err));
     }, []);
 
     return (
@@ -36,7 +52,7 @@ const UserProfileContainer = props => {
             {isLoading ? (
                 <Header as="h1" content="Loading" />
             ) : user !== null ? (
-                <UserProfile user={user} />
+                <UserProfile user={user} saltiUser={saltiUser} />
             ) : (
                 <Header as="h2" content="Not a user" />
             )}

@@ -5,10 +5,14 @@ import { Card, Header } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 import "./user.scss";
 
+
+import { useStateValue } from '../../state';
+
 const UserList = props => {
   // console.log("props in UserList", props);
 
   const [users, setUsers] = useState([]);
+  const [{ theme }, dispatch] = useStateValue();
 
   useEffect(() => {
     axios
@@ -24,6 +28,16 @@ const UserList = props => {
         // console.log('JSON', json)
       });
   }, []);
+
+  useEffect(() => {
+    console.log(theme);
+    dispatch({
+        type: 'updateTheme',
+        payload: 'dark',
+    });
+}, []);
+
+console.log(theme);
 
   // return paginated .map over list of users, rendering a UserCard for each
   return (
