@@ -9,6 +9,7 @@ import {
     Tooltip,
     Legend,
 } from 'recharts';
+import { Segment } from 'semantic-ui-react';
 
 const data = [
     { name: '8-1', salty: 1, sweet: 3.1 },
@@ -28,16 +29,15 @@ const data = [
     { name: '8-15', salty: -0.9, sweet: 3 },
 ];
 
-export const TimeChart = () => {
+export const TimeChart = ({ width = 600, height = 200 }) => {
     return (
         <div>
-            <Header as="h1" content="Hello Freaks" />
-            <LineChart
-                width={600}
-                height={300}
-                data={data}
-                margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-            >
+            <Header
+                as="h1"
+                content="Saltiness over time"
+                style={{ marginLeft: 45 }}
+            />
+            <LineChart width={600} height={200} data={data}>
                 <Line type="monotone" dataKey="salty" stroke="#57bb12" />
                 <Line type="monotone" dataKey="sweet" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
