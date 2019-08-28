@@ -5,3 +5,14 @@
   flex-direction: column;
   align-content: center;
 }
+
+// Morton salt theme
+.ui.stackable.top.fixed.menu {
+  background: #041e42;
+  * {
+    color: white;
+  }
+}
+// body {
+//   background: #041e42;
+// }
