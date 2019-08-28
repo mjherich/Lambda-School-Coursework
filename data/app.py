@@ -87,6 +87,18 @@ def user_wordcloud(user_id):
                                   mimetype='application/json')
     curs = conn.cursor()
     
+    # check if user_id exists in the database
+    check_exist = f'''
+                  SELECT exists (SELECT 1 FROM comments 
+                                 WHERE author = '{user_id}' LIMIT 1);
+                  '''
+    curs.execute(check_exist)
+    exists = curs.fetchall()
+    if not exists[0][0]:
+        return app.response_class(response=json.dumps({}),
+                                  status=400,
+                                  mimetype='application/json')
+    
     # Using author = 'pg' as placeholder
     query = '''
             SELECT text FROM comments
@@ -140,11 +152,23 @@ def user_salt(user_id):
     
     # throw an error response when connection is not open
     if conn.closed != 0:
-        return app.response_class(response=json.dump({}),
+        return app.response_class(response=json.dumps({}),
                                   status=400,
                                   mimetype='application/json')
     curs = conn.cursor()
     
+    # check if user_id exists in the database
+    check_exist = f'''
+                  SELECT exists (SELECT 1 FROM comments 
+                                 WHERE author = '{user_id}' LIMIT 1);
+                  '''
+    curs.execute(check_exist)
+    exists = curs.fetchall()
+    if not exists[0][0]:
+        return app.response_class(response=json.dumps({}),
+                                  status=400,
+                                  mimetype='application/json')
+
     # Using author = 'pg' as placeholder
     query_text = '''
                  SELECT parent, id, time, by, text, score FROM comments
@@ -207,32 +231,38 @@ def serve_results():
 
 @app.route("/cloud", methods=['POST'])
 def serve_wordcloud():
-    if request.method != 'POST':
-        return app.response_class(response=json.dump({}),
+    input_json = request.get_json(force=True)
+    # error checking if the json file has username input, if not, return error
+    try:
+        user_id = str(input_json['username'])
+    except:
+        return app.response_class(response=json.dumps({}),
                                   status=400,
                                   mimetype='application/json')
     
-    input_json = request.get_json(force=True)
-    
-    result_json = user_wordcloud('asdf')
+    result_json = user_wordcloud(user_id)
     return result_json
 
 @app.route("/user", methods=['POST'])
 def serve_user():
-    if request.method != 'POST':
-        return app.response_class(response=json.dump({}),
+
+    input_json = request.get_json(force=True)
+    # error checking if the json file has username input, if not, return error
+    try:
+        user_id = str(input_json['username'])
+    except:
+        return app.response_class(response=json.dumps({}),
                                   status=400,
                                   mimetype='application/json')
     
-    input_json = request.get_json(force=True)
+    result_json = user_salt(user_id)
     
-    result_json = user_salt("asdf")
     return result_json
 
 
 if __name__ == "__main__":
-    #foo = user_salt('asdf')
+    #foo = user_salt('asdff')
     #print(foo)
-    #foo = user_wordcloud('asdf')
+    #foo = user_wordcloud('asdfff')
     #print(foo)
     app.run(debug=True)
