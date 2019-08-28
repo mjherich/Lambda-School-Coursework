@@ -500,7 +500,7 @@ article #contact button {
 }
 .teamCard .teamPhoto {
   width: 100%;
-  border-radius: 20px;
+  border-radius: 50px;
   padding: 5%;
 }
 .teamCard .name {
@@ -516,6 +516,18 @@ article #contact button {
   color: #FAFEFD;
   text-align: center;
   font-size: 2rem;
+}
+.teamCard .aboutTeam {
+  padding: 3%;
+  font-family: 'Roboto', sans-serif;
+  color: #FAFEFD;
+  text-align: justify;
+  font-size: 1.6rem;
+}
+@media (min-width: 1000px) {
+  #projectLead {
+    margin: 5% 25%;
+  }
 }
 /* --------------- Back to Top Link Mobile View ---------------*/
 .backTop {
