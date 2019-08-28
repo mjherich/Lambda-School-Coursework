@@ -17,8 +17,8 @@ const rotate = word => word.value % 360;
 export default function WordCloud({ username }) {
   const [data, setData] = useState([])
   useEffect(() => {
-    axios.post('https://cors-anywhere.herokuapp.com/hackernews-serving.herokuapp.com/cloud', {userID: username})
-      .then(res => setData(JSON.parse(res.data.text)))
+    axios.post('https://cors-anywhere.herokuapp.com/hackernews-serving.herokuapp.com/cloud', {"username": username})
+      .then(res => setData(JSON.parse(res.data.texts)))
       .catch(err => console.log(err))
   }, [])
   return (
