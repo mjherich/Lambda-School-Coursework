@@ -10,6 +10,12 @@ import nltk
 
 app = Flask(__name__)
 
+# ElephantDB connection information
+dbname = 'mrbekufe'
+user = 'mrbekufe'
+password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
+host = 'isilo.db.elephantsql.com'
+
 
 def salt_rank():
     """
@@ -37,16 +43,22 @@ def salt_rank():
     curs = conn.cursor()
      
     query = '''
-            SELECT ranking, author, text FROM comments
-            ORDER BY ranking
+            SELECT b.avg, a.author, a.text, b.min
+            FROM 
+            (
+                SELECT author, AVG(score) AS avg, MIN(score) AS min
+                FROM comments
+                GROUP BY author
+            ) AS b 
+            JOIN comments a 
+            ON a.author = b.author AND b.min = a.score
+            ORDER BY avg ASC
             LIMIT 100;
             '''
     curs.execute(query)
     data = curs.fetchall()
     
-    df = pd.DataFrame(data, columns=['salt_score', 'username', 'text'])
-    # appending a placeholder row for salt score
-    df['score'] = 100
+    df = pd.DataFrame(data, columns=['salt_score', 'username', 'text', 'score'])
     
     result = df.to_json(orient='records')
     
@@ -198,7 +210,7 @@ def user_salt(user_id):
     return results
     
 @app.route("/salt", methods=['POST'])
-def serve_results():
+def serve_ranks():
     """
     Pulling user salt ranking from database(s) and returns the results in
     json format.
@@ -219,7 +231,7 @@ def serve_results():
     except ValueError as e:
         print("NOT JSON")
 
-    return jsonify(result_json)
+    return result_json
 
 @app.route("/cloud", methods=['POST'])
 def serve_wordcloud():
@@ -260,8 +272,4 @@ def serve_user():
 
 
 if __name__ == "__main__":
-    #foo = user_salt('asdff')
-    #print(foo)
-    #foo = user_wordcloud('asdfff')
-    #print(foo)
     app.run(debug=True)
