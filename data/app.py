@@ -10,16 +10,10 @@ import nltk
 
 app = Flask(__name__)
 
-# ElephantDB connection information
-dbname = 'mrbekufe'
-user = 'mrbekufe'
-password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
-host = 'isilo.db.elephantsql.com'
-
 
 def salt_rank(mode):
     """
-    Querying the database for ranking, user, text, and salt score.
+    Querying the database for salt_score, user, text, and score for the text.
     
     Parameters:
     -----------
@@ -136,7 +130,8 @@ def user_wordcloud(user_id):
     
     wordcount = dict(Counter(foo))
     wc_df = pd.DataFrame(list(wordcount.items()), columns=['text', 'value'])
-    result_dict = {"username": "pg", "texts": wc_df.to_json(orient='records')}
+    result_dict = {"username": "'"+str(user_id)+"'", 
+                   "texts": wc_df.to_json(orient='records')}
     
     curs.close()
     conn.close()
@@ -271,7 +266,6 @@ def serve_ranks():
                                   status=400,
                                   mimetype='application/json')
     
-    # right now this is a dummy
     input_json = request.get_json(force=True)
     
     try:
@@ -306,6 +300,7 @@ def serve_wordcloud():
                                   mimetype='application/json')
     
     result_json = user_wordcloud(user_id)
+    
     return result_json
 
 @app.route("/user", methods=['POST'])
