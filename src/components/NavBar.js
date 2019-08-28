@@ -6,7 +6,7 @@ import UserSearch from './UserSearch'
 const NavBar = () => {
     return (
         <Menu fixed="top" stackable>
-            <Menu.Item as={Link} to="/" name="home" content="Home" />
+            <Menu.Item as={Link} to="/" className="site-title" name="home" content="Salty Hackers" />
             <Menu.Item
                 as={Link}
                 to="/top-100-users"
