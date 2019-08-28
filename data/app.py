@@ -10,12 +10,6 @@ import nltk
 
 app = Flask(__name__)
 
-# ElephantDB connection information
-dbname = 'mrbekufe'
-user = 'mrbekufe'
-password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
-host = 'isilo.db.elephantsql.com'
-
 
 def salt_rank():
     """
