@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
-import { Sidebar, Responsive, Menu, Container, Icon } from 'semantic-ui-react';
+import {
+    Sidebar,
+    Responsive,
+    Menu,
+    Container,
+    Checkbox,
+    Icon,
+} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserSearch from './UserSearch';
+
+import { useStateValue } from '../state';
 
 import styled from 'styled-components';
 
@@ -53,8 +62,10 @@ const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => {
 };
 
 const NavBarDesktop = () => {
+    const [{ theme }, dispatch] = useStateValue();
+
     return (
-        <Menu fixed="top" size="large">
+        <Menu inverted={theme ? 'inverted' : null} fixed="top" size="large">
             <Menu.Item as={Link} to="/" name="home" content="Home" />
             <Menu.Item
                 as={Link}
@@ -74,6 +85,19 @@ const NavBarDesktop = () => {
                 name="about-us"
                 content="About Us"
             />
+            <Menu.Item>
+                <Checkbox
+                    toggle
+                    defaultChecked
+                    style={{ marginTop: 10 }}
+                    onClick={() =>
+                        dispatch({
+                            type: 'updateTheme',
+                            payload: theme ? false : true,
+                        })
+                    }
+                />
+            </Menu.Item>
             <Menu.Menu position="right">
                 <UserSearch />
             </Menu.Menu>
@@ -82,8 +106,13 @@ const NavBarDesktop = () => {
 };
 
 const NavBarChildren = ({ children }) => {
+    const [{ theme }, dispatch] = useStateValue();
+
     return (
-        <Container fluid style={{ marginTop: 80 }}>
+        <Container
+            fluid
+            style={{ paddingTop: 80, backgroundColor: theme && '#041f42' }}
+        >
             {children}
         </Container>
     );
