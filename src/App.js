@@ -14,6 +14,9 @@ import NavBar from './components/NavBar';
 import UserProfileContainer from './components/UserProfileContainer';
 import UserList from './components/users/userList';
 import CommentList from './components/comments/commentList';
+
+import { StateProvider } from './state';
+
 import About from "./components/about";
 //Temp Components
 const Home = () => <Header as="h1" content="Home" />;
@@ -23,25 +26,45 @@ const Top100Comments = () => (
 
 
 const App = () => {
+    const initialState = {
+        theme: true,
+    };
+
+    const reducer = (state, action) => {
+        console.log(action);
+        switch (action.type) {
+            case 'updateTheme':
+                console.log(action);
+                return {
+                    ...state,
+                    theme: action.payload,
+                };
+            default:
+                return state;
+        }
+    };
+
     return (
-        <BrowserRouter>
-            <NavBar>
-                <Route exact path="/" render={() => <Home />} />
-                <Route
-                    path="/top-100-users"
-                    render={props => <UserList {...props} />}
-                />
-                <Route
-                    path="/top-100-comments"
-                    render={(props) => <CommentList {...props} />}
-                />
-                <Route path="/about-us" render={() => <About />} />
-                <Route
-                    path="/users/:username"
-                    render={props => <UserProfileContainer {...props} />}
-                />
-            </NavBar>
-        </BrowserRouter>
+        <StateProvider initialState={initialState} reducer={reducer}>
+            <BrowserRouter>
+                <NavBar>
+                    <Route exact path="/" render={() => <Home />} />
+                    <Route
+                        path="/top-100-users"
+                        render={props => <UserList {...props} />}
+                    />
+                    <Route
+                        path="/top-100-comments"
+                        render={props => <CommentList {...props} />}
+                    />
+                    <Route path="/about-us" render={() => <About />} />
+                    <Route
+                        path="/users/:username"
+                        render={props => <UserProfileContainer {...props} />}
+                    />
+                </NavBar>
+            </BrowserRouter>
+        </StateProvider>
     );
 };
 
