@@ -99,22 +99,21 @@ def user_wordcloud(user_id):
                                   status=400,
                                   mimetype='application/json')
     
-    # Using author = 'pg' as placeholder
-    query = '''
+    query = f'''
             SELECT text FROM comments
-            WHERE author = 'pg' AND score < 0;
+            WHERE author = '{user_id}' AND score < 0;
             '''
     curs.execute(query)
     text = curs.fetchall()
     text = ' '.join(map(str, text)).lower()
     regex = re.compile('[%s]' % re.escape(string.punctuation))
-    regetext = regex.sub(' ', text)#.split()
+    regetext = regex.sub(' ', text)
     
     stopwords = nltk.corpus.stopwords.words('english')
     new_words = ['i', 'p', 'com', 'http', 'we', 'that', 
                  'get', 'n', 'rel', 'much', 'like']
     stopwords.extend(new_words)
-    s=set(stopwords)
+    s = set(stopwords)
     
     foo = filter(lambda w: not w in s, regetext.split())
     
@@ -130,8 +129,7 @@ def user_wordcloud(user_id):
 def user_salt(user_id):
     """
     Querying the database for user and returns the top 10 highest salt score 
-    comments in the format of 
-    
+    comments in json format
     
     Parameters:
     -----------
@@ -170,9 +168,9 @@ def user_salt(user_id):
                                   mimetype='application/json')
 
     # Using author = 'pg' as placeholder
-    query_text = '''
+    query_text = f'''
                  SELECT parent, id, time, by, text, score FROM comments
-                 WHERE author = 'pg' AND score < 0
+                 WHERE author = '{user_id}' AND score < 0
                  ORDER BY score ASC
                  LIMIT 100;
                  '''
@@ -185,9 +183,9 @@ def user_salt(user_id):
     text_json = text_df.to_json(orient='records')
     
     # querying for user's salt score.
-    query_user_score = '''
+    query_user_score = f'''
                        SELECT author, SUM(score) FROM comments
-                       WHERE author = 'pg'
+                       WHERE author = '{user_id}'
                        GROUP BY author
                        '''
     curs.execute(query_user_score)
