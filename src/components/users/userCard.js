@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "semantic-ui-react";
+import { Card, Icon } from "semantic-ui-react";
 import "./user.scss";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const UserCard = props => {
-  console.log("props in userCard", props);
-  // TODO: handleClick function. Should route to userPage by pushing that onto history. Or, wrap in Link.
+  // console.log("props in userCard", props);
 
   const [hnUserData, setHnUserData] = useState({});
 
@@ -19,14 +18,16 @@ const UserCard = props => {
     else return "red";
   };
 
-  function strip(html){
-    var doc = new DOMParser().parseFromString(html, 'text/html');
+  function strip(html) {
+    var doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
- }
+  }
 
   useEffect(() => {
     axios
-      .get(`https://hacker-news.firebaseio.com/v0/user/${props.user.username}.json?print=pretty`)
+      .get(
+        `https://hacker-news.firebaseio.com/v0/user/${props.user.username}.json?print=pretty`
+      )
       .then(response => {
         // console.log('HN api response', response, 'response.data.submitted', response.data.submitted.length)
         setHnUserData(response.data);
@@ -34,18 +35,26 @@ const UserCard = props => {
   }, []);
 
   return (
-    <Card as={Link} to={`/users/${props.user.username}`} color={color(props.user.salt_score)} fluid>
-        <div className="userCard">
+    <Card
+      as={Link}
+      to={`/users/${props.user.username}`}
+      color={color(props.user.salt_score)}
+      fluid
+    >
+      <div className="userCard">
+        <div>
           <Card.Header as="h2">{props.user.username}</Card.Header>
-          <div>
-            {hnUserData.submitted && (
-              <div>Number of Comments: {hnUserData.submitted.length}</div>
-            )}
-            <div>Karma: {hnUserData.karma}</div>
-            <div>Salty Score: {props.user.salt_score}</div>
-            {/* <div>{strip(props.user.text)}</div> */}
-          </div>
+          {hnUserData.submitted && <Card.Meta>{hnUserData.submitted.length} Comments,  {hnUserData.karma} Karma</Card.Meta>}
+          <div className="quote"><Icon name="quote left" size="small"/>{strip(props.user.text).slice(0, 200)}...</div>
         </div>
+        <div className="rightContent">
+          {/* {hnUserData.submitted && (
+            <div>Number of Comments: {hnUserData.submitted.length}</div>
+          )}
+          <div>Karma: {hnUserData.karma}</div> */}
+          <div>Salty Score: {props.user.salt_score}</div>
+        </div>
+      </div>
     </Card>
   );
 };

@@ -14,12 +14,14 @@ const UserList = props => {
     axios
       .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/salt", {})
       .then(response => {
-        let json = JSON.parse(response.data)
-        // console.log('JSON', json)
-        let sorted = json.sort((a, b) => {
-          return a.ranking - b.ranking
+        console.log(response)
+        let sorted = response.data.sort((a, b) => {
+          return b.score - a.score
         })
         setUsers(sorted)
+      
+        // let json = JSON.parse(response.data)
+        // console.log('JSON', json)
       });
   }, []);
 

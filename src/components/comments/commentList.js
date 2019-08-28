@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CommentCard from "./commentCard";
-import { Card } from "semantic-ui-react";
+import { Card, Icon } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 
 const CommentList = props => {
@@ -26,7 +26,6 @@ const CommentList = props => {
   // return .map over list of comments, rendering a CommentCard for each
   return (
     <Card.Group className="cardGroup" itemsPerRow="1">
-
       {comments !== [] ? <Pagination
         dataArray={comments}
         render={function paginatedData(props) {
