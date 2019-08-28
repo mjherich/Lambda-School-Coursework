@@ -17,12 +17,13 @@ import CommentList from './components/comments/commentList';
 
 import { StateProvider } from './state';
 
+import About from "./components/about";
 //Temp Components
 const Home = () => <Header as="h1" content="Home" />;
 const Top100Comments = () => (
     <Header as="h1" content="Top 100 Saltiest Comments" />
 );
-const About = () => <Header as="h1" content="About Us" />;
+
 
 const App = () => {
     const initialState = {
