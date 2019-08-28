@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserCard from "./userCard";
-import { Card, Header, Form, Radio } from "semantic-ui-react";
+import { Card, Header, Form, Radio, Container } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 import "./user.scss";
+import Example from "./chart";
 
 import { useStateValue } from "../../state";
 
@@ -45,29 +46,36 @@ const UserList = props => {
       <Header id="header" textAlign="center" as="h1">
         Saltiest 100 Users
       </Header>
-      <Form>
-        <Form.Field>
-          Selected value: <b>{mode}</b>
-        </Form.Field>
-        <Form.Field>
-          <Radio
-            label='Choose this'
-            name='radioGroup'
-            value='this'
-            checked={mode === 'average'}
-            onChange={e => {e.preventDefault(); setMode('average')}}
-          />
-        </Form.Field>
-        <Form.Field>
-          <Radio
-            label='Or that'
-            name='radioGroup'
-            value='that'
-            checked={mode === 'total'}
-            onChange={e => {e.preventDefault(); setMode('total')}}
-          />
-        </Form.Field>
-      </Form>
+<div className="topContent">
+        <Example />
+        <Form compact className="modeToggle">
+          <Form.Field>Rank By:</Form.Field>
+          <Form.Field>
+            <Radio
+              label="Average Saltiness"
+              name="radioGroup"
+              value="average"
+              checked={mode === "average"}
+              onChange={e => {
+                e.preventDefault();
+                setMode("average");
+              }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Total Saltiness"
+              name="radioGroup"
+              value="total"
+              checked={mode === "total"}
+              onChange={e => {
+                e.preventDefault();
+                setMode("total");
+              }}
+            />
+          </Form.Field>
+        </Form>
+</div>
       <Card.Group className="cardGroup" itemsPerRow="1">
         {users !== [] ? (
           <Pagination
@@ -77,7 +85,7 @@ const UserList = props => {
                 <>
                   {props.handleShowCount(10)}
                   {props.paginatedData.map(function renderPaginatedData(data) {
-                    return <UserCard user={data} mode={mode}/>;
+                    return <UserCard user={data} mode={mode} />;
                   })}
                 </>
               );

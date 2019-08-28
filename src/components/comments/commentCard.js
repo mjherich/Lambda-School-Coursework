@@ -50,7 +50,7 @@ const CommentCard = props => {
           {"  "}
         </Card.Content>
         <div>
-          <div>Salty Score: {props.comment.score}</div>
+          <div className="score"> Score: {props.comment.score.toFixed(2)}</div>
         </div>
       </div>
     </Card>
