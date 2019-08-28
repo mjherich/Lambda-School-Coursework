@@ -11,17 +11,12 @@ import { Header, Container } from 'semantic-ui-react';
 
 //Custom Components
 import NavBar from './components/NavBar';
-import { TimeChart } from './components/Charts';
-import UserProfile from './components/UserProfile';
+import UserProfileContainer from './components/UserProfileContainer';
 import UserList from './components/users/userList';
-
-const StyledContainer = styled(Container)`
-    padding-top: 48px;
-`;
+import CommentList from './components/comments/commentList';
 
 //Temp Components
 const Home = () => <Header as="h1" content="Home" />;
-const Top100Users = () => <Header as="h1" content="Top 100 Saltiest Users" />;
 const Top100Comments = () => (
     <Header as="h1" content="Top 100 Saltiest Comments" />
 );
@@ -30,8 +25,7 @@ const About = () => <Header as="h1" content="About Us" />;
 const App = () => {
     return (
         <BrowserRouter>
-            <StyledContainer fluid>
-                <NavBar />
+            <NavBar>
                 <Route exact path="/" render={() => <Home />} />
                 <Route
                     path="/top-100-users"
@@ -39,14 +33,14 @@ const App = () => {
                 />
                 <Route
                     path="/top-100-comments"
-                    render={() => <Top100Comments />}
+                    render={(props) => <CommentList {...props} />}
                 />
                 <Route path="/about-us" render={() => <About />} />
                 <Route
                     path="/users/:username"
-                    render={props => <UserProfile {...props} />}
+                    render={props => <UserProfileContainer {...props} />}
                 />
-            </StyledContainer>
+            </NavBar>
         </BrowserRouter>
     );
 };
