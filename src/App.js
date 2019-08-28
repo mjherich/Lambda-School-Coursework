@@ -27,7 +27,7 @@ const Top100Comments = () => (
 
 const App = () => {
     const initialState = {
-        theme: true,
+        theme: window.localStorage.getItem('theme') || 'dark',
     };
 
     const reducer = (state, action) => {
@@ -35,10 +35,25 @@ const App = () => {
         switch (action.type) {
             case 'updateTheme':
                 console.log(action);
+                window.localStorage.setItem('theme', action.payload)
                 return {
                     ...state,
                     theme: action.payload,
                 };
+            case 'toggleTheme':
+                if (state.theme==="dark") {
+                  window.localStorage.setItem('theme', 'light')
+                  return {
+                    ...state,
+                    theme: 'light',
+                  }
+                } else {
+                  window.localStorage.setItem('theme', 'dark')
+                  return {
+                    ...state,
+                    theme: 'dark',
+                  }                  
+                }
             default:
                 return state;
         }

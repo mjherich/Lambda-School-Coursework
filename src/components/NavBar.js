@@ -88,13 +88,13 @@ const NavBarDesktop = () => {
             <Menu.Item>
                 <Checkbox
                     toggle
-                    defaultChecked
+                    defaultChecked={theme==="dark" ? true : false}
                     style={{ marginTop: 10 }}
-                    onClick={() =>
+                    onClick={e => {
                         dispatch({
-                            type: 'updateTheme',
-                            payload: theme ? false : true,
+                            type: 'toggleTheme'
                         })
+                      }
                     }
                 />
             </Menu.Item>
@@ -111,7 +111,7 @@ const NavBarChildren = ({ children }) => {
     return (
         <Container
             fluid
-            style={{ paddingTop: 80, backgroundColor: theme && '#041f42' }}
+            style={{ paddingTop: 80, backgroundColor: theme==='dark' && '#041f42' }}
         >
             {children}
         </Container>
