@@ -33,13 +33,21 @@ const CommentCard = props => {
   //   }, []);
 
   return (
-    <Card       as={Link}
-    to={`/users/${props.comment.username}`} color={color(props.comment.saltyScore)} fluid>
-    <Card.Meta id="meta"><div>{"  "}</div>{props.comment.username}</Card.Meta>
+    <Card
+      as={Link}
+      to={`/users/${props.comment.username}`}
+      color={color(props.comment.saltyScore)}
+      fluid
+    >
+      <Card.Meta id="meta">
+        <div>{"  "}</div>
+        {props.comment.username}
+      </Card.Meta>
       <div className="userCard">
         <Card.Content>
           <Icon name="quote left" size="small" />
-          {strip(props.comment.text)}{'  '}
+          {strip(props.comment.text)}
+          {"  "}
         </Card.Content>
         <div>
           <div>Salty Score: {props.comment.score}</div>
