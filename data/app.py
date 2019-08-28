@@ -17,17 +17,20 @@ password = 'IbQXFoww4GFxiA-D-2al5sJXGaaJ_4Qs'
 host = 'isilo.db.elephantsql.com'
 
 
-def salt_rank():
+def salt_rank(mode):
     """
     Querying the database for ranking, user, text, and salt score.
     
     Parameters:
     -----------
+    mode: string. query mode.  takes in 'average' or 'total' for returning 
+    average salt score or total salt score of a user's comments 
     
     Output:
     -----------
     results: json format string with format 
              {"salt_score": float,
+              "num_posts": int,
               "username": string,
               "text": string,
               "score": float
@@ -41,14 +44,16 @@ def salt_rank():
                                   status=400,
                                   mimetype='application/json')
     curs = conn.cursor()
-     
-    query = '''
+    
+    sql_mode = dict({"average": "AVG", "total": "SUM"})
+    
+    query = f'''
             SELECT b.avg, b.posts, a.author, a.text, b.min
             FROM 
             (
                 SELECT author, 
                        COUNT(DISTINCT id) as posts, 
-                       AVG(score) AS avg, 
+                       {sql_mode[str(mode)]} (score) AS avg, 
                        MIN(score) AS min
                 FROM comments
                 GROUP BY author
@@ -269,12 +274,19 @@ def serve_ranks():
     # right now this is a dummy
     input_json = request.get_json(force=True)
     
-    result_json = salt_rank()
-
     try:
-        foo = json.loads(result_json)
-    except ValueError as e:
-        print("NOT JSON")
+        mode = str(input_json['mode'])
+    except:
+        return app.response_class(response=json.dumps({}),
+                                  status=400,
+                                  mimetype='application/json')
+                                  
+    if mode not in ['average', 'total']:
+        return app.response_class(response=json.dump({}),
+                                  status=400,
+                                  mimetype='application/json')
+                                  
+    result_json = salt_rank(mode)
 
     return result_json
 
@@ -336,6 +348,6 @@ def serve_comments():
 
 
 if __name__ == "__main__":
-    #foo = salt_rank()
+    #foo = salt_rank('total')
     #print(foo)
     app.run(debug=True)
