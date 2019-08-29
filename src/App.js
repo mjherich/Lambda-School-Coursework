@@ -2,12 +2,11 @@ import React from 'react';
 
 //Import Styles
 import 'semantic-ui-css/semantic.min.css';
-import styled from 'styled-components';
 import './App.scss';
 
 //Import Components
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import { Header, Container } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
 //Custom Components
 import NavBar from './components/NavBar';
@@ -38,10 +37,8 @@ const App = () => {
     };
 
     const reducer = (state, action) => {
-        console.log(action);
         switch (action.type) {
             case 'updateTheme':
-                console.log(action);
                 window.localStorage.setItem('theme', action.payload)
                 return {
                     ...state,

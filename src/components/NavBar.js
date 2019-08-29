@@ -12,7 +12,6 @@ import UserSearch from './UserSearch';
 
 import { useStateValue } from '../state';
 
-import styled from 'styled-components';
 
 const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => {
     return (
@@ -65,7 +64,7 @@ const NavBarDesktop = () => {
     const [{ theme }, dispatch] = useStateValue();
 
     return (
-        <Menu inverted={theme==='dark' ? 'inverted' : null} fixed="top" size="large">
+        <Menu inverted={theme === 'dark' ? true : null} fixed="top" size="large">
             <Menu.Item as={Link} to="/" className="site-title" name="home" content="Salty Hackers" />
             <Menu.Item
                 as={Link}
@@ -90,7 +89,7 @@ const NavBarDesktop = () => {
                     toggle
                     defaultChecked={theme==="dark" ? true : false}
                     style={{ marginTop: 10 }}
-                    onClick={e => {
+                    onClick={() => {
                         dispatch({
                             type: 'toggleTheme'
                         })
@@ -106,7 +105,7 @@ const NavBarDesktop = () => {
 };
 
 const NavBarChildren = ({ children }) => {
-    const [{ theme }, dispatch] = useStateValue();
+    const [{ theme }] = useStateValue();
 
     return (
         <Container
