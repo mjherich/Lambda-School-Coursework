@@ -5,7 +5,6 @@ import { Card, Header, Form, Radio, Container } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 import "./user.scss";
 import Chart from "./chart";
-import SaltyKarma from "./scatterChart";
 
 import { useStateValue } from "../../state";
 
@@ -24,11 +23,6 @@ const UserList = () => {
       )
       .then(response => {
 
-        let sorted = response.data.sort((a, b) => {
-          return a.score - b.score
-        })
-        setUsers(sorted)
-
         // console.log("100 users response", response);
         let sorted = response.data.sort((a, b) => {
           return a.score - b.score;
@@ -44,11 +38,10 @@ const UserList = () => {
         payload: 'dark',
     });
 }, []);
-  return (
-<div>
-      <Header id="header" textAlign="center" as="h1" className="salty-title">Saltiest 100 Users</Header>
 
-  // return paginated .map over list of users, rendering a UserCard for each
+
+
+ 
   return (
     <div>
       <Header id="header" textAlign="center" as="h1">
