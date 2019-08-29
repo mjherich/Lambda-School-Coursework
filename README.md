@@ -33,7 +33,7 @@ CLI: ```curl -X POST -H "Content-Type: application/json" -d '{"username": "swomb
 Returns: ```{"username": str,
           "texts": {text: str, values:int}. {text: str, values:int}, {text: str, values:int}, ...}```
 
-#3. User comments.
+## 3. User comments.
 Returns user, salt score of the user, and its comments w/ sentiment score for individual comment.
 
 End point: http://hackernews-serving.herokuapp.com/user
