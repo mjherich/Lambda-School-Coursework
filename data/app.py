@@ -77,6 +77,49 @@ def salt_rank(mode):
     conn.close()
 
     return result
+
+def salt_time():
+    """
+    Querying the database for average salt score of all comments grouped by
+    time.
+    
+    Parameters:
+    -----------
+    
+    
+    Output:
+    -----------
+    results: json format string with format 
+             {"time_ts": string,
+              "score": float
+              }
+    """
+    conn = psycopg2.connect(dbname=dbname, user=user,
+                            password=password, host=host)
+    
+    if conn.closed != 0:
+        return app.response_class(response=json.dump({}),
+                                  status=400,
+                                  mimetype='application/json')
+    curs = conn.cursor()
+    
+    query = f'''
+            SELECT date_trunc('day', comments.time_ts) "day", 
+                   AVG(score) FROM comments
+            GROUP BY day
+            ORDER BY day;
+            '''
+    curs.execute(query)
+    data = curs.fetchall()
+    
+    df = pd.DataFrame(data, columns=['time_ts', 'score'])
+    
+    result = df.to_json(orient='records')
+    
+    curs.close()
+    conn.close()
+
+    return result  
     
 def user_wordcloud(user_id):
     """
@@ -264,9 +307,11 @@ def comments_rank():
 @app.route("/salt", methods=['POST'])
 def serve_ranks():
     """
-    Pulling user salt ranking from database(s) and returns the results in
-    json format.
-    Calls salt_rank.
+    Pulling 1) user salt ranking from database(s) 
+            2) average salt of all comments grouped by day
+            and returns the results in json format.
+            
+    Calls salt_rank and salt_time.
     """
     if request.method != 'POST':
         return app.response_class(response=json.dump({}),
@@ -287,7 +332,11 @@ def serve_ranks():
                                   status=400,
                                   mimetype='application/json')
                                   
-    result_json = salt_rank(mode)
+    rank_json = salt_rank(mode)
+    time_json = salt_time()
+    
+    result = { 'ranking' : rank_json, 'timing' : time_json}
+    result_json = json.dumps(data)
 
     return result_json
 
@@ -343,6 +392,6 @@ def serve_comments():
 
 
 if __name__ == "__main__":
-    #foo = salt_rank('total')
+    #foo = salt_time()
     #print(foo)
     app.run(debug=True)
