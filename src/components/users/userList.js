@@ -77,7 +77,7 @@ const UserList = props => {
           </Form.Field>
         </Form>
       </div>
-      {/* <SaltyKarma users={users}/> */}
+      {/* <SaltyKarma users={users}/> Todo: refactor with context api to store HN data and pass it to scatterplot, usercards*/} 
       <Card.Group className="cardGroup" itemsPerRow="1">
         {users !== [] ? (
           <Pagination
