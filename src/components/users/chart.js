@@ -3,7 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 import './user.scss';
-
+import { Link } from 'react-router-dom';
 
 const Chart = (props) => {
     let positive = props.users.map(function absoluteVal(user) {
@@ -11,8 +11,9 @@ const Chart = (props) => {
     } )
 
     const handleClick = (e) => {
-        // e.preventDefault();
-        console.log(e.username)
+        // console.log(e.username)
+        // I don't like hardcoding this, the alternative is to pass down props.match, but that isn't going through the pagination component right now.
+        window.location.assign('https://hn-trolls.now.sh/users/' + e.username)
       }
     // console.log('props in chart', props)
     return (
@@ -30,7 +31,7 @@ const Chart = (props) => {
         <YAxis />
         <Tooltip />
         {/* <Legend /> */}
-        <Bar dataKey="score" fill="#ffcd00" onClick={handleClick}/>
+        <Bar dataKey="score" fill="#ffcd00" onClick={handleClick}><Link to="/"/></Bar>
       </BarChart>        
     )
 }
