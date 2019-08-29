@@ -1,9 +1,9 @@
 # Saltiest Hackers Data Engineering
 
-![Architecture image](https://github.com/Saltiest-Hacker-News-Trolls/bw-saltiest-hacker-news-trolls-DS/blob/master/Architecture%20Image.png)
+![Architecture image](https://github.com/Saltiest-Hacker-News-Trolls/bw-saltiest-hacker-news-trolls-DS/blob/master/Backend_architecture_image.png)
 
-## 1. Top 100 users by salt_score
-Returns top 100 users with average salt score, # of posts, username, most salty comment, and the score of that comment.  Also, average salt scores across all comments group by day.
+## 1. Top 100 users by salt_score and saltiness by time
+Returns top 100 users according to either average or total salt score. Each row includes average/total salt score, # of posts, username, most salty comment, and the score of that comment. Also has optionality of outputting average salt scores across all comments group by day.
 
 End point: http://hackernews-serving.herokuapp.com/salt
 
@@ -22,7 +22,7 @@ End point: http://hackernews-serving.herokuapp.com/salt
 `[{"time_ts": string, score": float}, {"time_ts": string, score": float}, {...}, ...]`
 
 ## 2. Wordcloud
-Returns user and word counts of his negative sentiment comments.
+Returns user and word counts from user's negative sentiment comments.
 
 End point: http://hackernews-serving.herokuapp.com/cloud
 
