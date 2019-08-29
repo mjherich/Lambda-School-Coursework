@@ -11,10 +11,27 @@ import { Link } from 'react-router-dom';
 import UserSearch from './UserSearch';
 
 import { useStateValue } from '../state';
+import _ from 'lodash';
+import { TweenLite, Power4 } from 'gsap/all';
 
 import styled from 'styled-components';
 
-const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => {
+const StyledImage = styled.img`
+    transform: rotate(180deg);
+    margin-top: 10px;
+    :hover {
+        cursor: pointer;
+    }
+`;
+
+const NavBarMobile = ({
+    children,
+    onPusherClick,
+    onToggle,
+    visible,
+    theme,
+    dispatch,
+}) => {
     return (
         <Sidebar.Pushable>
             <Sidebar
@@ -23,8 +40,9 @@ const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => {
                 animation="overlay"
                 direction="top"
                 stackable
-                style={{ width: '100vw' }}
+                style={{ width: '100vw', backgroundColor: theme && '#041F42' }}
                 size="large"
+                inverted={theme}
             >
                 <Menu.Item as={Link} to="/" name="home" content="Home" />
                 <Menu.Item
@@ -47,9 +65,26 @@ const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => {
                 />
             </Sidebar>
             <Sidebar.Pusher onClick={onPusherClick}>
-                <Menu fixed="top">
+                <Menu
+                    style={{ backgroundColor: theme && '#041F42' }}
+                    inverted={theme}
+                    fixed="top"
+                >
                     <Menu.Item onClick={onToggle}>
                         <Icon name="sidebar" />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Checkbox
+                            toggle
+                            defaultChecked
+                            style={{ marginTop: 10 }}
+                            onClick={() =>
+                                dispatch({
+                                    type: 'updateTheme',
+                                    payload: theme ? false : true,
+                                })
+                            }
+                        />
                     </Menu.Item>
                     <Menu.Menu position="right">
                         <UserSearch />
@@ -61,11 +96,14 @@ const NavBarMobile = ({ children, onPusherClick, onToggle, visible }) => {
     );
 };
 
-const NavBarDesktop = () => {
-    const [{ theme }, dispatch] = useStateValue();
-
+const NavBarDesktop = ({ theme, dispatch }) => {
     return (
-        <Menu inverted={theme ? 'inverted' : null} fixed="top" size="large">
+        <Menu
+            style={{ backgroundColor: theme && '#041F42' }}
+            inverted={theme}
+            fixed="top"
+            size="large"
+        >
             <Menu.Item as={Link} to="/" name="home" content="Home" />
             <Menu.Item
                 as={Link}
@@ -99,19 +137,27 @@ const NavBarDesktop = () => {
                 />
             </Menu.Item>
             <Menu.Menu position="right">
+                <StyledImage
+                    width="40"
+                    height="40"
+                    src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/155/salt-shaker_1f9c2.png"
+                    alt=""
+                    onClick={() => alert('salted')}
+                />
                 <UserSearch />
             </Menu.Menu>
         </Menu>
     );
 };
 
-const NavBarChildren = ({ children }) => {
-    const [{ theme }, dispatch] = useStateValue();
-
+const NavBarChildren = ({ children, theme }) => {
     return (
         <Container
             fluid
-            style={{ paddingTop: 80, backgroundColor: theme && '#041f42' }}
+            style={{
+                paddingTop: 80,
+                backgroundColor: theme && '#041f42',
+            }}
         >
             {children}
         </Container>
@@ -120,6 +166,8 @@ const NavBarChildren = ({ children }) => {
 
 const NavBar = ({ children }) => {
     const [visible, setVisible] = useState(false);
+
+    const [{ theme }, dispatch] = useStateValue();
 
     const handlePusher = () => {
         if (visible) setVisible(false);
@@ -134,15 +182,26 @@ const NavBar = ({ children }) => {
             <Responsive {...Responsive.onlyMobile}>
                 <NavBarMobile
                     visible={visible}
+                    theme={theme}
+                    dispatch={dispatch}
                     onToggle={handleToggle}
                     onPusherClick={handlePusher}
                 >
-                    <NavBarChildren>{children}</NavBarChildren>
+                    <div
+                        style={{
+                            paddingTop: 80,
+                            width: '100%',
+                            backgroundColor: theme && '#041f42',
+                        }}
+                        theme={theme}
+                    >
+                        {children}
+                    </div>
                 </NavBarMobile>
             </Responsive>
             <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-                <NavBarDesktop />
-                <NavBarChildren>{children}</NavBarChildren>
+                <NavBarDesktop theme={theme} dispatch={dispatch} />
+                <NavBarChildren theme={theme}>{children}</NavBarChildren>
             </Responsive>
         </div>
     );

@@ -13,6 +13,8 @@ import { TimeChart, TwoLevelPieChart } from './Charts.js';
 import styled from 'styled-components';
 import { UserComments } from './UserComments.js';
 
+import { useStateValue } from '../state';
+
 const CardContainer = styled.div`
     position: fixed;
     width: 400px;
@@ -28,7 +30,18 @@ const StyledSegment = styled(Segment)`
     text-align: center;
 `;
 
+const StyledChartContainer = styled.div`
+    display: flex,
+    flex-direction: 'row'
+
+    @media and screen (max-width: 767px) {
+        flex-direction: column;
+    }
+`;
+
 const UserProfile = ({ user, saltiUser }) => {
+    const [{ theme }, dispatch] = useStateValue();
+
     let formatNumber = number => {
         return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     };
@@ -42,23 +55,30 @@ const UserProfile = ({ user, saltiUser }) => {
     };
 
     let comments = JSON.parse(saltiUser.comments);
+
     let pieChartData = [
         { name: 'Salty', value: comments.length },
-        { name: 'All', value: user.submitted.length },
+        { name: 'All', value: user.submitted.length || '' },
     ];
+
+    let about = user.about.substring(0, 300);
 
     return (
         <Container>
             <Grid stackable>
                 <Grid.Column width={5}>
                     <CardContainer>
-                        <Header as="h1" content="User Profile" />
+                        <Header
+                            as="h1"
+                            content="User Profile"
+                            inverted={theme}
+                        />
                         <Card>
                             <Card.Content>
                                 <Card.Header as="h2" content={user.id} />
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: user.about,
+                                        __html: about,
                                     }}
                                 ></div>
                                 <Card.Description>
@@ -100,8 +120,12 @@ const UserProfile = ({ user, saltiUser }) => {
                 </Grid.Column>
                 <Grid.Column width={11}>
                     <WordCloud username={user.id} />
-                    <Header as="h1" content="Saltiness vs Non-Salty" />
-                    <div style={{ display: 'flex' }}>
+                    <Header
+                        as="h1"
+                        content="Saltiness vs Non-Salty"
+                        inverted={theme}
+                    />
+                    <StyledChartContainer>
                         <TwoLevelPieChart data={pieChartData} />
                         <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
                             <StyledSegment>
@@ -113,8 +137,12 @@ const UserProfile = ({ user, saltiUser }) => {
                                 <p>Average Saltiness</p>
                             </StyledSegment>
                         </div>
-                    </div>
-                    <Header as="h1" content="Saltiest Comments" />
+                    </StyledChartContainer>
+                    <Header
+                        as="h1"
+                        content="Saltiest Comments"
+                        inverted={theme}
+                    />
                     <UserComments comments={comments} />
                 </Grid.Column>
             </Grid>
