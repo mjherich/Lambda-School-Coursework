@@ -9,45 +9,19 @@ import {
   Segment,
   Button
 } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 const Footer = () => (
   <div className="footer">
     <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
       <Container textAlign='center'>
         <Grid divided inverted stackable>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 1' />
-            <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 2' />
-            <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={3}>
-            <Header inverted as='h4' content='Group 3' />
-            <List link inverted>
-              <List.Item as='a'>Link One</List.Item>
-              <List.Item as='a'>Link Two</List.Item>
-              <List.Item as='a'>Link Three</List.Item>
-              <List.Item as='a'>Link Four</List.Item>
-            </List>
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <Header inverted as='h4' content='About Salty Hackers' />
+          <Grid.Column width={16}>
+            <Header inverted as='h3' content='About Salty Hackers' />
             <p>
-              This site is dedicated to showing all.
+              This site was created to showcase the saltiest commenters on hacker news.<br/> Using a variety of sentiment analysis methodologies, we're able to rank individual users and comments based on how "salty" they are.
             </p>
-            <Button content="See the team" />
+            <Button><Link to="/about-us" style={{color: '#000'}}>About Team</Link></Button>
           </Grid.Column>
         </Grid>
 
