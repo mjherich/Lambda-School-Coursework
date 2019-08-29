@@ -4,7 +4,8 @@ import UserCard from "./userCard";
 import { Card, Header, Form, Radio, Container } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 import "./user.scss";
-import Example from "./chart";
+import Chart from "./chart";
+import SaltyKarma from "./scatterChart";
 
 import { useStateValue } from "../../state";
 
@@ -46,8 +47,8 @@ const UserList = props => {
       <Header id="header" textAlign="center" as="h1">
         Saltiest 100 Users
       </Header>
-<div className="topContent">
-        <Example />
+      <div className="topContent">
+        <Chart users={users} />
         <Form compact className="modeToggle">
           <Form.Field>Rank By:</Form.Field>
           <Form.Field>
@@ -75,7 +76,8 @@ const UserList = props => {
             />
           </Form.Field>
         </Form>
-</div>
+      </div>
+      {/* <SaltyKarma users={users}/> */}
       <Card.Group className="cardGroup" itemsPerRow="1">
         {users !== [] ? (
           <Pagination

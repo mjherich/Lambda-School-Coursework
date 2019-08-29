@@ -27,7 +27,7 @@ const Top100Comments = () => (
 
 const App = () => {
     const initialState = {
-        theme: false,
+        theme: true,
     };
 
     const reducer = (state, action) => {

@@ -88,7 +88,7 @@ const NavBarDesktop = () => {
             <Menu.Item>
                 <Checkbox
                     toggle
-                    // defaultChecked
+                    defaultChecked
                     style={{ marginTop: 10 }}
                     onClick={() =>
                         dispatch({
