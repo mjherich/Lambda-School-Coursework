@@ -12,10 +12,10 @@ app = Flask(__name__)
 
 # Using python decouple to store .env
 # https://simpleisbetterthancomplex.com/2015/11/26/package-of-the-week-python-decouple.html
-dbname = config('ESQL1_DBNAME')
-user = config('ESQL1_USER')
-password = config('ESQL1_PASSWORD')
-host = config('ESQL1_HOST')
+dbname = config('RDS2_DBNAME')
+user = config('RDS2_USER')
+password = config('RDS2_PASSWORD')
+host = config('RDS2_HOST')
 
 
 def salt_rank(mode):
