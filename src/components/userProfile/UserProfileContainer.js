@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 //Componetns
-import { Header, Grid } from 'semantic-ui-react';
-import { TimeChart } from './Charts';
+import { Header } from 'semantic-ui-react';
 import UserProfile from './UserProfile';
 
-import { useStateValue } from '../state';
+import { useStateValue } from '../../state';
 
 import axios from 'axios';
 

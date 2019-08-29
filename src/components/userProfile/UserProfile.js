@@ -1,5 +1,5 @@
 import React from 'react';
-import WordCloud from './WordCloud';
+import WordCloud from '../WordCloud';
 import {
     Card,
     Header,
@@ -9,11 +9,11 @@ import {
     Icon,
     Segment,
 } from 'semantic-ui-react';
-import { TimeChart, TwoLevelPieChart } from './Charts.js';
+import { TimeChart, TwoLevelPieChart } from '../Charts.js';
 import styled from 'styled-components';
 import { UserComments } from './UserComments.js';
 
-import { useStateValue } from '../state';
+import { useStateValue } from '../../state';
 
 const CardContainer = styled.div`
     position: fixed;
