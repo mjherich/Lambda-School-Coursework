@@ -105,11 +105,11 @@ const UserProfile = ({ user, saltiUser }) => {
                         <TwoLevelPieChart data={pieChartData} />
                         <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
                             <StyledSegment>
-                                <Header as="h2" content={`45`} />
+                                <Header as="p" content={`45`} />
                                 <p>Average Saltiness</p>
                             </StyledSegment>
                             <StyledSegment>
-                                <p>45</p>
+                                <Header as="p" content={`45`} />
                                 <p>Average Saltiness</p>
                             </StyledSegment>
                         </div>
