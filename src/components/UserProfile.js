@@ -52,7 +52,7 @@ const UserProfile = ({ user, saltiUser }) => {
             <Grid stackable>
                 <Grid.Column width={5}>
                     <CardContainer>
-                        <Header as="h1" content="User Profile" />
+                        <Header as="h1" id="header" content="User Profile" />
                         <Card>
                             <Card.Content>
                                 <Card.Header as="h2" content={user.id} />
@@ -100,7 +100,7 @@ const UserProfile = ({ user, saltiUser }) => {
                 </Grid.Column>
                 <Grid.Column width={11}>
                     <WordCloud username={user.id} />
-                    <Header as="h1" content="Saltiness vs Non-Salty" />
+                    <Header as="h2" content="Saltiness vs Non-Salty" />
                     <div style={{ display: 'flex' }}>
                         <TwoLevelPieChart data={pieChartData} />
                         <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
@@ -114,7 +114,7 @@ const UserProfile = ({ user, saltiUser }) => {
                             </StyledSegment>
                         </div>
                     </div>
-                    <Header as="h1" content="Saltiest Comments" />
+                    <Header as="h2" content="Saltiest Comments" />
                     <UserComments comments={comments} />
                 </Grid.Column>
             </Grid>

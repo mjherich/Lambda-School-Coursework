@@ -15,7 +15,7 @@
 }
 
 .dark {
-  h1 {
+  h1, h1#header, h2.header {
     color: #fff;
   }
 }
@@ -32,6 +32,7 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
+
   .cta {
     font-weight: bold;
     font-size: 18px;
