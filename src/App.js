@@ -19,13 +19,16 @@ import { StateProvider } from './state';
 import About from './components/about';
 //Temp Components
 const Home = () => {
- return (
-   <>
-    <div className="hero">
-      <Link className="cta" to="/top-100-users">Let's Go!</Link>
-    </div>
-  </>
- )};
+    return (
+        <>
+            <div className="hero">
+                <Link className="cta" to="/top-100-users">
+                    Let's Go!
+                </Link>
+            </div>
+        </>
+    );
+};
 const Top100Comments = () => (
     <Header as="h1" content="Top 100 Saltiest Comments" />
 );
@@ -37,25 +40,25 @@ const App = () => {
 
     const reducer = (state, action) => {
         switch (action.type) {
-            case 'updateTheme':
-                window.localStorage.setItem('theme', action.payload)
-                return {
-                    ...state,
-                    theme: action.payload,
-                };
+            // case 'updateTheme':
+            //     window.localStorage.setItem('theme', action.payload)
+            //     return {
+            //         ...state,
+            //         theme: action.payload,
+            //     };
             case 'toggleTheme':
-                if (state.theme==="dark") {
-                  window.localStorage.setItem('theme', 'light')
-                  return {
-                    ...state,
-                    theme: 'light',
-                  }
+                if (state.theme === 'dark') {
+                    window.localStorage.setItem('theme', 'light');
+                    return {
+                        ...state,
+                        theme: 'light',
+                    };
                 } else {
-                  window.localStorage.setItem('theme', 'dark')
-                  return {
-                    ...state,
-                    theme: 'dark',
-                  }                  
+                    window.localStorage.setItem('theme', 'dark');
+                    return {
+                        ...state,
+                        theme: 'dark',
+                    };
                 }
             default:
                 return state;

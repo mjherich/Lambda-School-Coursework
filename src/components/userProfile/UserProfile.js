@@ -67,7 +67,7 @@ const UserProfile = ({ user, saltiUser }) => {
                         <Header
                             as="h1"
                             content="User Profile"
-                            inverted={theme}
+                            inverted={theme === 'dark' ? true : false}
                         />
                         <Card>
                             <Card.Content>
@@ -119,7 +119,7 @@ const UserProfile = ({ user, saltiUser }) => {
                     <Header
                         as="h1"
                         content="Saltiness per comment"
-                        inverted={theme}
+                        inverted={theme === 'dark' ? true : false}
                     />
 
                     <TimeChart
@@ -132,7 +132,7 @@ const UserProfile = ({ user, saltiUser }) => {
                     <Header
                         as="h1"
                         content="Saltiest Comments"
-                        inverted={theme}
+                        inverted={theme === 'dark' ? true : false}
                     />
                     <UserComments comments={comments} />
                 </Grid.Column>

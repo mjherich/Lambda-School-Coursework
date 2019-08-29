@@ -13,7 +13,7 @@ import UserSearch from './UserSearch';
 import { useStateValue } from '../state';
 import _ from 'lodash';
 import { TweenLite, Power4 } from 'gsap/all';
-
+import styled from 'styled-components';
 
 const StyledImage = styled.img`
     transform: rotate(180deg);
@@ -39,7 +39,10 @@ const NavBarMobile = ({
                 animation="overlay"
                 direction="top"
                 stackable
-                style={{ width: '100vw', backgroundColor: theme && '#041F42' }}
+                style={{
+                    width: '100vw',
+                    backgroundColor: theme === 'dark' ? '#041F42' : null,
+                }}
                 size="large"
                 inverted={theme}
             >
@@ -65,7 +68,9 @@ const NavBarMobile = ({
             </Sidebar>
             <Sidebar.Pusher onClick={onPusherClick}>
                 <Menu
-                    style={{ backgroundColor: theme && '#041F42' }}
+                    style={{
+                        backgroundColor: theme === 'dark' ? '#041F42' : null,
+                    }}
                     inverted={theme}
                     fixed="top"
                 >
@@ -80,7 +85,8 @@ const NavBarMobile = ({
                             onClick={() =>
                                 dispatch({
                                     type: 'updateTheme',
-                                    payload: theme ? false : true,
+                                    payload:
+                                        theme == 'light' ? 'dark' : 'light',
                                 })
                             }
                         />
@@ -97,18 +103,13 @@ const NavBarMobile = ({
 
 const NavBarDesktop = ({ theme, dispatch }) => {
     return (
-<<<<<<< HEAD
         <Menu
-            style={{ backgroundColor: theme && '#041F42' }}
-            inverted={theme}
+            style={{ backgroundColor: theme === 'dark' && '#041F42' }}
+            inverted={theme === 'dark' ? true : false}
             fixed="top"
             size="large"
         >
             <Menu.Item as={Link} to="/" name="home" content="Home" />
-=======
-        <Menu inverted={theme === 'dark' ? true : null} fixed="top" size="large">
-            <Menu.Item as={Link} to="/" className="site-title" name="home" content="Salty Hackers" />
->>>>>>> master
             <Menu.Item
                 as={Link}
                 to="/top-100-users"
@@ -130,14 +131,14 @@ const NavBarDesktop = ({ theme, dispatch }) => {
             <Menu.Item>
                 <Checkbox
                     toggle
-                    defaultChecked={theme==="dark" ? true : false}
+                    defaultChecked={theme === 'dark' ? true : false}
                     style={{ marginTop: 10 }}
                     onClick={() => {
                         dispatch({
-                            type: 'toggleTheme'
-                        })
-                      }
-                    }
+                            type: 'toggleTheme',
+                            payload: 'dark',
+                        });
+                    }}
                 />
             </Menu.Item>
             <Menu.Menu position="right">
@@ -154,26 +155,15 @@ const NavBarDesktop = ({ theme, dispatch }) => {
     );
 };
 
-<<<<<<< HEAD
 const NavBarChildren = ({ children, theme }) => {
     return (
         <Container
             fluid
             style={{
                 paddingTop: 80,
-                backgroundColor: theme && '#041f42',
+                backgroundColor: theme === 'dark' ? '#041f42' : null,
                 minHeight: '100vh',
             }}
-=======
-const NavBarChildren = ({ children }) => {
-    const [{ theme }] = useStateValue();
-
-    return (
-        <Container
-            fluid
-            className={theme}
-            style={{ paddingTop: 80, backgroundColor: theme==='dark' && '#041f42' }}
->>>>>>> master
         >
             {children}
         </Container>
@@ -207,7 +197,8 @@ const NavBar = ({ children }) => {
                         style={{
                             paddingTop: 80,
                             width: '100%',
-                            backgroundColor: theme && '#041f42',
+                            backgroundColor:
+                                theme === 'dark' ? '#041f42' : null,
                         }}
                         theme={theme}
                     >
