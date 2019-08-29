@@ -54,13 +54,13 @@ def salt_rank(mode):
             (
                 SELECT author, 
                        COUNT(DISTINCT id) as posts, 
-                       {sql_mode[str(mode)]} (score) AS avg, 
-                       MIN(score) AS min
+                       {sql_mode[str(mode)]} (scores) AS avg, 
+                       MIN(scores) AS min
                 FROM comments
                 GROUP BY author
             ) AS b 
             JOIN comments a 
-            ON a.author = b.author AND b.min = a.score
+            ON a.author = b.author AND b.min = a.scores
             WHERE posts > 10
             ORDER BY avg ASC
             LIMIT 100;
@@ -105,7 +105,7 @@ def salt_time():
     
     query = f'''
             SELECT date_trunc('day', comments.time_ts) "day", 
-                   AVG(score) FROM comments
+                   AVG(scores) FROM comments
             GROUP BY day
             ORDER BY day;
             '''
@@ -161,7 +161,7 @@ def user_wordcloud(user_id):
     
     query = f'''
             SELECT text FROM comments
-            WHERE author = '{user_id}' AND score < 0
+            WHERE author = '{user_id}' AND scores < 0
             LIMIT 500;
             '''
     curs.execute(query)
@@ -230,9 +230,9 @@ def user_salt(user_id):
                                   mimetype='application/json')
 
     query_text = f'''
-                 SELECT parent, id, time, by, text, score FROM comments
-                 WHERE author = '{user_id}' AND score < 0
-                 ORDER BY score ASC
+                 SELECT parent, id, time, by, text, scores FROM comments
+                 WHERE author = '{user_id}' AND scores < 0
+                 ORDER BY scores ASC
                  LIMIT 100;
                  '''
     curs.execute(query_text)
@@ -245,7 +245,7 @@ def user_salt(user_id):
     
     # querying for user's salt score.
     query_user_score = f'''
-                       SELECT author, AVG(score) FROM comments
+                       SELECT author, AVG(scores) FROM comments
                        WHERE author = '{user_id}'
                        GROUP BY author
                        '''
@@ -288,8 +288,8 @@ def comments_rank():
     
     # check if user_id exists in the database
     query_text = f'''
-                  SELECT score, text, by, id, parent FROM comments
-                  ORDER BY score ASC
+                  SELECT scores, text, by, id, parent FROM comments
+                  ORDER BY scores ASC
                   LIMIT 100;
                   '''
     curs.execute(query_text)
