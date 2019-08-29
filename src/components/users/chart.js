@@ -16,7 +16,7 @@ const Chart = (props) => {
     const handleClick = (e) => {
         props.history.push(`/users/${e.username}`)
       }
-    console.log('props in chart', props)
+    // console.log('props in chart', props)
     return (
       <BarChart
         className="barChart"
@@ -32,7 +32,7 @@ const Chart = (props) => {
         <YAxis />
         <Tooltip />
         {/* <Legend /> */}
-        <Bar dataKey="score" fill="#ffcd00" onClick={handleClick}><Link to="/"/></Bar>
+        <Bar dataKey="score" fill="#ffcd00" onClick={handleClick} />
       </BarChart>        
     )
 }

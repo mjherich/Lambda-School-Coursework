@@ -14,7 +14,6 @@
     @media (max-width: 995px){
         flex-direction: column-reverse;
         align-items: center;
-        text-align: center!important;
     }
 }
   .barChart {
@@ -22,6 +21,14 @@
      display: none;
     }
   }
+  .dark, .dark>* {
+    color: rgb(230, 230, 230);
+    // border: 1px solid red;
+}
+
+.lds-roller light {
+    background: black;
+}
   #header {
       padding: 20px 0px;
   }

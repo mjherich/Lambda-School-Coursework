@@ -54,7 +54,7 @@ const UserList = props => {
         Saltiest 100 Users
       </Header>
       <div className="topContent">
-        <Chart users={users} history={props.history}/>
+        <Chart users={users} history={props.history} />
         <Form className="modeToggle">
           <Form.Field>Rank By:</Form.Field>
           <Form.Field>
@@ -84,8 +84,8 @@ const UserList = props => {
         </Form>
       </div>
       {/* <SaltyKarma users={users}/> Todo: refactor with context api to store HN data and pass it to scatterplot, usercards*/}
-      <Card.Group className="cardGroup" itemsPerRow="1">
-        {typeof users == "object" && users.length > 0 ? (
+      {typeof users == "object" && users.length > 0 ? (
+        <Card.Group className="cardGroup" itemsPerRow="1">
           <Pagination
             dataArray={users}
             render={function paginatedData(props) {
@@ -103,34 +103,34 @@ const UserList = props => {
               );
             }}
           />
-        ) : (
-          <div className="loading">
-            {failed ? (
-              <h1>failed to load resource</h1>
-            ) : (
-              //  credit to https://loading.io/css/
-              <div className="lds-roller">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            )}
-            {function checkUsers() {
-              return setTimeout(function inTenSeconds() {
-                if (users.length == 0) {
-                  setFailed(true);
-                }
-                return null;
-              }, 10000);
-            }}
-          </div>
-        )}
-      </Card.Group>
+        </Card.Group>
+      ) : (
+        <div className="loading">
+          {failed ? (
+            <h1>failed to load resource</h1>
+          ) : (
+            //  credit to https://loading.io/css/
+            <div className="lds-roller light">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          )}
+          {function checkUsers() {
+            return setTimeout(function inTenSeconds() {
+              if (users.length == 0) {
+                setFailed(true);
+              }
+              return null;
+            }, 10000);
+          }}
+        </div>
+      )}
     </div>
   );
 };
