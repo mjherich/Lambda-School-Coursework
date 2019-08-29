@@ -1,4 +1,4 @@
-# bw-saltiest-hacker-news-trolls-DS
+# Saltiest Hackers Data Engineering
 
 ![Architecture image](https://github.com/Saltiest-Hacker-News-Trolls/bw-saltiest-hacker-news-trolls-DS/blob/master/Architecture%20Image.png)
 
