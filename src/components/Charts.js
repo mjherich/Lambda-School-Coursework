@@ -18,21 +18,18 @@ import { Segment } from 'semantic-ui-react';
 export const TimeChart = ({
     width = 600,
     height = 200,
-    content,
     data,
     dataKeyX,
     dataKeyY,
 }) => {
     return (
         <div>
-            <Header as="h1" content={content} style={{ marginLeft: 45 }} />
-            <LineChart width={600} height={200} data={data}>
+            <LineChart width={width} height={height} data={data}>
                 <Line type="monotone" dataKey={dataKeyY} stroke="#57bb12" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey={dataKeyX} />
-                <YAxis />
+                <YAxis reversed />
                 <Tooltip />
-                <Legend />
             </LineChart>
         </div>
     );

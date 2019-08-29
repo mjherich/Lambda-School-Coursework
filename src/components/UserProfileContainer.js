@@ -5,12 +5,15 @@ import { Header, Grid } from 'semantic-ui-react';
 import { TimeChart } from './Charts';
 import UserProfile from './UserProfile';
 
+import { useStateValue } from '../state';
+
 import axios from 'axios';
 
 const UserProfileContainer = props => {
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState({});
     const [saltiUser, setSaltiUser] = useState({});
+    const [{ theme }, dispatch] = useStateValue();
 
     let username = props.match.params.username || 'pg';
 
@@ -50,7 +53,7 @@ const UserProfileContainer = props => {
     return (
         <>
             {isLoading ? (
-                <Header as="h1" content="Loading" />
+                <Header as="h1" content="Loading" inverted={theme} />
             ) : user !== null ? (
                 <UserProfile user={user} saltiUser={saltiUser} />
             ) : (

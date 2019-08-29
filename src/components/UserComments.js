@@ -8,6 +8,7 @@ export const UserComments = props => {
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>View</Table.HeaderCell>
+                    <Table.HeaderCell>Score</Table.HeaderCell>
                     <Table.HeaderCell>Comment</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
@@ -23,6 +24,7 @@ export const UserComments = props => {
                                     <Icon name="eye" />
                                 </a>
                             </Table.Cell>
+                            <Table.Cell>{item.score}</Table.Cell>
                             <Table.Cell>
                                 <div
                                     dangerouslySetInnerHTML={{

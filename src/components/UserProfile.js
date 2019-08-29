@@ -24,26 +24,13 @@ const CardContainer = styled.div`
     }
 `;
 
-const StyledSegment = styled(Segment)`
-    width: 200px;
-    height: 80px;
-    text-align: center;
-`;
-
-const StyledChartContainer = styled.div`
-    display: flex,
-    flex-direction: 'row'
-
-    @media and screen (max-width: 767px) {
-        flex-direction: column;
-    }
-`;
-
 const UserProfile = ({ user, saltiUser }) => {
     const [{ theme }, dispatch] = useStateValue();
 
     let formatNumber = number => {
-        return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        if (number) {
+            return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        }
     };
 
     let formatDate = date => {
@@ -54,14 +41,23 @@ const UserProfile = ({ user, saltiUser }) => {
         return `${day}/${month}/${year}`;
     };
 
+    let about = user.about ? user.about.substring(0, 300) : null;
     let comments = JSON.parse(saltiUser.comments);
+    let submitted = user.submitted ? user.submitted.length : 0;
 
     let pieChartData = [
         { name: 'Salty', value: comments.length },
-        { name: 'All', value: user.submitted.length || '' },
+        { name: 'All', value: submitted },
     ];
 
-    let about = user.about.substring(0, 300);
+    let width =
+        window.innerWidth > 900
+            ? window.innerWidth / 1.7
+            : window.innerWidth / 1.2;
+
+    let timeChartDate = comments.map((comment, index) => {
+        return { name: index, value: comment.score };
+    });
 
     return (
         <Container>
@@ -95,7 +91,7 @@ const UserProfile = ({ user, saltiUser }) => {
                                         style={{ marginTop: 10 }}
                                     >
                                         <Icon name="send" />
-                                        {formatNumber(user.submitted.length)}
+                                        {formatNumber(submitted)}
                                         <Label.Detail>Submissions</Label.Detail>
                                     </Label>
                                     <Label
@@ -122,22 +118,17 @@ const UserProfile = ({ user, saltiUser }) => {
                     <WordCloud username={user.id} />
                     <Header
                         as="h1"
-                        content="Saltiness vs Non-Salty"
+                        content="Saltiness per comment"
                         inverted={theme}
                     />
-                    <StyledChartContainer>
-                        <TwoLevelPieChart data={pieChartData} />
-                        <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
-                            <StyledSegment>
-                                <Header as="h2" content={`45`} />
-                                <p>Average Saltiness</p>
-                            </StyledSegment>
-                            <StyledSegment>
-                                <p>45</p>
-                                <p>Average Saltiness</p>
-                            </StyledSegment>
-                        </div>
-                    </StyledChartContainer>
+
+                    <TimeChart
+                        width={width}
+                        data={timeChartDate}
+                        dataKeyX="name"
+                        dataKeyY="value"
+                    />
+
                     <Header
                         as="h1"
                         content="Saltiest Comments"

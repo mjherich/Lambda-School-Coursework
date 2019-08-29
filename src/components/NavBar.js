@@ -142,7 +142,7 @@ const NavBarDesktop = ({ theme, dispatch }) => {
                     height="40"
                     src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/155/salt-shaker_1f9c2.png"
                     alt=""
-                    onClick={() => alert('salted')}
+                    onClick={() => alert("You've Been A-Salted")}
                 />
                 <UserSearch />
             </Menu.Menu>
@@ -157,6 +157,7 @@ const NavBarChildren = ({ children, theme }) => {
             style={{
                 paddingTop: 80,
                 backgroundColor: theme && '#041f42',
+                minHeight: '100vh',
             }}
         >
             {children}
