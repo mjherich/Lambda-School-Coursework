@@ -6,7 +6,7 @@ import axios from "axios";
 
 const UserCard = props => {
   const [hnUserData, setHnUserData] = useState({});
-
+  // console.log('HN', hnUserData)
   const color = saltyScore => {
     if (saltyScore <= 16.7) return "teal";
     else if (saltyScore <= 33.4) return "green";
@@ -44,7 +44,11 @@ const UserCard = props => {
           <div className="quote"><Icon name="quote left" size="small"/>{strip(props.user.text).slice(0, 200)}...</div>
         </div>
         <div className="rightContent">
+
           <div>Salty Score: {props.user.score}</div>
+
+          <div className="score">Score: {props.user.score.toFixed(2)}</div>
+
         </div>
       </div>
     </Card>

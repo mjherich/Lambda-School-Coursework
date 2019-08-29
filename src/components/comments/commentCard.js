@@ -19,17 +19,20 @@ const CommentCard = props => {
   }
 
   return (
+
     <Card as={Link}
     to={`/users/${props.comment.username}`} color={color(props.comment.saltyScore)} fluid>
     <Card.Meta id="meta"><div>{"  "}</div>{props.comment.username}</Card.Meta>
+
       <div className="userCard">
         <Card.Content>
           <Icon name="quote left" size="small" />
           {strip(props.comment.text)}
           <Icon name="quote right" size="small" />
+
         </Card.Content>
         <div>
-          <div>Salty Score: {props.comment.score}</div>
+          <div className="score"> Score: {props.comment.score.toFixed(2)}</div>
         </div>
       </div>
     </Card>
