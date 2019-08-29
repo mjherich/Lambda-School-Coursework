@@ -9,7 +9,7 @@ import {
     Icon,
     Segment,
 } from 'semantic-ui-react';
-import { TimeChart, TwoLevelPieChart } from '../Charts.js';
+import { TimeChart } from '../Charts.js';
 import styled from 'styled-components';
 import { UserComments } from './UserComments.js';
 

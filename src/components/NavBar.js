@@ -14,7 +14,6 @@ import { useStateValue } from '../state';
 import _ from 'lodash';
 import { TweenLite, Power4 } from 'gsap/all';
 
-import styled from 'styled-components';
 
 const StyledImage = styled.img`
     transform: rotate(180deg);
@@ -98,6 +97,7 @@ const NavBarMobile = ({
 
 const NavBarDesktop = ({ theme, dispatch }) => {
     return (
+<<<<<<< HEAD
         <Menu
             style={{ backgroundColor: theme && '#041F42' }}
             inverted={theme}
@@ -105,6 +105,10 @@ const NavBarDesktop = ({ theme, dispatch }) => {
             size="large"
         >
             <Menu.Item as={Link} to="/" name="home" content="Home" />
+=======
+        <Menu inverted={theme === 'dark' ? true : null} fixed="top" size="large">
+            <Menu.Item as={Link} to="/" className="site-title" name="home" content="Salty Hackers" />
+>>>>>>> master
             <Menu.Item
                 as={Link}
                 to="/top-100-users"
@@ -126,13 +130,13 @@ const NavBarDesktop = ({ theme, dispatch }) => {
             <Menu.Item>
                 <Checkbox
                     toggle
-                    defaultChecked
+                    defaultChecked={theme==="dark" ? true : false}
                     style={{ marginTop: 10 }}
-                    onClick={() =>
+                    onClick={() => {
                         dispatch({
-                            type: 'updateTheme',
-                            payload: theme ? false : true,
+                            type: 'toggleTheme'
                         })
+                      }
                     }
                 />
             </Menu.Item>
@@ -150,6 +154,7 @@ const NavBarDesktop = ({ theme, dispatch }) => {
     );
 };
 
+<<<<<<< HEAD
 const NavBarChildren = ({ children, theme }) => {
     return (
         <Container
@@ -159,6 +164,16 @@ const NavBarChildren = ({ children, theme }) => {
                 backgroundColor: theme && '#041f42',
                 minHeight: '100vh',
             }}
+=======
+const NavBarChildren = ({ children }) => {
+    const [{ theme }] = useStateValue();
+
+    return (
+        <Container
+            fluid
+            className={theme}
+            style={{ paddingTop: 80, backgroundColor: theme==='dark' && '#041f42' }}
+>>>>>>> master
         >
             {children}
         </Container>

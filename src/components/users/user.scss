@@ -6,9 +6,20 @@
     // text-decoration: none;
     color: rgb(108, 108, 119);
   }
-
+.topContent {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 20px;
+    justify-content: center;
+}
   .cardGroup {
-    padding: 40px 0px 40px 0px;
+    // padding: 40px 0px 40px 0px;
+  }
+  #header {
+      padding: 20px 0px;
+  }
+  .modeToggle {
+      text-align: right;
   }
 
   .quote {
@@ -18,7 +29,11 @@
   }
 
   .rightContent {
-    min-width: 200px;
+    min-width: 150px;
+  }
+
+  .score {
+    font-size: 1.4rem;
   }
 
   //TODO: add media breakpoint for mobile
