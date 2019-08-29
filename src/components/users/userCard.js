@@ -8,7 +8,7 @@ const UserCard = props => {
   // console.log("props in userCard", props);
 
   const [hnUserData, setHnUserData] = useState({});
-
+  // console.log('HN', hnUserData)
   const color = saltyScore => {
     if (saltyScore <= 16.7) return "teal";
     else if (saltyScore <= 33.4) return "green";
@@ -52,7 +52,7 @@ const UserCard = props => {
             <div>Number of Comments: {hnUserData.submitted.length}</div>
           )}
           <div>Karma: {hnUserData.karma}</div> */}
-          <div>Salty Score: {props.user.score}</div>
+          <div className="score">Score: {props.user.score.toFixed(2)}</div>
         </div>
       </div>
     </Card>

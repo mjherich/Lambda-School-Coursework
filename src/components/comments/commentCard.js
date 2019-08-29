@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Card, Icon } from "semantic-ui-react";
 // import "./user.scss";
-import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
 const CommentCard = props => {
   console.log("props in commentCard", props);
@@ -33,16 +32,24 @@ const CommentCard = props => {
   //   }, []);
 
   return (
-    <Card       as={Link}
-    to={`/users/${props.comment.username}`} color={color(props.comment.saltyScore)} fluid>
-    <Card.Meta id="meta"><div>{"  "}</div>{props.comment.username}</Card.Meta>
+    <Card
+      as={Link}
+      to={`/users/${props.comment.username}`}
+      color={color(props.comment.saltyScore)}
+      fluid
+    >
+      <Card.Meta id="meta">
+        <div>{"  "}</div>
+        {props.comment.username}
+      </Card.Meta>
       <div className="userCard">
         <Card.Content>
           <Icon name="quote left" size="small" />
-          {strip(props.comment.text)}{'  '}
+          {strip(props.comment.text)}
+          {"  "}
         </Card.Content>
         <div>
-          <div>Salty Score: {props.comment.score}</div>
+          <div className="score"> Score: {props.comment.score.toFixed(2)}</div>
         </div>
       </div>
     </Card>
