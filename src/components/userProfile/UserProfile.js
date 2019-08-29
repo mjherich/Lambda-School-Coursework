@@ -117,7 +117,7 @@ const UserProfile = ({ user, saltiUser }) => {
                 <Grid.Column width={11}>
                     <WordCloud username={user.id} />
                     <Header
-                        as="h1"
+                        as="h2"
                         content="Saltiness per comment"
                         inverted={theme === 'dark' ? true : false}
                     />
@@ -130,7 +130,7 @@ const UserProfile = ({ user, saltiUser }) => {
                     />
 
                     <Header
-                        as="h1"
+                        as="h2"
                         content="Saltiest Comments"
                         inverted={theme === 'dark' ? true : false}
                     />

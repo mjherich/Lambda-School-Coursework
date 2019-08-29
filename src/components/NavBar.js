@@ -9,6 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserSearch from './UserSearch';
+import Footer from './Footer';
 
 import { useStateValue } from '../state';
 import _ from 'lodash';
@@ -158,6 +159,7 @@ const NavBarDesktop = ({ theme, dispatch }) => {
 const NavBarChildren = ({ children, theme }) => {
     return (
         <Container
+            className={theme}
             fluid
             style={{
                 paddingTop: 80,
@@ -166,6 +168,7 @@ const NavBarChildren = ({ children, theme }) => {
             }}
         >
             {children}
+            <Footer />
         </Container>
     );
 };
