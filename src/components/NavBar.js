@@ -159,6 +159,7 @@ const NavBarDesktop = ({ theme, dispatch }) => {
 const NavBarChildren = ({ children, theme }) => {
     return (
         <Container
+            className={theme}
             fluid
             style={{
                 paddingTop: 80,
