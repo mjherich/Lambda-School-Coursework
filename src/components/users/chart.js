@@ -4,18 +4,19 @@ import {
 } from 'recharts';
 import './user.scss';
 import { Link } from 'react-router-dom';
+import { useStateValue } from "../../state";
 
 const Chart = (props) => {
+    const [{ theme }, dispatch] = useStateValue();
+
     let positive = props.users.map(function absoluteVal(user) {
         return {...user, score: Math.abs(user.score)}
     } )
 
     const handleClick = (e) => {
-        // console.log(e.username)
-        // I don't like hardcoding this, the alternative is to pass down props.match, but that isn't going through the pagination component right now.
-        window.location.assign('https://hn-trolls.now.sh/users/' + e.username)
+        props.history.push(`/users/${e.username}`)
       }
-    // console.log('props in chart', props)
+    console.log('props in chart', props)
     return (
       <BarChart
         className="barChart"

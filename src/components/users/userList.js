@@ -6,10 +6,9 @@ import Pagination from "../common/Pagination";
 import "./user.scss";
 import Chart from "./chart";
 import { average, total } from "../../state/DataSnapshots";
-
 import { useStateValue } from "../../state";
 
-const UserList = () => {
+const UserList = props => {
   const sortedAverage = average.sort((a, b) => {
     return a.score - b.score;
   });
@@ -21,7 +20,7 @@ const UserList = () => {
   const [failed, setFailed] = useState(false);
   // const [mode, setMode] = useState("average");
   const [users, setUsers] = useState(sortedAverage);
-  console.log("users", users);
+  // console.log("users", users);
 
   // Because the endpoint /salt makes a slow SQL call, we instead use periodically snapshotted data, temporarily.
   // useEffect(() => {
@@ -42,12 +41,12 @@ const UserList = () => {
   //     })
   // }, [mode]);
 
-  useEffect(() => {
-    dispatch({
-      type: "updateTheme",
-      payload: "dark"
-    });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "updateTheme",
+  //     payload: "dark"
+  //   });
+  // }, []);
 
   return (
     <div>
@@ -55,7 +54,7 @@ const UserList = () => {
         Saltiest 100 Users
       </Header>
       <div className="topContent">
-        <Chart users={users} />
+        <Chart users={users} history={props.history}/>
         <Form className="modeToggle">
           <Form.Field>Rank By:</Form.Field>
           <Form.Field>

@@ -5,7 +5,7 @@ import { Card, Header } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 
 const CommentList = props => {
-  console.log("props in UserList", props);
+  // console.log("props in CommentList", props);
   // useState to store user list
   const [comments, setComments] = useState([]);
 
@@ -14,7 +14,7 @@ const CommentList = props => {
     axios
       .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/comment", { "username": "swombat" })
       .then(response => {
-        console.log("Comments post response", response.data);
+        // console.log("Comments post response", response.data);
         let sortedBySalt = response.data.sort((a, b) => {
           return a.score - b.score;
         });
