@@ -35,9 +35,11 @@ code {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #fff;
+  background: #ffcd00;
   margin: -3px 0 0 -3px;
 }
+
+
 .lds-roller div:nth-child(1) {
   animation-delay: -0.036s;
 }

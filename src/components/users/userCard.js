@@ -36,19 +36,23 @@ const UserCard = props => {
       to={`/users/${props.user.username}`}
       color={color(props.user.salt_score)}
       fluid
+      inverted
     >
       <div className="userCard">
         <div>
           <Card.Header as="h2">{props.user.username}</Card.Header>
-          {hnUserData.submitted && <Card.Meta>{hnUserData.submitted.length} Comments,  {hnUserData.karma} Karma</Card.Meta>}
-          <div className="quote"><Icon name="quote left" size="small"/>{strip(props.user.text).slice(0, 200)}...</div>
+          {hnUserData.submitted && (
+            <Card.Meta>
+              {hnUserData.submitted.length} Comments, {hnUserData.karma} Karma
+            </Card.Meta>
+          )}
+          <div className="quote">
+            <Icon name="quote left" size="small" />
+            {strip(props.user.text).slice(0, 200)}...
+          </div>
         </div>
         <div className="rightContent">
-
-          <div>Salty Score: {props.user.score}</div>
-
           <div className="score">Score: {props.user.score.toFixed(2)}</div>
-
         </div>
       </div>
     </Card>
