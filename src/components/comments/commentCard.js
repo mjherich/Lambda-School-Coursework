@@ -1,13 +1,9 @@
 import React from "react";
 import { Card, Icon } from "semantic-ui-react";
-// import "./user.scss";
 import { Link } from "react-router-dom";
 
+
 const CommentCard = props => {
-  console.log("props in commentCard", props);
-
-  //   const [hnUserData, setHnUserData] = useState({});
-
   const color = saltyScore => {
     if (saltyScore <= 16.7) return "teal";
     else if (saltyScore <= 33.4) return "green";
@@ -22,31 +18,18 @@ const CommentCard = props => {
     return doc.body.textContent || "";
   }
 
-  //   useEffect(() => {
-  //     axios
-  //       .get("https://hacker-news.firebaseio.com/v0/user/okket.json?print=pretty")
-  //       .then(response => {
-  //         // console.log('HN api response', response, 'response.data.submitted', response.data.submitted.length)
-  //         setHnUserData(response.data);
-  //       });
-  //   }, []);
-
   return (
-    <Card
-      as={Link}
-      to={`/users/${props.comment.username}`}
-      color={color(props.comment.saltyScore)}
-      fluid
-    >
-      <Card.Meta id="meta">
-        <div>{"  "}</div>
-        {props.comment.username}
-      </Card.Meta>
+
+    <Card as={Link}
+    to={`/users/${props.comment.username}`} color={color(props.comment.saltyScore)} fluid>
+    <Card.Meta id="meta"><div>{"  "}</div>{props.comment.username}</Card.Meta>
+
       <div className="userCard">
         <Card.Content>
           <Icon name="quote left" size="small" />
           {strip(props.comment.text)}
-          {"  "}
+          <Icon name="quote right" size="small" />
+
         </Card.Content>
         <div>
           <div className="score"> Score: {props.comment.score.toFixed(2)}</div>

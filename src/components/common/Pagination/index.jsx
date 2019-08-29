@@ -60,6 +60,7 @@ export default function Pagination({ dataArray, render: Data }) {
     return (
         <div className="container">
             <Data
+               
                 paginatedData={paginatedData}
                 handleShowCount={handleShowCount}
             />
@@ -107,7 +108,8 @@ function PaginationHandler(props) {
                         </a>
                     </li>
                 ) : null}
-                <li className="page-item">
+
+               {currentPage != 1 ?  <li className="page-item">
                     <a
                         onClick={function onPagePrevClick() {
                             return handlePrev(currentPage);
@@ -117,6 +119,9 @@ function PaginationHandler(props) {
                         {'<<'}
                     </a>
                 </li>
+                : null}
+
+
                 {pages.map(function renderPageCount(page, index) {
                     return (
                         <React.Fragment key={index}>
@@ -139,7 +144,7 @@ function PaginationHandler(props) {
                         </React.Fragment>
                     );
                 })}
-                <li className="page-item">
+                {pagesCount != currentPage ? <li className="page-item">
                     <a
                         onClick={function onPageNextClick() {
                             return handleNext(currentPage, pagesCount);
@@ -149,6 +154,7 @@ function PaginationHandler(props) {
                         {'>>'}
                     </a>
                 </li>
+                :null}
 
                 {pagesCount != currentPage ? (
                     <li className="page-item">

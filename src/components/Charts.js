@@ -13,8 +13,6 @@ import {
     Pie,
     Cell,
 } from 'recharts';
-import { Segment } from 'semantic-ui-react';
-
 const data = [
     { name: '8-1', salty: 1, sweet: 3.1 },
     { name: '8-2', salty: 0.9, sweet: 1.3 },
@@ -33,7 +31,7 @@ const data = [
     { name: '8-15', salty: -0.9, sweet: 3 },
 ];
 
-export const TimeChart = ({ width = 600, height = 200 }) => {
+export const TimeChart = () => {
     return (
         <div>
             <Header
@@ -149,7 +147,7 @@ export const TwoLevelPieChart = ({ data }) => {
                 onMouseEnter={onPieEnter}
             >
                 {data.map((entry, index) => (
-                    <Cell fill={COLORS[index % COLORS.length]} />
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
                 ))}
             </Pie>
         </PieChart>
