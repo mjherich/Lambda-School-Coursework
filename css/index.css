@@ -325,21 +325,26 @@ article #application .appText {
   }
 }
 article #application .saltyButton {
-  width: 45%;
+  width: 40%;
   background: #6D6E7B;
   text-align: center;
   color: #FECE02;
   font-family: 'Damion', cursive;
   font-size: 3rem;
-  padding: 2%;
+  padding: 2% 0%;
   border: 1px dotted #FAFEFD;
-  border-radius: 20px;
+  border-radius: 90px;
   margin: 5% auto;
   text-shadow: 3px 3px 10px black;
   text-decoration: none;
   -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+}
+@media (min-width: 1000px) {
+  article #application .saltyButton {
+    width: 25%;
+  }
 }
 article #contact {
   width: 100%;
