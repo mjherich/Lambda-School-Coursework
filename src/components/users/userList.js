@@ -22,13 +22,15 @@ const UserList = () => {
         { mode: `${mode}` }
       )
       .then(response => {
-
-        // console.log("100 users response", response);
         let sorted = response.data.sort((a, b) => {
           return a.score - b.score;
         });
         setUsers(sorted);
-      });
+      })
+      .catch(err => {
+        console.log(err)
+        
+      })
   }, [mode]);
 
 
