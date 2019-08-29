@@ -9,8 +9,33 @@ import pandas as pd
 import psycopg2
 from tqdm import tqdm
 import click
+from decouple import config
 
 
+# ElephantDB 2 connection information
+#"""
+dbname = config('ESQL2_DBNAME')
+user = config('ESQL2_USER')
+password = config('ESQL2_PASSWORD')
+host = config('ESQL2_HOST')
+#"""
+
+
+# ElephantDB 1 connection information
+"""
+dbname = config('ESQL1_DBNAME')
+user = config('ESQL1_USER')
+password = config('ESQL1_PASSWORD')
+host = config('ESQL1_HOST')
+"""
+
+# AWS RDS 1 connection information
+"""
+dbname = config('RDS1_DBNAME')
+user = config('RDS1_USER')
+password = config('RDS1_PASSWORD')
+host = config('RDS1_HOST')
+"""
 
 # Google Cloud bigquery API setup information:
 # https://cloud.google.com/docs/authentication/getting-started
