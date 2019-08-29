@@ -1,6 +1,6 @@
-import React, { PureComponent, useState } from 'react';
+import React from 'react';
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
 
@@ -13,7 +13,7 @@ const Chart = (props) => {
         // e.preventDefault();
         console.log(e)
       }
-    console.log('props in chart', props)
+    // console.log('props in chart', props)
     return (
       <BarChart
         width={800}

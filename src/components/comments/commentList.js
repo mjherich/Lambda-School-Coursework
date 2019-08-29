@@ -35,7 +35,7 @@ const CommentList = props => {
               <>
                 {props.handleShowCount(10)}
                 {props.paginatedData.map(function renderPaginatedData(data) {
-                  return <CommentCard comment={data} />;
+                  return <CommentCard comment={data} key={data.username}/>;
                 })}
               </>
             );

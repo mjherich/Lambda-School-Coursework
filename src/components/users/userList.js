@@ -23,7 +23,7 @@ const UserList = props => {
         { mode: `${mode}` }
       )
       .then(response => {
-        console.log("100 users response", response);
+        // console.log("100 users response", response);
         let sorted = response.data.sort((a, b) => {
           return a.score - b.score;
         });
@@ -49,7 +49,7 @@ const UserList = props => {
       </Header>
       <div className="topContent">
         <Chart users={users} />
-        <Form compact className="modeToggle">
+        <Form className="modeToggle">
           <Form.Field>Rank By:</Form.Field>
           <Form.Field>
             <Radio
@@ -87,7 +87,7 @@ const UserList = props => {
                 <>
                   {props.handleShowCount(10)}
                   {props.paginatedData.map(function renderPaginatedData(data) {
-                    return <UserCard user={data} mode={mode} />;
+                    return <UserCard user={data} mode={mode} key={data.username}/>;
                   })}
                 </>
               );
