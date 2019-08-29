@@ -5,33 +5,50 @@ import { Card, Header, Form, Radio, Container } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 import "./user.scss";
 import Chart from "./chart";
+import { average, total } from "../../state/DataSnapshots";
 
 import { useStateValue } from "../../state";
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);
   const [{ theme }, dispatch] = useStateValue();
   const [failed, setFailed] = useState(false);
-  const [mode, setMode] = useState("average");
+  // const [mode, setMode] = useState("average");
+  const [users, setUsers] = useState(average);
+  console.log('users', users)
 
 
-  useEffect(() => {
-    axios
-      .post(
-        "https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/salt",
-        { mode: `${mode}` }
-      )
-      .then(response => {
-        let sorted = response.data.sort((a, b) => {
-          return a.score - b.score;
-        });
-        setUsers(sorted);
-      })
-      .catch(err => {
-        console.log(err)
-        
-      })
-  }, [mode]);
+  // Because the endpoint /salt makes a slow SQL call, we instead use periodically snapshotted data, temporarily.
+  // useEffect(() => {
+  //   axios
+  //     .post(
+  //       "https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/salt",
+  //       { mode: `${mode}` }
+  //     )
+  //     .then(response => {
+  //       let sorted = response.data.sort((a, b) => {
+  //         return a.score - b.score;
+  //       });
+  //       setUsers(sorted);
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+
+  //     })
+  // }, [mode]);
+
+
+  // useEffect((mode)=>{
+  //     switch(mode){
+  //       case 'average':
+  //         setUsers(average);
+  //         // break;
+  //       case 'total':
+  //         setUsers(total)
+  //         // break;
+  //     }
+  // }, [mode])
+
+
 
 
   useEffect(() => {
@@ -40,8 +57,6 @@ const UserList = () => {
         payload: 'dark',
     });
 }, []);
-
-
 
  
   return (
@@ -58,10 +73,10 @@ const UserList = () => {
               label="Average Saltiness"
               name="radioGroup"
               value="average"
-              checked={mode === "average"}
+              checked={users === average}
               onChange={e => {
                 e.preventDefault();
-                setMode("average");
+                setUsers(average);
               }}
             />
           </Form.Field>
@@ -70,10 +85,10 @@ const UserList = () => {
               label="Total Saltiness"
               name="radioGroup"
               value="total"
-              checked={mode === "total"}
+              checked={users === total}
               onChange={e => {
                 e.preventDefault();
-                setMode("total");
+                setUsers(total)
               }}
             />
           </Form.Field>
@@ -111,7 +126,7 @@ const UserList = () => {
                 }
                 return null;
               },10000)
-            })()}
+            })}
           </div>
         )}
       </Card.Group>
