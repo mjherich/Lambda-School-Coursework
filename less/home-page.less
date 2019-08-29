@@ -69,19 +69,23 @@ article{
         }
 
         .saltyButton{
-            width: 45%;
+            width: 40%;
             background: @secondaryBG;
             text-align: center;
             color: @logoHeading;
             font-family: @logoText;
             font-size: 3rem;
-            padding: 2%;
+            padding: 2% 0%;
             border: 1px dotted @mainText;
-            border-radius: 20px;
+            border-radius: 90px;
             margin: 5% auto;
             text-shadow: 3px 3px 10px black;
             text-decoration: none;
             .box-shadow(9px, 9px, 10px, 0.5);
+
+            @media @desktop{
+                width: 25%;
+            }
         }
     }
 
