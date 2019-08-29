@@ -36,6 +36,7 @@ const UserCard = props => {
       to={`/users/${props.user.username}`}
       color={color(props.user.salt_score)}
       fluid
+      inverted
     >
       <div className="userCard">
         <div>

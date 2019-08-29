@@ -1,3 +1,7 @@
+// To update, use CLI: curl -X POST -H "Content-Type: application/json" -d '{"mode":"average"}' http://hackernews-serving.herokuapp.com/salt
+// or CLI: curl -X POST -H "Content-Type: application/json" -d '{"mode":"total"}' http://hackernews-serving.herokuapp.com/salt
+
+
 export const average = [
 	{
 		"salt_score": -0.3975333333,

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
+import './user.scss';
 
 
 const Chart = (props) => {
@@ -11,11 +12,12 @@ const Chart = (props) => {
 
     const handleClick = (e) => {
         // e.preventDefault();
-        console.log(e)
+        console.log(e.username)
       }
     // console.log('props in chart', props)
     return (
       <BarChart
+        className="barChart"
         width={800}
         height={300}
         data={positive}
@@ -27,7 +29,7 @@ const Chart = (props) => {
         <XAxis dataKey="username" />
         <YAxis />
         <Tooltip />
-        <Legend />
+        {/* <Legend /> */}
         <Bar dataKey="score" fill="#ffcd00" onClick={handleClick}/>
       </BarChart>        
     )

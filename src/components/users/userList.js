@@ -10,12 +10,18 @@ import { average, total } from "../../state/DataSnapshots";
 import { useStateValue } from "../../state";
 
 const UserList = () => {
+  const sortedAverage = average.sort((a, b) => {
+    return a.score - b.score;
+  });
+  const sortedTotal = total.sort((a, b) => {
+    return a.score - b.score;
+  });
+
   const [{ theme }, dispatch] = useStateValue();
   const [failed, setFailed] = useState(false);
   // const [mode, setMode] = useState("average");
-  const [users, setUsers] = useState(average);
-  console.log('users', users)
-
+  const [users, setUsers] = useState(sortedAverage);
+  console.log("users", users);
 
   // Because the endpoint /salt makes a slow SQL call, we instead use periodically snapshotted data, temporarily.
   // useEffect(() => {
@@ -36,29 +42,13 @@ const UserList = () => {
   //     })
   // }, [mode]);
 
-
-  // useEffect((mode)=>{
-  //     switch(mode){
-  //       case 'average':
-  //         setUsers(average);
-  //         // break;
-  //       case 'total':
-  //         setUsers(total)
-  //         // break;
-  //     }
-  // }, [mode])
-
-
-
-
   useEffect(() => {
     dispatch({
-        type: 'updateTheme',
-        payload: 'dark',
+      type: "updateTheme",
+      payload: "dark"
     });
-}, []);
+  }, []);
 
- 
   return (
     <div>
       <Header id="header" textAlign="center" as="h1">
@@ -76,7 +66,7 @@ const UserList = () => {
               checked={users === average}
               onChange={e => {
                 e.preventDefault();
-                setUsers(average);
+                setUsers(sortedAverage);
               }}
             />
           </Form.Field>
@@ -88,15 +78,14 @@ const UserList = () => {
               checked={users === total}
               onChange={e => {
                 e.preventDefault();
-                setUsers(total)
+                setUsers(sortedTotal);
               }}
             />
           </Form.Field>
         </Form>
       </div>
-      {/* <SaltyKarma users={users}/> Todo: refactor with context api to store HN data and pass it to scatterplot, usercards*/} 
+      {/* <SaltyKarma users={users}/> Todo: refactor with context api to store HN data and pass it to scatterplot, usercards*/}
       <Card.Group className="cardGroup" itemsPerRow="1">
-
         {typeof users == "object" && users.length > 0 ? (
           <Pagination
             dataArray={users}
@@ -105,7 +94,10 @@ const UserList = () => {
                 <>
                   {props.handleShowCount(10)}
 
-                  {props.paginatedData.map(function renderPaginatedData(data, index) {
+                  {props.paginatedData.map(function renderPaginatedData(
+                    data,
+                    index
+                  ) {
                     return <UserCard key={index} user={data} />;
                   })}
                 </>
@@ -114,19 +106,29 @@ const UserList = () => {
           />
         ) : (
           <div className="loading">
-            {failed 
-            ? <h1>failed to load resource</h1>
-            //  credit to https://loading.io/css/
-            : <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            }
-            {(function checkUsers(){
-              return setTimeout(function inTenSeconds(){
-                if(users.length == 0){
+            {failed ? (
+              <h1>failed to load resource</h1>
+            ) : (
+              //  credit to https://loading.io/css/
+              <div className="lds-roller">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
+            {function checkUsers() {
+              return setTimeout(function inTenSeconds() {
+                if (users.length == 0) {
                   setFailed(true);
                 }
                 return null;
-              },10000)
-            })}
+              }, 10000);
+            }}
           </div>
         )}
       </Card.Group>
