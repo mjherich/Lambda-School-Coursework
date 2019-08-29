@@ -28,17 +28,8 @@ const Footer = () => (
         <Divider inverted section />
         <Header centered as="h4" id="footer-site-title" content='Salty Hackers' />
         <List horizontal inverted divided link size='small'>
-          <List.Item as='a' href='#'>
-            Site Map
-          </List.Item>
-          <List.Item as='a' href='#'>
-            Contact Us
-          </List.Item>
-          <List.Item as='a' href='#'>
-            Terms and Conditions
-          </List.Item>
-          <List.Item as='a' href='#'>
-            Privacy Policy
+          <List.Item as='p'>
+            A Lambda School Build Week Project
           </List.Item>
         </List>
       </Container>

@@ -24,8 +24,11 @@
 }
 
 .dark {
-  h1, h1#header, h2.header {
+  h1, h1#header, h2.header, form.ui.form.modeToggle, form.ui.form.modeToggle label, span.recharts-legend-item-text {
     color: #fff;
+  }
+  .userCard h2.header {
+    color: #6c6c77;
   }
 }
 
