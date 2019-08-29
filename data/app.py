@@ -336,7 +336,7 @@ def serve_ranks():
     time_json = salt_time()
     
     result = { 'ranking' : rank_json, 'timing' : time_json}
-    result_json = json.dumps(data)
+    result_json = json.dumps(result)
 
     return result_json
 
