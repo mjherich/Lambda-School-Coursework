@@ -9,6 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import UserSearch from './UserSearch';
+import Footer from './Footer';
 
 import { useStateValue } from '../state';
 
@@ -111,6 +112,7 @@ const NavBarChildren = ({ children }) => {
     return (
         <Container
             fluid
+            id="theme-container"
             className={theme}
             style={{ paddingTop: 80, backgroundColor: theme==='dark' && '#041f42' }}
         >
@@ -137,13 +139,15 @@ const NavBar = ({ children }) => {
                     visible={visible}
                     onToggle={handleToggle}
                     onPusherClick={handlePusher}
-                >
+                    >
                     <NavBarChildren>{children}</NavBarChildren>
+                    <Footer />
                 </NavBarMobile>
             </Responsive>
             <Responsive minWidth={Responsive.onlyTablet.minWidth}>
                 <NavBarDesktop />
                 <NavBarChildren>{children}</NavBarChildren>
+                <Footer />
             </Responsive>
         </div>
     );

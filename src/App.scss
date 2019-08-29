@@ -6,12 +6,17 @@
   align-content: center;
 }
 
-.site-title {
+.site-title,
+#footer-site-title {
   font-family: 'Damion', cursive;
   color: #ffcd00 !important;
   font-size: 32px;
   padding: 0 20px !important;
   justify-content: center;
+}
+#footer-site-title {
+  font-size: 22px;
+  font-weight: normal;
 }
 
 .dark {
@@ -46,4 +51,19 @@
 
 nav .page-item {
   cursor: pointer;
+}
+
+// Stick footer to bottom of page
+html {
+  position: relative;
+  min-height: 100%;
+}
+footer {
+  background-color: orange;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
 }
