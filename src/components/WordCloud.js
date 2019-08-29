@@ -11,8 +11,7 @@ import WC from 'react-d3-cloud'
 //   { text: 'news', value: 100 }
 // ]
 
-const fontSizeMapper = word => Math.log2(word.value) * 5;
-const rotate = word => word.value % 360;
+const fontSizeMapper = word => Math.log2(word.value) * 50;
 
 export default function WordCloud({ username }) {
   const [data, setData] = useState([])
@@ -23,7 +22,7 @@ export default function WordCloud({ username }) {
   }, [])
   return (
     <>
-      {data.length > 0 && (<WC data={data} fontSizeMapper={fontSizeMapper} rotate={rotate} />)}
+      {data.length > 0 && (<WC data={data} fontSizeMapper={fontSizeMapper} />)}
     </>
   )
 }
