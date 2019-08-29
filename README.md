@@ -5,18 +5,18 @@
 1. Top 100 users by salt_score. Returns top 100 users with average salt score, # of posts, username, most salty comment, and the score of that comment.  Also, average salt scores across all comments group by day.
 End point: http://hackernews-serving.herokuapp.com/salt
 
-Expected method: `POST -d {"mode": "average"}, {"mode":"total"},  {"mode":"timing"}`
+  Expected method: `POST -d {"mode": "average"}, {"mode":"total"},  {"mode":"timing"}`
 
-CLI: `curl -X POST -H "Content-Type: application/json" -d '{"mode":"total"}' http://hackernews-serving.herokuapp.com/salt`
+  CLI: `curl -X POST -H "Content-Type: application/json" -d '{"mode":"total"}' http://hackernews-serving.herokuapp.com/salt`
 
-Returns: ```[{"salt_score": float,
+  Returns: ```[{"salt_score": float,
               "num_posts": int,
               "username": string,
               "text": string,
               "score": float
               }, {}, ...]```
 
-OR for 'timing' mode, returns
+  OR for 'timing' mode, returns
 `[{"time_ts": string, score": float}, {"time_ts": string, score": float}, {...}, ...]`
 
 2. Wordcloud. Returns user and word counts of his negative sentiment comments.
