@@ -246,8 +246,6 @@ article {
   justify-content: center;
   align-content: center;
 }
-@media (min-width: 1000px) {
-}
 article #application {
   width: 100%;
   padding: 0% 0%;
@@ -278,6 +276,7 @@ article #application img {
   -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid #FECE02;
 }
 @media (min-width: 1000px) {
   article #application img {
@@ -332,7 +331,7 @@ article #application .saltyButton {
   font-family: 'Damion', cursive;
   font-size: 3rem;
   padding: 2% 0%;
-  border: 1px dotted #FAFEFD;
+  border: 2px solid #FECE02;
   border-radius: 90px;
   margin: 5% auto;
   text-shadow: 3px 3px 10px black;
@@ -340,11 +339,6 @@ article #application .saltyButton {
   -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
-}
-@media (min-width: 1000px) {
-  article #application .saltyButton {
-    width: 25%;
-  }
 }
 article #contact {
   width: 100%;
@@ -375,6 +369,7 @@ article #contact img {
   -webkit-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
   box-shadow: 9px 9px 10px rgba(0, 0, 0, 0.5);
+  border: 2px solid #FECE02;
 }
 @media (min-width: 1000px) {
   article #contact img {
@@ -426,6 +421,7 @@ article #contact button {
   border-radius: 20px;
   color: #FAFEFD;
   background: #6D6E7B;
+  border: 2px solid #FECE02;
 }
 /* --------------- Main Page - .socialMediaLinks --------------- */
 .socialMediaLinks {
@@ -454,6 +450,7 @@ article #contact button {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   border-radius: 30px;
+  border: 2px solid #FECE02;
 }
 .fa:hover {
   opacity: 0.7;
