@@ -1,5 +1,5 @@
 import React from 'react';
-import WordCloud from './WordCloud';
+import WordCloud from '../WordCloud';
 import {
     Card,
     Header,
@@ -9,9 +9,11 @@ import {
     Icon,
     Segment,
 } from 'semantic-ui-react';
-import { TimeChart, TwoLevelPieChart } from './Charts.js';
+import { TimeChart } from '../Charts.js';
 import styled from 'styled-components';
 import { UserComments } from './UserComments.js';
+
+import { useStateValue } from '../../state';
 
 const CardContainer = styled.div`
     position: fixed;
@@ -22,15 +24,13 @@ const CardContainer = styled.div`
     }
 `;
 
-const StyledSegment = styled(Segment)`
-    width: 200px;
-    height: 80px;
-    text-align: center;
-`;
-
 const UserProfile = ({ user, saltiUser }) => {
+    const [{ theme }, dispatch] = useStateValue();
+
     let formatNumber = number => {
-        return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        if (number) {
+            return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        }
     };
 
     let formatDate = date => {
@@ -41,24 +41,40 @@ const UserProfile = ({ user, saltiUser }) => {
         return `${day}/${month}/${year}`;
     };
 
+    let about = user.about ? user.about.substring(0, 300) : null;
     let comments = JSON.parse(saltiUser.comments);
+    let submitted = user.submitted ? user.submitted.length : 0;
+
     let pieChartData = [
         { name: 'Salty', value: comments.length },
-        { name: 'All', value: user.submitted.length },
+        { name: 'All', value: submitted },
     ];
+
+    let width =
+        window.innerWidth > 900
+            ? window.innerWidth / 1.7
+            : window.innerWidth / 1.2;
+
+    let timeChartDate = comments.map((comment, index) => {
+        return { name: index, value: comment.score };
+    });
 
     return (
         <Container>
             <Grid stackable>
                 <Grid.Column width={5}>
                     <CardContainer>
-                        <Header as="h1" id="header" content="User Profile" />
+                        <Header
+                            as="h1"
+                            content="User Profile"
+                            inverted={theme === 'dark' ? true : false}
+                        />
                         <Card>
                             <Card.Content>
                                 <Card.Header as="h2" content={user.id} />
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: user.about,
+                                        __html: about,
                                     }}
                                 ></div>
                                 <Card.Description>
@@ -75,7 +91,7 @@ const UserProfile = ({ user, saltiUser }) => {
                                         style={{ marginTop: 10 }}
                                     >
                                         <Icon name="send" />
-                                        {formatNumber(user.submitted.length)}
+                                        {formatNumber(submitted)}
                                         <Label.Detail>Submissions</Label.Detail>
                                     </Label>
                                     <Label
@@ -100,21 +116,24 @@ const UserProfile = ({ user, saltiUser }) => {
                 </Grid.Column>
                 <Grid.Column width={11}>
                     <WordCloud username={user.id} />
-                    <Header as="h2" content="Saltiness vs Non-Salty" />
-                    <div style={{ display: 'flex' }}>
-                        <TwoLevelPieChart data={pieChartData} />
-                        <div style={{ display: 'flex', flexFlow: 'row wrap' }}>
-                            <StyledSegment>
-                                <Header as="p" content={`45`} />
-                                <p>Average Saltiness</p>
-                            </StyledSegment>
-                            <StyledSegment>
-                                <Header as="p" content={`45`} />
-                                <p>Average Saltiness</p>
-                            </StyledSegment>
-                        </div>
-                    </div>
-                    <Header as="h2" content="Saltiest Comments" />
+                    <Header
+                        as="h2"
+                        content="Saltiness per comment"
+                        inverted={theme === 'dark' ? true : false}
+                    />
+
+                    <TimeChart
+                        width={width}
+                        data={timeChartDate}
+                        dataKeyX="name"
+                        dataKeyY="value"
+                    />
+
+                    <Header
+                        as="h2"
+                        content="Saltiest Comments"
+                        inverted={theme === 'dark' ? true : false}
+                    />
                     <UserComments comments={comments} />
                 </Grid.Column>
             </Grid>

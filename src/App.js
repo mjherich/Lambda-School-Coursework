@@ -2,35 +2,36 @@ import React from 'react';
 
 //Import Styles
 import 'semantic-ui-css/semantic.min.css';
-import styled from 'styled-components';
 import './App.scss';
 
 //Import Components
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import { Header, Container } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
 //Custom Components
 import NavBar from './components/NavBar';
-import UserProfileContainer from './components/UserProfileContainer';
+import UserProfileContainer from './components/userProfile/UserProfileContainer';
 import UserList from './components/users/userList';
 import CommentList from './components/comments/commentList';
 
 import { StateProvider } from './state';
 
-import About from "./components/about";
+import About from './components/about';
 //Temp Components
 const Home = () => {
- return (
-   <>
-    <div className="hero">
-      <Link className="cta" to="/top-100-users">Let's Go!</Link>
-    </div>
-  </>
- )};
+    return (
+        <>
+            <div className="hero">
+                <Link className="cta" to="/top-100-users">
+                    Let's Go!
+                </Link>
+            </div>
+        </>
+    );
+};
 const Top100Comments = () => (
     <Header as="h1" content="Top 100 Saltiest Comments" />
 );
-
 
 const App = () => {
     const initialState = {
@@ -38,28 +39,26 @@ const App = () => {
     };
 
     const reducer = (state, action) => {
-        console.log(action);
         switch (action.type) {
-            case 'updateTheme':
-                console.log(action);
-                window.localStorage.setItem('theme', action.payload)
-                return {
-                    ...state,
-                    theme: action.payload,
-                };
+            // case 'updateTheme':
+            //     window.localStorage.setItem('theme', action.payload)
+            //     return {
+            //         ...state,
+            //         theme: action.payload,
+            //     };
             case 'toggleTheme':
-                if (state.theme==="dark") {
-                  window.localStorage.setItem('theme', 'light')
-                  return {
-                    ...state,
-                    theme: 'light',
-                  }
+                if (state.theme === 'dark') {
+                    window.localStorage.setItem('theme', 'light');
+                    return {
+                        ...state,
+                        theme: 'light',
+                    };
                 } else {
-                  window.localStorage.setItem('theme', 'dark')
-                  return {
-                    ...state,
-                    theme: 'dark',
-                  }                  
+                    window.localStorage.setItem('theme', 'dark');
+                    return {
+                        ...state,
+                        theme: 'dark',
+                    };
                 }
             default:
                 return state;

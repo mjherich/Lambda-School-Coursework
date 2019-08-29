@@ -1,71 +1,118 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserCard from "./userCard";
-import { Card, Header } from "semantic-ui-react";
+import { Card, Header, Form, Radio, Container } from "semantic-ui-react";
 import Pagination from "../common/Pagination";
 import "./user.scss";
+import Chart from "./chart";
 
+import { useStateValue } from "../../state";
 
-import { useStateValue } from '../../state';
-
-const UserList = props => {
-  // console.log("props in UserList", props);
-
+const UserList = () => {
   const [users, setUsers] = useState([]);
   const [{ theme }, dispatch] = useStateValue();
+  const [failed, setFailed] = useState(false);
+  const [mode, setMode] = useState("average");
+
 
   useEffect(() => {
     axios
-      .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/salt", {"mode": "average"})
+      .post(
+        "https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/salt",
+        { mode: `${mode}` }
+      )
       .then(response => {
-        console.log('100 users response', response)
+
+        // console.log("100 users response", response);
         let sorted = response.data.sort((a, b) => {
-          return a.score - b.score
-        })
-        setUsers(sorted)
-      
-        // let json = JSON.parse(response.data)
-        // console.log('JSON', json)
+          return a.score - b.score;
+        });
+        setUsers(sorted);
       });
-  }, []);
+  }, [mode]);
+
 
   useEffect(() => {
-    console.log(theme);
     dispatch({
         type: 'updateTheme',
         payload: 'dark',
     });
 }, []);
 
-console.log(theme);
 
-  // return paginated .map over list of users, rendering a UserCard for each
+
+ 
   return (
-<div>
-      <Header id="header" textAlign="center" as="h1">Saltiest 100 Users</Header>
+    <div>
+      <Header id="header" textAlign="center" as="h1">
+        Saltiest 100 Users
+      </Header>
+      <div className="topContent">
+        <Chart users={users} />
+        <Form className="modeToggle">
+          <Form.Field>Rank By:</Form.Field>
+          <Form.Field>
+            <Radio
+              label="Average Saltiness"
+              name="radioGroup"
+              value="average"
+              checked={mode === "average"}
+              onChange={e => {
+                e.preventDefault();
+                setMode("average");
+              }}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Total Saltiness"
+              name="radioGroup"
+              value="total"
+              checked={mode === "total"}
+              onChange={e => {
+                e.preventDefault();
+                setMode("total");
+              }}
+            />
+          </Form.Field>
+        </Form>
+      </div>
       <Card.Group className="cardGroup" itemsPerRow="1">
-        {users !== [] ? (
+
+        {typeof users == "object" && users.length > 0 ? (
           <Pagination
             dataArray={users}
             render={function paginatedData(props) {
               return (
                 <>
                   {props.handleShowCount(10)}
-                  {props.paginatedData.map(function renderPaginatedData(data) {
-                    return <UserCard user={data} />;
+
+                  {props.paginatedData.map(function renderPaginatedData(data, index) {
+                    return <UserCard key={index} user={data} />;
                   })}
                 </>
               );
             }}
           />
         ) : (
-          <h1>Users not found</h1>
+          <div className="loading">
+            {failed 
+            ? <h1>failed to load resource</h1>
+            //  credit to https://loading.io/css/
+            : <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            }
+            {(function checkUsers(){
+              return setTimeout(function inTenSeconds(){
+                if(users.length == 0){
+                  setFailed(true);
+                }
+                return null;
+              },10000)
+            })()}
+          </div>
         )}
-        {/* {uses.map(user => {
-          return <UserCard user={user} props={props} />;
-        })} */}
       </Card.Group>
-</div>
+    </div>
   );
 };
 

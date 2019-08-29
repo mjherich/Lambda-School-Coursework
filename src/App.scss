@@ -1,9 +1,13 @@
 .App {
-  text-align: center;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
+    text-align: center;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+    @media only screen and (max-width: 767px) {
+        background-color: '#041f42';
+    }
 }
 
 .site-title,
@@ -53,17 +57,7 @@ nav .page-item {
   cursor: pointer;
 }
 
-// Stick footer to bottom of page
-html {
-  position: relative;
-  min-height: 100%;
-}
-footer {
-  background-color: orange;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 100px;
-  width: 100%;
-  overflow: hidden;
+// Make footer spread entire width
+.footer .ui.inverted.vertical.segment {
+  margin: 0 -15px !important;
 }

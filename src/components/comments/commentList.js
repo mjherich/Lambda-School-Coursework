@@ -15,17 +15,17 @@ const CommentList = props => {
       .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/comment", { "username": "swombat" })
       .then(response => {
         console.log("Comments post response", response.data);
-        // let sortedBySalt = response.data.sort((a, b) => {
-        //   return b.saltyScore - a.saltyScore;
-        // });
+        let sortedBySalt = response.data.sort((a, b) => {
+          return a.score - b.score;
+        });
         // console.log("sortedBySalt", sortedBySalt);
-        setComments(response.data);
+        setComments(sortedBySalt);
       });
   }, []);
 
   // return .map over list of comments, rendering a CommentCard for each
   return (
-    <>
+<div>
       <Header id="header" textAlign="center" as="h1">Saltiest 100 Comments</Header>
       <Card.Group className="cardGroup" itemsPerRow="1">
         {comments !== [] ? <Pagination
@@ -35,15 +35,15 @@ const CommentList = props => {
               <>
                 {props.handleShowCount(10)}
                 {props.paginatedData.map(function renderPaginatedData(data) {
-                  return <CommentCard comment={data} />;
+                  return <CommentCard comment={data} key={data.username}/>;
                 })}
               </>
             );
           }}
         /> : <h1>Comments not found</h1>}
-
+  
       </Card.Group>
-    </>
+</div>
   );
 };
 
