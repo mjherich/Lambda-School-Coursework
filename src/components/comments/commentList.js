@@ -12,7 +12,7 @@ const CommentList = props => {
   // axios inside useEffect to get list of users, and inside .then sorts this array by saltiness and does setUsers with result
   useEffect(() => {
     axios
-      .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/comment", {"username": "swombat"})
+      .post("https://cors-anywhere.herokuapp.com/http://hackernews-serving.herokuapp.com/comment", { "username": "swombat" })
       .then(response => {
         console.log("Comments post response", response.data);
         let sortedBySalt = response.data.sort((a, b) => {
