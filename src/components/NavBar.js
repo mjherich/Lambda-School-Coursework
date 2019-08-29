@@ -65,8 +65,8 @@ const NavBarDesktop = () => {
     const [{ theme }, dispatch] = useStateValue();
 
     return (
-        <Menu inverted={theme ? 'inverted' : null} fixed="top" size="large">
-            <Menu.Item as={Link} to="/" name="home" content="Home" />
+        <Menu inverted={theme==='dark' ? 'inverted' : null} fixed="top" size="large">
+            <Menu.Item as={Link} to="/" className="site-title" name="home" content="Salty Hackers" />
             <Menu.Item
                 as={Link}
                 to="/top-100-users"
@@ -88,13 +88,13 @@ const NavBarDesktop = () => {
             <Menu.Item>
                 <Checkbox
                     toggle
-                    defaultChecked
+                    defaultChecked={theme==="dark" ? true : false}
                     style={{ marginTop: 10 }}
-                    onClick={() =>
+                    onClick={e => {
                         dispatch({
-                            type: 'updateTheme',
-                            payload: theme ? false : true,
+                            type: 'toggleTheme'
                         })
+                      }
                     }
                 />
             </Menu.Item>
@@ -111,7 +111,8 @@ const NavBarChildren = ({ children }) => {
     return (
         <Container
             fluid
-            style={{ paddingTop: 80, backgroundColor: theme && '#041f42' }}
+            className={theme}
+            style={{ paddingTop: 80, backgroundColor: theme==='dark' && '#041f42' }}
         >
             {children}
         </Container>
