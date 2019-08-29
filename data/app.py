@@ -327,16 +327,14 @@ def serve_ranks():
                                   status=400,
                                   mimetype='application/json')
                                   
-    if mode not in ['average', 'total']:
+    if mode in ['average', 'total']:
+        result_json = salt_rank(mode)
+    elif mode in ['timing']:
+        result_json = salt_time()
+    else:
         return app.response_class(response=json.dump({}),
                                   status=400,
                                   mimetype='application/json')
-                                  
-    rank_json = salt_rank(mode)
-    time_json = salt_time()
-    
-    result = { 'ranking' : rank_json, 'timing' : time_json}
-    result_json = json.dumps(result)
 
     return result_json
 
