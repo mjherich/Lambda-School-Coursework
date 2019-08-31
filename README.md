@@ -2,6 +2,8 @@
 
 ![Architecture image](https://github.com/Saltiest-Hacker-News-Trolls/bw-saltiest-hacker-news-trolls-DS/blob/master/Backend_architecture_image.png)
 
+[Technical Design Doc](https://docs.google.com/document/d/1lPI9yx3g5VGFWusxn_U5BfgOXBkrin4-mCu3XJHoqaI/)
+
 ## 1. Top 100 users by salt_score and saltiness by time
 Returns top 100 users according to either average or total salt score. Each row includes average/total salt score, # of posts, username, most salty comment, and the score of that comment. Also has optionality of outputting average salt scores across all comments group by day.
 
