@@ -1,0 +1,36 @@
+// Mixins Here
+.flex(@direction: row, @justify: flex-start, @align: stretch, @wrap: nowrap) {
+  display: flex;
+  flex-direction: @direction;
+  justify-content: @justify;
+  align-items: @align;
+  flex-wrap: @wrap;
+}
+
+.button(@bg-color: @red, @font-color: #fff) {
+  .flex(row, center, center);
+  width: 10em;
+  margin: 2.5rem 0 0;
+
+  a {
+    .flex(row, center, center);
+    background: @bg-color;
+    color: @font-color;
+    width: 100%;
+    border-radius: 2px;
+    padding: 1rem 0;
+    font-size: 1.6rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+
+    @media @phone {
+      background: @bg-color;
+    }
+
+    &:hover {
+      background: #fff;
+      color: @bg-color;
+    }
+  }
+}
