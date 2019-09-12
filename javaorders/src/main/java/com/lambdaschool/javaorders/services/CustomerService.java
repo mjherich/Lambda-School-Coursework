@@ -7,7 +7,8 @@ import java.util.List;
 public interface CustomerService
 {
     List<Customer> findAll();
-    Customer findByCustomerName(String name);
+
+    Customer findByCustomerName(String custname);
 
     void delete(long id);
 
