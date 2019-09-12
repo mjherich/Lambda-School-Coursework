@@ -21,21 +21,21 @@ public class Order
 
     @ManyToOne
     @JoinColumn(name = "custcode",
-            nullable = false)
-    @JsonIgnoreProperties("orders")
+            nullable = false,
+            insertable = false,
+            updatable = false)
     private Customer customer;
 
     public Order()
     {
     }
 
-    public Order(double ordamount, double advanceamount, String orddescription, long custcode, Customer customer)
+    public Order(double ordamount, double advanceamount, Customer customer, String orddescription)
     {
         this.ordamount = ordamount;
         this.advanceamount = advanceamount;
-        this.orddescription = orddescription;
-        this.custcode = custcode;
         this.customer = customer;
+        this.orddescription = orddescription;
     }
 
     public long getOrdnum()
