@@ -3,6 +3,8 @@ package com.lambdaschool.javaorders.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -25,11 +27,18 @@ public class Customer
     private double outstandingamt;
     private String phone;
 
+    // @JsonIgnoreProperties("customers")
+    // Map Customers to Agent
     @ManyToOne
     @JoinColumn(name = "agentcode",
             nullable = false)
-    @JsonIgnoreProperties("customers")
     private Agent agent;
+
+    // Map Orders to Customer
+    @OneToMany(mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     public Customer()
     {
@@ -168,5 +177,10 @@ public class Customer
     public void setAgent(Agent agent)
     {
         this.agent = agent;
+    }
+
+    public List<Order> getOrders()
+    {
+        return orders;
     }
 }
