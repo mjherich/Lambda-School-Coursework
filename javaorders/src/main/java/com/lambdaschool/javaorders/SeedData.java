@@ -1,4 +1,4 @@
-package com.lambdaschool.orders;
+package com.lambdaschool.javaorders;
 
 import com.lambdaschool.javaorders.models.Agent;
 import com.lambdaschool.javaorders.models.Customer;
