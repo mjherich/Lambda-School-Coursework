@@ -8,4 +8,8 @@ public interface CustomerService
 {
     List<Customer> findAll();
     Customer findByCustomerName(String name);
+
+    void delete(long id);
+
+    Customer save(Customer customer);
 }
