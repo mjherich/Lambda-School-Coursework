@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 
-import StudentDashboard from './components/Student/StudentDashboard';
+import AddTicket from './components/Student/AddTicket';
 
 function App() {
   return (
     <div className="App">
-      <StudentDashboard />
+      <AddTicket />
     </div>
   );
 }
