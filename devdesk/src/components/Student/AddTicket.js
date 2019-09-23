@@ -32,6 +32,7 @@ const AddTicket = () => {
             <form onSubmit={handleSubmit}>
                 <label>Title</label>
                 <input type='text' name='title' placeholder='Title' value={ticket.title} onChange={handleChange} />
+                <label>Category</label>
                 <select name='category' onChange={handleChange} value={ticket.category}>
                     <option>Select a category</option>
                     <option value="html">HTML</option>
