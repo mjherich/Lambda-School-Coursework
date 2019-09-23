@@ -24,14 +24,15 @@ const AddTicket = () => {
     const handleSubmit = (e) => {
         //axiosWithAuth post request here after adding StudentID and randomly assigning ticket id
         e.preventDefault();
+        setTicket(initialTicket);
     }
-
+    console.log(ticket);
     return (
         <div>
             <form onSubmit={handleSubmit}>
                 <label>Title</label>
                 <input type='text' name='title' placeholder='Title' value={ticket.title} onChange={handleChange} />
-                <select name='category' onChange={handleChange}>
+                <select name='category' onChange={handleChange} value={ticket.category}>
                     <option>Select a category</option>
                     <option value="html">HTML</option>
                     <option value="css">CSS</option>
@@ -41,7 +42,7 @@ const AddTicket = () => {
                     <option value="other">Other</option>
                 </select>
                 <label>Description</label>
-                <textarea name='description' placeholder='How can I ....' onChange={handleChange} />
+                <textarea name='description' placeholder='How can I ....' onChange={handleChange} value={ticket.description} />
                 <button type='submit'>Submit Ticket</button>
             </form>
         </div>
