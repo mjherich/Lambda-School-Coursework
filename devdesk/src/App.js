@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
 
+import StudentDashboard from './components/Student/StudentDashboard';
+
 function App() {
   return (
     <div className="App">
-      Test
+      <StudentDashboard />
     </div>
   );
 }
