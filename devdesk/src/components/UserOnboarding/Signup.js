@@ -9,21 +9,47 @@ const StyledFormikDiv = styled.div`
     width: 16rem;
     height: 20rem;
     border-radius: 10px;
+    margin-top: 2rem;
+    padding: 1rem;
     display: flex;
-    flex-direction: column;
-    justify-items: space-between;
-    align-items: center;
+    justify-content: center;
+
+    form {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative; /* Necessary for "position: absolute" on button to work! */
+    }
 
     .form-title {
-        border: 1px solid red;
+        margin-bottom: 2rem;
+
+        h2 {
+            font-size: 3rem;
+        }
     }
 
     .field {
-        border: 1px solid red;
+        margin-bottom: 1rem;
+
+        &:nth-last-of-type(1) {
+            margin-bottom: 2rem;
+        }
+
+        .radio {
+            height: 1.5rem;
+        }
+
+        p { /* Error messages. */
+            color: red;
+        }
     }
 
-    button {
-        
+    .submit-button {
+        position: absolute;
+        bottom: 0;
     }
 `;
 
@@ -71,20 +97,26 @@ export default function Signup(props) {
                             </div>
                             <div className="field">
                                 <Field name="username" type="text" placeholder=" Username" />
-                                <ErrorMessage name="username" component="div" />
+                                <ErrorMessage name="username" component="p" />
                             </div>
                             <div className="field">
                                 <Field name="password" type="password" placeholder=" Password" />
-                                <ErrorMessage name="password" component="div" />
+                                <ErrorMessage name="password" component="p" />
                             </div>
                             <div className="field">
-                                Student
-                                <Field name="userType" type="radio" value="student" />
-                                Helper
-                                <Field name="userType" type="radio" value="helper" />
-                                <ErrorMessage name="userType" component="div" />
+                                <div className="radio">
+                                    <span>Student</span>
+                                    <Field name="userType" type="radio" value="student" />
+                                </div>
+                                <div className="radio">
+                                    <span>Helper</span>
+                                    <Field name="userType" type="radio" value="helper" />
+                                </div>
+                                <ErrorMessage name="userType" component="p" />
                             </div>
-                            <button type="submit">Sign Up</button>
+                            <div className="submit-button">
+                                <button type="submit">Sign Up</button>
+                            </div>
                         </Form>
                     )
                 }}
