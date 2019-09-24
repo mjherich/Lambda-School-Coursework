@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 
-import AddTicket from './components/Student/AddTicket'
+import AnswerTicket from './components/Helper/AnswerTicket'
 
 function App() {
 
   return (
     <div className="App">
-      <AddTicket />
+      <AnswerTicket />
     </div>
   );
 }

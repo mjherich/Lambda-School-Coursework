@@ -40,6 +40,11 @@
   margin: 2% auto;
 }
 
+.form-div h2{
+  font-size:2rem;
+  padding:2%;
+}
+
 .form-div form {
   display:flex;
   flex-direction:column;

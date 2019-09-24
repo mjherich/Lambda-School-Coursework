@@ -14,14 +14,15 @@ const AnswerTicket = () => {
         //redirect to dashboard or individual ticket route to see updated ticket
     }
     return (
-        <div>
+        <div className='form-div'>
+            <h2>Answer Ticket Form</h2>
             <div>
                 <h3>{ticket.title}</h3>
                 <p>{ticket.category}</p>
                 <p>{ticket.description}</p>
             </div>
             <form onSubmit={handleSubmit}>
-                <label>Response</label>
+                <label>Response:</label>
                 <textarea value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder='Answer here' />
                 <button type='submit'>Submit</button>
             </form>
