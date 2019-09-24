@@ -168,4 +168,27 @@ public class UserController
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping(value = "/createStudent",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewStudent(HttpServletRequest request, @Valid
+    @RequestBody
+            User newstudent) throws URISyntaxException
+    {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        newstudent = userService.saveStudent(newstudent);
+
+        // set the location header for the newly created resource
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{userid}")
+                .buildAndExpand(newstudent.getUserid())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
 }
