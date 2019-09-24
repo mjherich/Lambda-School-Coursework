@@ -5,7 +5,7 @@ import TicketList from '../Ticket/TicketList';
 const HelperDashboard = () => {
 
     return (
-        <div>
+        <div className='dashboard'>
             <h2>Helper Dashboard</h2>
             <TicketList />
         </div>

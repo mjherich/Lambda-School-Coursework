@@ -3,3 +3,30 @@
   width: 100vw;
   height: 100vh;
 }
+
+.dashboard {
+  background: rgb(141,233,105, 0.5) ;
+  width: 80%;
+  margin: 2% auto;
+}
+
+
+.ticket-grid {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1%;
+}
+
+.ticket-link {
+  width:23%;
+  margin:1%;
+  padding:1%;
+  background:white;
+  color:black;
+  text-decoration:none;
+}
+
+.ticket-card p {
+ margin:4%;
+}
