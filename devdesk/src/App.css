@@ -4,6 +4,7 @@
   height: 100vh;
 }
 
+/* Dashboard Styles */
 .dashboard {
   background: rgb(141,233,105, 0.5) ;
   width: 80%;
@@ -30,3 +31,34 @@
 .ticket-card p {
  margin:4%;
 }
+
+/* Form Styles */
+
+.form-div{
+  background: rgb(141,233,105, 0.5) ;
+  width: 80%;
+  margin: 2% auto;
+}
+
+.form-div form {
+  display:flex;
+  flex-direction:column;
+  width: 40%;
+  margin: 0 auto;
+  padding:2%;
+}
+
+.form-div input, .form-div select, .form-div textarea {
+ padding: 2%;
+ margin:2% 0%;
+}
+
+ .form-div button {
+   width:30%;
+   margin:0 auto;
+   background: #8DE969 ;
+   border:none;
+   padding:2%;
+   border-radius:10px;
+   cursor: pointer;
+ }

@@ -26,14 +26,15 @@ const AddTicket = () => {
         e.preventDefault();
         setTicket(initialTicket);
     }
-    console.log(ticket);
+
     return (
-        <div>
+        <div className='form-div'>
+            <h2>Add Ticket Form</h2>
             <form onSubmit={handleSubmit}>
                 <label>Title</label>
-                <input type='text' name='title' placeholder='Title' value={ticket.title} onChange={handleChange} />
+                <input className='inputs' type='text' name='title' placeholder='Title' value={ticket.title} onChange={handleChange} />
                 <label>Category</label>
-                <select name='category' onChange={handleChange} value={ticket.category}>
+                <select className='inputs' name='category' onChange={handleChange} value={ticket.category}>
                     <option>Select a category</option>
                     <option value="html">HTML</option>
                     <option value="css">CSS</option>
@@ -43,7 +44,7 @@ const AddTicket = () => {
                     <option value="other">Other</option>
                 </select>
                 <label>Description</label>
-                <textarea name='description' placeholder='How can I ....' onChange={handleChange} value={ticket.description} />
+                <textarea className='inputs' name='description' placeholder='How can I ....' onChange={handleChange} value={ticket.description} />
                 <button type='submit'>Submit Ticket</button>
             </form>
         </div>
