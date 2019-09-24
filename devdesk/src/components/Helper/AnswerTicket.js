@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import ticketArray from '../../MockData'
+import axiosWithAuth from '../../utils/axiosWithAuth';
 
 const AnswerTicket = () => {
     const [answer, setAnswer] = useState('');
@@ -10,8 +11,12 @@ const AnswerTicket = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         //axiosWithAuth put request here- change answer, helper id, and closed properties
+        axiosWithAuth().put('url/id', answer)
+            .then(res => console.log(res))
+            .catch(err => console.log('AddTicket.js: Post: ', err));
         setAnswer('');
         //redirect to dashboard or individual ticket route to see updated ticket
+        //move to actions file
     }
     return (
         <div className='form-div'>
