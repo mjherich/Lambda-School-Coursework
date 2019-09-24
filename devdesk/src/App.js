@@ -27,7 +27,7 @@ function App() {
       />
       <Route path="/signup/" render={(props) => <Signup {...props} signupValues={signupValues} />} />
       <Route path="/login/" render={(props) => <Login {...props} />} />
-      <Route path="/student-dashboard" render={() => <StudentDashboard {...props}/>} />
+      <Route path="/student-dashboard" render={(props) => <StudentDashboard {...props}/>} />
     </div>
   );
 }
