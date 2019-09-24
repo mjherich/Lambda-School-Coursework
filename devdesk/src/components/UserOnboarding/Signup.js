@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const StyledFormikDiv = styled.div`
     background: darkslategrey;
@@ -64,8 +64,8 @@ export default function Signup(props) {
             userType: formValues.userType,
         }
 
-        console.log(userToPost); // In lieu of an axios.post...
-        actions.resetForm();
+        console.log(userToPost); // In lieu of an axios.post...      
+        props.history.push("/login/");
     };
 
     const validationSchema = yup.object().shape({

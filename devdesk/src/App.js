@@ -23,6 +23,7 @@ function App() {
         }
       />
       <Route path="/signup/" render={(props) => <Signup {...props} signupValues={signupValues} />} />
+      <Route path="/login/" render={(props) => <Login {...props} />} />
     </div>
   );
 }
