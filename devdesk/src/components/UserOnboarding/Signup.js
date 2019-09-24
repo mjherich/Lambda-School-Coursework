@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledFormikDiv = styled.div`
     background: darkslategrey;
@@ -84,43 +85,46 @@ export default function Signup(props) {
     });
 
     return (
-        <StyledFormikDiv className="signup-form">
-            <Formik 
-                initialValues={signupValues}
-                onSubmit={onSubmit}
-                validationSchema={validationSchema}
-                render={props => {
-                    return (
-                        <Form>
-                            <div className="form-title">
-                                <h2>Sign Up</h2>
-                            </div>
-                            <div className="field">
-                                <Field name="username" type="text" placeholder=" Username" />
-                                <ErrorMessage name="username" component="p" />
-                            </div>
-                            <div className="field">
-                                <Field name="password" type="password" placeholder=" Password" />
-                                <ErrorMessage name="password" component="p" />
-                            </div>
-                            <div className="field">
-                                <div className="radio">
-                                    <span>Student</span>
-                                    <Field name="userType" type="radio" value="student" />
+        <>
+            <Link to="/">Homepage</Link>
+            <StyledFormikDiv className="signup-form">
+                <Formik 
+                    initialValues={signupValues}
+                    onSubmit={onSubmit}
+                    validationSchema={validationSchema}
+                    render={props => {
+                        return (
+                            <Form>
+                                <div className="form-title">
+                                    <h2>Sign Up</h2>
                                 </div>
-                                <div className="radio">
-                                    <span>Helper</span>
-                                    <Field name="userType" type="radio" value="helper" />
+                                <div className="field">
+                                    <Field name="username" type="text" placeholder=" Username" />
+                                    <ErrorMessage name="username" component="p" />
                                 </div>
-                                <ErrorMessage name="userType" component="p" />
-                            </div>
-                            <div className="submit-button">
-                                <button type="submit">Sign Up</button>
-                            </div>
-                        </Form>
-                    )
-                }}
-            />
-        </StyledFormikDiv>
+                                <div className="field">
+                                    <Field name="password" type="password" placeholder=" Password" />
+                                    <ErrorMessage name="password" component="p" />
+                                </div>
+                                <div className="field">
+                                    <div className="radio">
+                                        <span>Student</span>
+                                        <Field name="userType" type="radio" value="student" />
+                                    </div>
+                                    <div className="radio">
+                                        <span>Helper</span>
+                                        <Field name="userType" type="radio" value="helper" />
+                                    </div>
+                                    <ErrorMessage name="userType" component="p" />
+                                </div>
+                                <div className="submit-button">
+                                    <button type="submit">Sign Up</button>
+                                </div>
+                            </Form>
+                        )
+                    }}
+                />
+            </StyledFormikDiv>
+        </>
     )
 }
