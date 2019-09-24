@@ -1,14 +1,15 @@
-import React from "react";
-import { Route, Link } from "react-router-dom";
+import React from 'react'
 
-export default function StudentDashboard(props) {
-    const {id} = props;
-    console.log("yo");
+import TicketList from '../Ticket/TicketList';
+
+const StudentDashboard = () => {
 
     return (
-        <>
-            <Link to="/">Homepage</Link>
-            <p>Student id {id}</p>
-        </>
+        <div>
+            <h2>Student Dashboard</h2>
+            <TicketList />
+        </div>
     )
 }
+
+export default StudentDashboard;
