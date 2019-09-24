@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 export default function Login(props) {
 
     return (
-        <Link to="/">Homepage</Link>
+        <>
+            <Link to="/">Homepage</Link>
+        </>
     )
 }

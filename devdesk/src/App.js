@@ -19,6 +19,7 @@ function App() {
           <>
             <div>Homepage</div><br/>
             <Link to="/signup/">Signup</Link><br/>
+            <Link to="/login/">Login</Link>
           </>
         }
       />
