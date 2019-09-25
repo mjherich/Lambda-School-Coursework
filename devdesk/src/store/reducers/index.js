@@ -1,13 +1,14 @@
 import {
     FETCH_TICKETS_START, FETCH_TICKETS_SUCCESS, FETCH_TICKETS_FAIL,
     PUT_TICKET_START, POST_TICKET_START, POST_TICKET_SUCCESS, POST_TICKET_FAIL,
-    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL
+    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL, FETCH_SINGLE_TICKET_START, FETCH_SINGLE_TICKET_SUCCESS, FETCH_SINGLE_TICKET_FAIL
 } from '../actions'
 
 const initialState = {
     userType: '',
     user: '',
     ticketArray: '',
+    singleTicket: '',
     getError: '',
     postError: '',
     putError: '',
@@ -33,6 +34,24 @@ export const reducer = (state = initialState, action) => {
                 user: ,
             };
         case FETCH_TICKETS_FAIL:
+            return {
+                ...state,
+                isGetting: false,
+                getError: action.payload,
+            };
+        case FETCH_SINGLE_TICKET_START:
+            return {
+                ...state,
+                isGetting: true,
+                getError: '',
+            };
+        case FETCH_SINGLE_TICKET_SUCCESS:
+            return {
+                ...state,
+                isGetting: false,
+                singleTicket: ,
+            };
+        case FETCH_SINGLE_TICKET_FAIL:
             return {
                 ...state,
                 isGetting: false,

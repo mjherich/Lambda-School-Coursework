@@ -11,6 +11,17 @@ export const fetchTickets = () => dispatch => {
         .catch(err => console.log(err))
 }
 
+export const FETCH_SINGLE_TICKET_START = 'FETCH_SINGLE_TICKET_START';
+export const FETCH_SINGLE_TICKET_SUCCESS = 'FETCH_SINGLE_TICKET_SUCCESS';
+export const FETCH_SINGLE_TICKET_FAIL = 'FETCH_SINGLE_TICKET_FAIL';
+
+export const fetchTickets = () => dispatch => {
+    dispatch({ type: FETCH_SINGLE_TICKET_START });
+    axiosWithAuth().get('url')
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+}
+
 export const POST_TICKET_START = 'POST_TICKET_START';
 export const POST_TICKET_SUCCESS = 'POST_TICKET_SUCCESS';
 export const POST_TICKET_FAIL = 'POST_TICKET_FAIL';
