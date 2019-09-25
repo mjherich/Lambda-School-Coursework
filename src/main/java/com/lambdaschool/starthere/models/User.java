@@ -19,10 +19,6 @@ public class User extends Auditable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long helperid;
-
     @Column(nullable = false,
             unique = true)
     private String username;
@@ -41,11 +37,6 @@ public class User extends Auditable
                orphanRemoval = true)
     @JsonIgnoreProperties("user")
     private List<Useremail> useremails = new ArrayList<>();
-
-    @OneToMany(mappedBy = "student",
-                cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("user")
-    private List<Ticket> tickets = new ArrayList<>();
 
     public User()
     {
@@ -68,13 +59,12 @@ public class User extends Auditable
         this.userroles = userRoles;
     }
 
-    public User(String username, String password, List<UserRoles> userroles, List<Useremail> useremails, List<Ticket> tickets)
+    public User(String username, String password, List<UserRoles> userroles, List<Useremail> useremails)
     {
         this.username = username;
         this.password = password;
         this.userroles = userroles;
         this.useremails = useremails;
-        this.tickets = tickets;
     }
 
     public long getUserid()
@@ -131,26 +121,6 @@ public class User extends Auditable
     public void setUseremails(List<Useremail> useremails)
     {
         this.useremails = useremails;
-    }
-
-    public long getHelperid()
-    {
-        return helperid;
-    }
-
-    public void setHelperid(long helperid)
-    {
-        this.helperid = helperid;
-    }
-
-    public List<Ticket> getTickets()
-    {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets)
-    {
-        this.tickets = tickets;
     }
 
     public List<SimpleGrantedAuthority> getAuthority()

@@ -21,6 +21,8 @@ public interface UserService
 
     User saveStudent(User user);
 
+    User saveHelper(User user);
+
     User update(User user, long id, boolean isAdmin);
 
     void deleteUserRole(long userid, long roleid);

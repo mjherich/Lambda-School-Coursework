@@ -41,7 +41,25 @@ public class TicketServiceImpl implements TicketService
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(ticketid)));
         User helper = userrepos.findById(helperid)
                 .orElseThrow(() -> new EntityNotFoundException(Long.toString(helperid)));
-        ticket.setUser(helper);
+        ticket.setHelper(helper);
         ticketrepos.save(ticket);
+    }
+
+    @Override
+    public List<Ticket> findTicketsByUsername(String username)
+    {
+        List<Ticket> tickets = new ArrayList<>();
+        ticketrepos.findAll().iterator().forEachRemaining(tickets::add);
+        tickets.removeIf(t -> !t.getStudent().getUsername().equalsIgnoreCase(username));
+        return tickets;
+    }
+
+    @Override
+    public void addAnswer(String answer, long ticketid)
+    {
+        Ticket t = ticketrepos.findById(ticketid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(ticketid)));
+        t.setResponse(answer);
+        ticketrepos.save(t);
     }
 }

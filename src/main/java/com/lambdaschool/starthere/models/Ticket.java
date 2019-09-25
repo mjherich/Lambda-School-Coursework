@@ -26,10 +26,17 @@ public class Ticket
     private boolean active = true;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid",
+    @JoinColumn(name = "studentid",
+            referencedColumnName = "userid",
             nullable = false)
     @JsonIgnoreProperties({"tickets", "hibernateLazyInitializer"})
     private User student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "helperid",
+            referencedColumnName = "userid")
+    @JsonIgnoreProperties({"tickets", "hibernateLazyInitializer"})
+    private User helper;
 
     public Ticket()
     {
@@ -111,5 +118,15 @@ public class Ticket
     public void setStudent(User student)
     {
         this.student = student;
+    }
+
+    public User getHelper()
+    {
+        return helper;
+    }
+
+    public void setHelper(User helper)
+    {
+        this.helper = helper;
     }
 }

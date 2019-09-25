@@ -139,6 +139,34 @@ public class UserServiceImpl implements UserDetailsService, UserService
         return userrepos.save(newStudent);
     }
 
+    @Transactional
+    @Override
+    public User saveHelper(User helper)
+    {
+        if (userrepos.findByUsername(helper.getUsername()) != null)
+        {
+            throw new ResourceFoundException(helper.getUsername() + " is already taken!");
+        }
+
+        User newHelper = new User();
+        newHelper.setUsername(helper.getUsername());
+        newHelper.setPasswordNoEncrypt(helper.getPassword());
+
+        // Setting student role
+        ArrayList<UserRoles> students = new ArrayList<>();
+        students.add(new UserRoles(new User(), new Role("helper")));
+        newHelper.setUserroles(students);
+
+        for (Useremail ue : helper.getUseremails())
+        {
+            newHelper.getUseremails()
+                    .add(new Useremail(newHelper, ue.getUseremail()));
+        }
+
+        return userrepos.save(newHelper);
+    }
+
+
 
     @Transactional
     @Override
