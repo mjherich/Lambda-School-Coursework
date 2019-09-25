@@ -3,7 +3,6 @@ import { Button, Form, FormGroup, Label, Input, } from 'reactstrap';
 import { withFormik} from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 const FormDiv = styled.div `
 border: 1px solid black;
@@ -18,8 +17,6 @@ width: 80%;
 export default class Login extends React.Component {
   render() {
     return (
-      <>
-      <Link to="/">Homepage</Link>
         <FormDiv>
           <Form>
             <FormGroup>
@@ -42,7 +39,6 @@ export default class Login extends React.Component {
             <Button>Submit</Button>
           </Form>
         </FormDiv>
-      </>
     );
   }
 }

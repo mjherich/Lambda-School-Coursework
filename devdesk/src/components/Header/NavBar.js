@@ -45,12 +45,12 @@ const StyledNavBar = styled.div`
         &[dropdown="false"] {
             width: 0;
         }
-
         &[dropdown="true"] {
             width: 10rem;
         }
-
         transition: width 0.5s;
+
+        overflow: hidden;
     }
 `;
 
@@ -76,7 +76,18 @@ export default function NavBar(props) {
                 </div>
             </div>
             <div className="dropdown" dropdown={dropDown}>
-
+                <div className="link-button" onClick={toggleDropDown}>
+                    <Link to="/">Home</Link>
+                </div>
+                <div className="link-button" onClick={toggleDropDown}>
+                    <Link to="/signup">Signup</Link>
+                </div>
+                <div className="link-button" onClick={toggleDropDown}>
+                    <Link to="/login">Login</Link>
+                </div>
+                <div className="link-button" onClick={toggleDropDown}>
+                    <Link to="/student-dashboard/">Dashboard</Link>
+                </div>
             </div>
         </StyledNavBar>
     )
