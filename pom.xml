@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lambdaschool</groupId>
-    <artifactId>starthere</artifactId>
+    <artifactId>devdeskqueue</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>starthere</name>
-    <description>Demo project for Spring Boot</description>
+    <name>devdeskqueue</name>
+    <description>Lambda School Build Week Project</description>
 
     <properties>
         <java.version>11</java.version>
@@ -136,7 +136,7 @@
 
     <build>
 <!--        <finalName>${project.artifactId}</finalName>-->
-        <finalName>jrmmba-oauthmin</finalName>
+        <finalName>lambda-dev-desk-queue</finalName>
 
         <plugins>
             <plugin>
