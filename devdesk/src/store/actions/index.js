@@ -21,3 +21,14 @@ export const postTicket = (ticket) => dispatch => {
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }
+
+export const PUT_TICKET_START = 'PUT_TICKET_START';
+export const PUT_TICKET_SUCCESS = 'PUT_TICKET_SUCCESS';
+export const PUT_TICKET_FAIL = 'PUT_TICKET_FAIL';
+
+export const putTicket = (ticket) => dispatch => {
+    dispatch({ type: PUT_TICKET_START });
+    axiosWithAuth().post(`url/${ticket.id}`, ticket)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+}
