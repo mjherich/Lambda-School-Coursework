@@ -5,15 +5,16 @@ import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 
 const StyledFormikDiv = styled.div`
-    background: darkslategrey;
-    margin: 0 auto;
-    width: 16rem;
-    height: 20rem;
-    border-radius: 10px;
-    margin-top: 2rem;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
+        background: #74BF56;
+        margin: 0 auto;
+        width: 16rem;
+        height: 20rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 3rem;
 
     form {
         height: 100%;
@@ -21,7 +22,7 @@ const StyledFormikDiv = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
-        position: relative; /* Necessary for "position: absolute" on button to work! */
+         /* Necessary for "position: absolute" on button to work! */
     }
 
     .form-title {
@@ -49,8 +50,7 @@ const StyledFormikDiv = styled.div`
     }
 
     .submit-button {
-        position: absolute;
-        bottom: 0;
+       
     }
 `;
 
