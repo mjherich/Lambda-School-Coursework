@@ -11,9 +11,10 @@ const DynamicTicket = (props) => {
     return (
         <div>
             <h3>{ticket.title}</h3>
+            <p>Status: {ticket.closed}</p>
             <p>{ticket.category}</p>
             <p>{ticket.description}</p>
-            <p>{ticket.answer}</p>
+            {ticket.answer ? <p>{ticket.answer}</p> : null}
         </div>
     )
 }

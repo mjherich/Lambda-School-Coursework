@@ -6,8 +6,8 @@ import ticketArray from '../../MockData';
 
 const TicketList = () => {
     return (
-        <div>
-            {ticketArray.map(ticket => <Link to={`/ticket/${ticket.id}`} ><TicketCard key={ticket.id} ticket={ticket} /> </Link>)}
+        <div className='ticket-grid'>
+            {ticketArray.map(ticket => <Link className='ticket-link' to={`/ticket/${ticket.id}`} ><TicketCard key={ticket.id} ticket={ticket} /> </Link>)}
         </div>
     )
 }
