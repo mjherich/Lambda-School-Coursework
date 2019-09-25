@@ -86,7 +86,10 @@ export default function NavBar(props) {
                     <Link to="/login">Login</Link>
                 </div>
                 <div className="link-button" onClick={toggleDropDown}>
-                    <Link to="/student-dashboard/">Dashboard</Link>
+                    <Link to="/student-dashboard/">Student Dashboard</Link>
+                </div>
+                <div className="link-button" onClick={toggleDropDown}>
+                    <Link to="/helper-dashboard/">Helper Dashboard</Link>
                 </div>
             </div>
         </StyledNavBar>
