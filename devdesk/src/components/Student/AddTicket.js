@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import axiosWithAuth from '../../utils/axiosWithAuth';
 
@@ -59,4 +60,10 @@ const AddTicket = () => {
     )
 }
 
-export default AddTicket;
+const mapStateToProps = (state) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, {})(AddTicket);
