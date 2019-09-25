@@ -49,4 +49,12 @@ public class TicketController
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
+
+    @PutMapping(value = "/{ticketid}/assign/{userid}", produces = {"application/json"})
+    public ResponseEntity<?> assignTicket(@PathVariable long ticketid, @PathVariable long helperid)
+    {
+        ticketService.assignHelper(ticketid, helperid);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+        return null;
+    }
 }

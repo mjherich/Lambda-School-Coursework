@@ -35,13 +35,6 @@ public class Ticket
     {
     }
 
-    public Ticket(String name, String category, String description)
-    {
-        this.name = name;
-        this.category = category;
-        this.description = description;
-    }
-
     public Ticket(String name, String category, String description, User student)
     {
         this.name = name;

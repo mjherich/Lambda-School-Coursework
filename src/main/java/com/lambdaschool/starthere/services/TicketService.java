@@ -9,4 +9,6 @@ public interface TicketService
     List<Ticket> findAllTickets();
 
     Ticket save(Ticket ticket);
+
+    void assignHelper(long ticketid, long helperid);
 }

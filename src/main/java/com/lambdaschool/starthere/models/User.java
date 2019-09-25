@@ -19,6 +19,10 @@ public class User extends Auditable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long helperid;
+
     @Column(nullable = false,
             unique = true)
     private String username;
@@ -127,6 +131,26 @@ public class User extends Auditable
     public void setUseremails(List<Useremail> useremails)
     {
         this.useremails = useremails;
+    }
+
+    public long getHelperid()
+    {
+        return helperid;
+    }
+
+    public void setHelperid(long helperid)
+    {
+        this.helperid = helperid;
+    }
+
+    public List<Ticket> getTickets()
+    {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets)
+    {
+        this.tickets = tickets;
     }
 
     public List<SimpleGrantedAuthority> getAuthority()
