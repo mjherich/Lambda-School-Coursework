@@ -1,13 +1,27 @@
-import React from 'react';
+import React from "react";
+import { Route } from "react-router-dom";
 import './App.css';
 
-import AnswerTicket from './components/Helper/AnswerTicket'
+import Header from "./components/Header/Header";
+import Signup from "./components/UserOnboarding/Signup";
+import Login from "./components/UserOnboarding/Login";
+import StudentDashboard from "./components/Student/StudentDashboard";
+import HelperDashboard from "./components/Helper/HelperDashboard";
 
 function App() {
-
   return (
     <div className="App">
-      <AnswerTicket />
+      <Header />
+      <Route exact path="/" render={() => 
+          <>
+            <div>Homepage</div>
+          </>
+        }
+      />
+      <Route path="/signup/" render={(props) => <Signup {...props} />} />
+      <Route path="/login/" render={(props) => <Login {...props} />} />
+      <Route path="/student-dashboard/" render={(props) => <StudentDashboard {...props} />} />
+      <Route path="/helper-dashboard/" render={(props) => <HelperDashboard {...props} />} />
     </div>
   );
 }
