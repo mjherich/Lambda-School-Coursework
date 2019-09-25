@@ -1,5 +1,7 @@
 const initialState = {
     userType: '',
+    user: '',
+    ticketArray: '',
     getError: '',
     postError: '',
     putError: '',
