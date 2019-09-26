@@ -33,7 +33,7 @@
  margin:4%;
 }
 
-/* Form Styles */
+/* Form Styles  DASHBOARD  */
 
 .form-div{
   background: rgb(141,233,105, 0.5) ;
@@ -68,3 +68,58 @@
    border-radius:10px;
    cursor: pointer;
  }
+
+ /* Form Styles  SIGNUP/LOGIN  */
+
+
+ 
+ .login-form {
+    background: #74BF56;
+    margin: 0 auto;
+    width: 16rem;
+    height: 20rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+ }
+ form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;   
+}
+
+.form-title {
+  margin-bottom: 2rem;
+}
+.form-title h2 {
+      font-size: 1.3rem;
+  }
+  
+.field {
+  margin-bottom: 1rem;
+}
+
+
+  .radio {
+      height: 1.5rem;
+  }
+
+  p { /* Error messages. */
+      color: red;
+  }
+.submit-button {
+  background: grey;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+}

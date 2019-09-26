@@ -1,9 +1,13 @@
-import React from 'react'
-
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux';
 import TicketList from '../Ticket/TicketList';
 
-const StudentDashboard = () => {
+import { fetchTickets } from '../../store/actions'
 
+const StudentDashboard = (props) => {
+    useEffect(() => {
+        props.fetchTickets()
+    }, [])
     return (
         <div className='dashboard'>
             <h2>Student Dashboard</h2>
@@ -12,4 +16,4 @@ const StudentDashboard = () => {
     )
 }
 
-export default StudentDashboard;
+export default connect(null, { fetchTickets })(StudentDashboard);
