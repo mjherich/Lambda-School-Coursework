@@ -165,9 +165,14 @@
 .form-div form {
   display:flex;
   flex-direction:column;
-  width: 40%;
+  width: 60%;
   margin: 0 auto;
   padding:2%;
+}
+
+.row-form{
+  display:flex;
+  flex-direction:row !important;
 }
 
 .form-div input, .form-div select, .form-div textarea {
