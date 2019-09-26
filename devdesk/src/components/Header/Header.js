@@ -8,7 +8,6 @@ import logo from "../images/logo.png";
 const StyledHeader = styled.header`
     background: #6A6A6A;
     height: 4rem;
-    width: 100vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,6 +31,7 @@ export default function Header(props) {
         <StyledHeader>
             <div className="logo">
                 <img src={logo} alt="logo" />
+                {/* From: https://iconmonstr.com/code-3-png/ */}
             </div>
             <NavBar />
         </StyledHeader>
