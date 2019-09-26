@@ -17,7 +17,7 @@ const DynamicTicket = (props) => {
     }
 
     return (
-        <div>
+        <div className='dynamic-ticket'>
             <h3>{singleTicket.name}</h3>
             <p>Status: {!singleTicket.active ? 'Closed' : 'Open'}</p>
             <p>Category: {singleTicket.category}</p>
