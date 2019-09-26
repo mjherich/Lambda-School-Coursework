@@ -130,13 +130,10 @@
 }
 
 
-  .radio {
-      height: 1.5rem;
-  }
+.radio {
+  height: 1.5rem;
+}
 
-  p { /* Error messages. */
-      color: red;
-  }
 .submit-button {
   background: grey;
   color: white;
@@ -147,4 +144,11 @@
   cursor: pointer;
   outline: none;
   bottom: 0;
+}
+
+
+.submit-button button {
+  background: grey;
+  border:none;
+  color:white;
 }
