@@ -12,6 +12,10 @@ const DynamicTicket = (props) => {
         props.fetchSingleTicket(id);
     }, [id])
 
+    const toForm = (e) => {
+        props.history.push(`/answer-ticket/${singleTicket.ticketid}`);
+    }
+
     return (
         <div>
             <h3>{singleTicket.name}</h3>
@@ -19,6 +23,7 @@ const DynamicTicket = (props) => {
             <p>Category: {singleTicket.category}</p>
             <p>{singleTicket.description}</p>
             {singleTicket.response ? <p>{singleTicket.response}</p> : null}
+            {props.userType === 'helper' ? <button onClick={toForm}>Answer Ticket</button> : null}
         </div>
     )
 }
@@ -26,7 +31,8 @@ const DynamicTicket = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        singleTicket: state.singleTicket
+        singleTicket: state.singleTicket,
+        userType: state.userType
     }
 }
 
