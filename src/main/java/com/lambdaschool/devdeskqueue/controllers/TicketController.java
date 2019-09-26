@@ -44,6 +44,13 @@ public class TicketController
         return new ResponseEntity<>(userTickets, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/findById/{ticketid}", produces = {"application/json"})
+    public ResponseEntity<?> findTicketById(@PathVariable long ticketid)
+    {
+        Ticket t = ticketService.findTicketById(ticketid);
+        return new ResponseEntity<>(t, HttpStatus.OK);
+    }
+
     // Create's a ticket and assigns to the current user (must be a student role)
     // POST localhost:2019/tickets/create
     @PostMapping(value = "/create", consumes = {"application/json"}, produces = {"application/json"})

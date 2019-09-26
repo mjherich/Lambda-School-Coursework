@@ -1,6 +1,7 @@
 package com.lambdaschool.devdeskqueue.services;
 
 import com.lambdaschool.devdeskqueue.models.User;
+import com.lambdaschool.devdeskqueue.models.UserMinimum;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public interface UserService
 
     User save(User user);
 
-    User saveStudent(User user);
+    User saveStudent(UserMinimum user);
 
-    User saveHelper(User user);
+    User saveHelper(UserMinimum user);
 
     User update(User user, long id, boolean isAdmin);
 

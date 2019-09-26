@@ -55,6 +55,14 @@ public class TicketServiceImpl implements TicketService
     }
 
     @Override
+    public Ticket findTicketById(long ticketid)
+    {
+        Ticket t = ticketrepos.findById(ticketid)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(ticketid)));
+        return t;
+    }
+
+    @Override
     public void addAnswer(String answer, long ticketid)
     {
         Ticket t = ticketrepos.findById(ticketid)

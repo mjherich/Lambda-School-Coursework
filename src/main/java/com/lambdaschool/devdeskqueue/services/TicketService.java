@@ -10,6 +10,8 @@ public interface TicketService
 
     List<Ticket> findTicketsByUsername(String username);
 
+    Ticket findTicketById(long ticketid);
+
     Ticket save(Ticket ticket);
 
     void assignHelper(long ticketid, long helperid);
