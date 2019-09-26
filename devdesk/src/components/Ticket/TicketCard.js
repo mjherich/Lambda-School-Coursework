@@ -12,9 +12,9 @@ const TicketCard = ({ ticket, userType, history }) => {
         <div className='ticket-card'>
             <Link className='ticket-link' to={`/ticket/${ticket.ticketid}`} >
                 <div>
-                    <h3>{ticket.name}</h3>
+                    <h3 className='ticket-header'>{ticket.name}</h3>
                     <p>Category: {ticket.category}</p>
-                    <p>Status: {!ticket.active ? 'Closed' : 'Open'}</p>
+                    {!ticket.active ? <p className='closed-ticket'>Closed</p> : <p className='open-ticket'>Open</p>}
                 </div>
             </Link>
             {userType === 'helper' ? <button onClick={toForm}>Answer Ticket</button> : null}

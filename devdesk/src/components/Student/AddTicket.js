@@ -21,18 +21,16 @@ const AddTicket = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(ticket)
         props.postTicket(ticket);
         setTicket(initialTicket);
+        props.history.push('/student-dashboard');
     }
 
     return (
         <div className='form-div'>
             <h2>Add Ticket Form</h2>
             <form onSubmit={handleSubmit}>
-                <label>Title</label>
                 <input className='inputs' type='text' name='name' placeholder='Title' value={ticket.title} onChange={handleChange} />
-                <label>Category</label>
                 <select className='inputs' name='category' onChange={handleChange} value={ticket.category}>
                     <option>Select a category</option>
                     <option value="html">HTML</option>
@@ -42,7 +40,7 @@ const AddTicket = (props) => {
                     <option value="redux">Redux</option>
                     <option value="other">Other</option>
                 </select>
-                <label>Description</label>
+                <label>Description:</label>
                 <textarea className='inputs' name='description' placeholder='How can I ....' onChange={handleChange} value={ticket.description} />
                 <button type='submit'>Submit Ticket</button>
             </form>

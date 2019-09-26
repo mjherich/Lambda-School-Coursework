@@ -11,8 +11,8 @@ const StudentDashboard = (props) => {
     }, [])
     return (
         <div className='dashboard'>
-            <h2>Student Dashboard</h2>
-            <Link to='/add-ticket'>Add Ticket</Link>
+            <h2 className='dash-title'>Student Dashboard</h2>
+            <Link to='/add-ticket' className='add-ticket-btn'>Add Ticket</Link>
             <TicketList />
         </div>
     )

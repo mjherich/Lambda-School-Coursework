@@ -18,13 +18,13 @@ const AnswerTicket = (props) => {
         //axiosWithAuth put request here- change answer, helper id, and closed properties
         props.putTicket(id, answer);
         setAnswer('');
-        //redirect to dashboard or individual ticket route to see updated ticket
+        props.history.push('/helper-dashboard');
     }
 
     return (
         <div className='form-div'>
             <h2>Answer Ticket Form</h2>
-            <div>
+            <div className='form-ticket'>
                 <h3>{singleTicket.name}</h3>
                 <p>{singleTicket.category}</p>
                 <p>{singleTicket.description}</p>
