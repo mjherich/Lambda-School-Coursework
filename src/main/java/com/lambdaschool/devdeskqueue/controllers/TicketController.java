@@ -1,6 +1,7 @@
 package com.lambdaschool.devdeskqueue.controllers;
 
 import com.lambdaschool.devdeskqueue.models.Ticket;
+import com.lambdaschool.devdeskqueue.models.TicketAnswer;
 import com.lambdaschool.devdeskqueue.models.UserRoles;
 import com.lambdaschool.devdeskqueue.services.TicketService;
 import com.lambdaschool.devdeskqueue.services.UserService;
@@ -44,6 +45,18 @@ public class TicketController
         return new ResponseEntity<>(userTickets, HttpStatus.OK);
     }
 
+    // Lists inactive tickets of the logged in user
+    // GET localhost:2019/tickets/myInactiveTickets
+    @GetMapping(value = "/tickets/myInactiveTickets", produces = {"application/json"})
+    public ResponseEntity<?> listInactiveTicketsByUserId(Principal principal)
+    {
+        String studUsername = principal.getName();
+        List<Ticket> userTickets = ticketService.findInactiveTicketsByUsername(studUsername);
+        return new ResponseEntity<>(userTickets, HttpStatus.OK);
+    }
+
+    // Finds a ticket by the ticket id
+    // GET localhost:2019/tickets/findById/{ticketid}
     @GetMapping(value = "/findById/{ticketid}", produces = {"application/json"})
     public ResponseEntity<?> findTicketById(@PathVariable long ticketid)
     {
@@ -51,7 +64,7 @@ public class TicketController
         return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
-    // Create's a ticket and assigns to the current user (must be a student role)
+    // Creates a ticket and assigns to the current user (must be a student role)
     // POST localhost:2019/tickets/create
     @PostMapping(value = "/create", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> createTicket(@RequestBody Ticket ticket, Principal principal)
@@ -92,9 +105,17 @@ public class TicketController
 
     // PUT localhost:2019/tickets/answer/{ticketid}
     @PutMapping(value = "/answer/{ticketid}", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<?> answerTicket(@RequestBody String answer, @PathVariable long ticketid)
+    public ResponseEntity<?> answerTicket(@RequestBody TicketAnswer answer, @PathVariable long ticketid, Principal principal)
     {
-        ticketService.addAnswer(answer, ticketid);
+        ticketService.addAnswer(answer, ticketid, principal.getName());
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    // PUT localhost:2019/tickets/update/{ticketid}
+    @PutMapping(value = "/update/{ticketid}", consumes = {"application/json"}, produces = {"application/json"})
+    public ResponseEntity<?> answerTicket(@RequestBody Ticket ticket, @PathVariable long ticketid)
+    {
+        ticketService.update(ticket, ticketid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
