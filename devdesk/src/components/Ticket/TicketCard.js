@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const TicketCard = ({ ticket, userType, history }) => {
 
     const toForm = (e) => {
-        history.push('/answer-ticket');
+        history.push(`/answer-ticket/${ticket.ticketid}`);
     }
 
     return (

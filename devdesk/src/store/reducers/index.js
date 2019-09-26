@@ -1,18 +1,15 @@
 import {
-    FETCH_TICKETS_START, FETCH_TICKETS_SUCCESS, FETCH_TICKETS_FAIL,
-    PUT_TICKET_START, POST_TICKET_START, POST_TICKET_SUCCESS, POST_TICKET_FAIL,
-    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL, FETCH_SINGLE_TICKET_START,
-    FETCH_SINGLE_TICKET_SUCCESS, FETCH_SINGLE_TICKET_FAIL, SET_USER_TYPE
+    FETCH_TICKETS_START, FETCH_TICKETS_SUCCESS,
+    PUT_TICKET_START, POST_TICKET_START, POST_TICKET_SUCCESS,
+    PUT_TICKET_SUCCESS, FETCH_SINGLE_TICKET_START,
+    FETCH_SINGLE_TICKET_SUCCESS, SET_USER_TYPE
 } from '../actions'
 
 const initialState = {
-    userType: 'helper',
+    userType: '',
     user: '',
     ticketArray: [],
-    singleTicket: '',
-    getError: '',
-    postError: '',
-    putError: '',
+    singleTicket: {},
     isGetting: false,
     isPosting: false,
     isPutting: false,
@@ -38,12 +35,6 @@ export const reducer = (state = initialState, action) => {
                 ticketArray: action.payload,
                 user: '',
             };
-        case FETCH_TICKETS_FAIL:
-            return {
-                ...state,
-                isGetting: false,
-                getError: action.payload,
-            };
         case FETCH_SINGLE_TICKET_START:
             return {
                 ...state,
@@ -54,13 +45,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isGetting: false,
-                singleTicket: '',
-            };
-        case FETCH_SINGLE_TICKET_FAIL:
-            return {
-                ...state,
-                isGetting: false,
-                getError: action.payload,
+                singleTicket: action.payload,
             };
         case POST_TICKET_START:
             return {
@@ -74,12 +59,6 @@ export const reducer = (state = initialState, action) => {
                 isPosting: false,
                 ticketArray: '',
             };
-        case POST_TICKET_FAIL:
-            return {
-                ...state,
-                isPosting: false,
-                postError: action.payload,
-            };
         case PUT_TICKET_START:
             return {
                 ...state,
@@ -91,12 +70,6 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 isPutting: false,
                 ticketArray: '',
-            };
-        case PUT_TICKET_FAIL:
-            return {
-                ...state,
-                isPutting: false,
-                putError: action.payload,
             };
         default:
             return state

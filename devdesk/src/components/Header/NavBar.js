@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 const StyledNavBar = styled.div`
 
@@ -26,7 +27,7 @@ const StyledNavBar = styled.div`
     }
 `;
 
-export default function NavBar(props) {
+const NavBar = (props) => {
     return (
         <StyledNavBar>
             <nav>
@@ -39,11 +40,17 @@ export default function NavBar(props) {
                 <div className="link-button">
                     <Link to="/login">Login</Link>
                 </div>
-                <div className="link-button">
-                    {/* Need to make this link dynamic! */}
-                    <Link to="/student-dashboard/">Dashboard</Link>
-                </div>
+                {props.userType === 'helper' ? <div className="link-button"> <Link to="/helper-dashboard/">Dashboard</Link></div>
+                    : props.userType === 'student' ? <div className="link-button"> <Link to="/student-dashboard/">Dashboard</Link> </div> : null}
             </nav>
         </StyledNavBar>
     )
 }
+
+const mapStateToProps = state => {
+    return {
+        userType: state.userType
+    }
+}
+
+export default connect(mapStateToProps, {})(NavBar);

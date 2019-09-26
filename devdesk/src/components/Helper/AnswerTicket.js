@@ -1,31 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 
-import ticketArray from '../../MockData'
 import axiosWithAuth from '../../utils/axiosWithAuth';
+import { fetchSingleTicket, putTicket } from '../../store/actions';
 
-const AnswerTicket = () => {
+const AnswerTicket = (props) => {
     const [answer, setAnswer] = useState('');
+    const singleTicket = props.singleTicket;
+    const id = props.match.params.id;
 
-    const ticket = ticketArray[0];
+    useEffect(() => {
+        props.fetchSingleTicket(id);
+    }, [id])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         //axiosWithAuth put request here- change answer, helper id, and closed properties
-        axiosWithAuth().put('url/id', answer)
-            .then(res => console.log(res))
-            .catch(err => console.log('AddTicket.js: Post: ', err));
+        props.putTicket(id, answer);
         setAnswer('');
         //redirect to dashboard or individual ticket route to see updated ticket
-        //move to actions file
     }
+
     return (
         <div className='form-div'>
             <h2>Answer Ticket Form</h2>
             <div>
-                <h3>{ticket.title}</h3>
-                <p>{ticket.category}</p>
-                <p>{ticket.description}</p>
+                <h3>{singleTicket.name}</h3>
+                <p>{singleTicket.category}</p>
+                <p>{singleTicket.description}</p>
             </div>
             <form onSubmit={handleSubmit}>
                 <label>Response:</label>
@@ -38,8 +40,8 @@ const AnswerTicket = () => {
 
 const mapStateToProps = (state) => {
     return {
-
+        singleTicket: state.singleTicket
     }
 }
 
-export default connect(mapStateToProps, {})(AnswerTicket);
+export default connect(mapStateToProps, { fetchSingleTicket, putTicket })(AnswerTicket);

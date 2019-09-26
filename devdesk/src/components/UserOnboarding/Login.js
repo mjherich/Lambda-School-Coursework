@@ -33,13 +33,23 @@ const Login = (props) => {
     };
 
     const validationSchema = yup.object().shape({
-
+        // username: yup.string()
+        //     .test(
+        //         "username",
+        //         "Please enter a username at least 8 characters long.",
+        //         value => value !== undefined && value.length >= 8,
+        //     ),
+        // password: yup.string()
+        //     .test(
+        //         "password",
+        //         "Please enter a password at least 8 characters long.",
+        //         value => value !== undefined && value.length >= 8,
+        //     ),
         userType: yup.string().required("Please choose a user type."),
     });
 
     return (
         <>
-            <Link to="/">Homepage</Link>
             <div className="login-form">
                 <Formik
                     initialValues={loginValues}
