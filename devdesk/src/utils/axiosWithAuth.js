@@ -2,9 +2,9 @@ import axios from 'axios'
 
 const axiosWithAuth = () => {
     return axios.create({
-        baseURL: '',
+        baseURL: 'https://lambda-dev-desk-queue.herokuapp.com/tickets',
         headers: {
-            authorization: localStorage.getItem('token')
+            authorization: `Bearer ${localStorage.getItem('token')}`
         }
     })
 }
