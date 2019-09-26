@@ -5,7 +5,7 @@ import axios from 'axios'
 import { fetchSingleTicket } from '../../store/actions'
 
 const DynamicTicket = (props) => {
-    const { singleTicket } = props
+    const singleTicket = props.singleTicket;
     const id = props.match.params.id;
 
     useEffect(() => {

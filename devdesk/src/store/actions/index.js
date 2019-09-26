@@ -33,9 +33,9 @@ export const postTicket = (ticket) => dispatch => {
 export const PUT_TICKET_START = 'PUT_TICKET_START';
 export const PUT_TICKET_SUCCESS = 'PUT_TICKET_SUCCESS';
 
-export const putTicket = (ticket) => dispatch => {
+export const putTicket = (id, solution) => dispatch => {
     dispatch({ type: PUT_TICKET_START });
-    axiosWithAuth().post(`url/${ticket.id}`, ticket)
+    axiosWithAuth().put(`answer/${id}`, { answer: solution })
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }

@@ -9,7 +9,7 @@ import StudentDashboard from "./components/Student/StudentDashboard";
 import HelperDashboard from "./components/Helper/HelperDashboard";
 import AddTicket from './components/Student/AddTicket';
 import DynamicTicket from './components/Ticket/DynamicTicket';
-import AnswerTicker from './components/Helper/AnswerTicket';
+import AnswerTicket from './components/Helper/AnswerTicket';
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
       <Route path="/helper-dashboard/" render={(props) => <HelperDashboard {...props} />} />
       <Route path="/add-ticket" render={(props) => <AddTicket {...props} />} />
       <Route path='/ticket/:id' render={(props) => <DynamicTicket {...props} />} />
+      <Route path='/answer-ticket/:id' render={(props) => <AnswerTicket {...props} />} />
     </div>
   );
 }
