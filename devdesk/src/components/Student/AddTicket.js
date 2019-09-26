@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import axiosWithAuth from '../../utils/axiosWithAuth';
 import { postTicket } from '../../store/actions'
 
 const initialTicket = {

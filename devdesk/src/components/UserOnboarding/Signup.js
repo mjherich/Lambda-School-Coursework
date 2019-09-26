@@ -19,7 +19,9 @@ export default function Signup(props) {
             userType: formValues.userType,
         }
 
-        console.log(userToPost); // In lieu of an axios.post...      
+        console.log(userToPost);
+        // ^Need to replace with axios.post()!
+
         props.history.push("/login/");
     };
 
