@@ -113,7 +113,7 @@ public class TicketController
 
     // PUT localhost:2019/tickets/update/{ticketid}
     @PutMapping(value = "/update/{ticketid}", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<?> answerTicket(@RequestBody Ticket ticket, @PathVariable long ticketid)
+    public ResponseEntity<?> updateTicket(@RequestBody Ticket ticket, @PathVariable long ticketid)
     {
         ticketService.update(ticket, ticketid);
         return new ResponseEntity<>(HttpStatus.OK);
