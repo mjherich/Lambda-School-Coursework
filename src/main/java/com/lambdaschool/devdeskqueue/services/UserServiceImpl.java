@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         User newStudent = new User();
         newStudent.setUsername(student.getUsername());
-        newStudent.setPasswordNoEncrypt(student.getPassword());
+        newStudent.setPassword(student.getPassword());
 
         // Setting student role
         ArrayList<UserRoles> students = new ArrayList<>();
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         User newHelper = new User();
         newHelper.setUsername(helper.getUsername());
-        newHelper.setPasswordNoEncrypt(helper.getPassword());
+        newHelper.setPassword(helper.getPassword());
 
         // Setting helper role
         ArrayList<UserRoles> helpers = new ArrayList<>();
