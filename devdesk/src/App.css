@@ -17,6 +17,24 @@
   margin: 2% auto;
 }
 
+.dash-title{
+  font-size:2rem;
+  padding:2% 0%;
+}
+
+.add-ticket-btn{
+  background: #74BF56;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+  text-decoration:none;
+  border: 2px solid black;
+}
 
 .ticket-grid {
   display:flex;
