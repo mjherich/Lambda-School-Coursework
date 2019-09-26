@@ -134,7 +134,7 @@
   height: 1.5rem;
 }
 
-.submit-button {
+.submit-button button {
   background: grey;
   color: white;
   border-radius: 20px;
@@ -144,11 +144,4 @@
   cursor: pointer;
   outline: none;
   bottom: 0;
-}
-
-
-.submit-button button {
-  background: grey;
-  border:none;
-  color:white;
 }
