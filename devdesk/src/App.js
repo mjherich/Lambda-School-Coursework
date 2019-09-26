@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import './App.css';
 
 import Header from "./components/Header/Header";
@@ -14,7 +14,7 @@ function App() {
       <Header />
       <Route exact path="/" render={() => 
           <>
-            <div>Homepage</div>
+            <Redirect to="/login/" />
           </>
         }
       />
