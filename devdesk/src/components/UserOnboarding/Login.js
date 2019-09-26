@@ -64,25 +64,25 @@ const Login = (props) => {
     const { loginValues } = props;
 
     const onSubmit = (formValues, actions) => {
+
         const userToPost = {
             username: formValues.username,
             password: formValues.password,
-
         }
 
-        console.log(userToPost); // In lieu of an axios.post...      
+        console.log(userToPost);
         axios.post('https://lambda-dev-desk-queue.herokuapp.com/login', `grant_type=password&username=${userToPost.username}&password=${userToPost.password}`, {
             headers: {
-
-                // btoa is converting our client id/client secret into base64
                 Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
                 'Content-Type': 'application/x-www-form-urlencoded'
-
             },
         })
-            .then(res => console.log(res))
+            .then(res => {
+                localStorage.setItem('token', res.data.access_token);
+                props.setUserType(formValues.userType);
+                formValues.userType === 'student' ? props.history.push('/student-dashboard') : props.history.push('/helper-dashboard')
+            })
             .catch(err => console.log(err))
-        props.history.push("/login/");
     };
 
     const validationSchema = yup.object().shape({
@@ -95,7 +95,6 @@ const Login = (props) => {
             ),
         userType: yup.string().required("Please choose a user type."),
     });
-
     return (
         <>
             <Link to="/">Homepage</Link>
@@ -141,10 +140,4 @@ const Login = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps, {})(Login);
+export default connect(null, { setUserType })(Login);

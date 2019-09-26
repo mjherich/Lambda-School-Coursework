@@ -1,7 +1,8 @@
 import {
     FETCH_TICKETS_START, FETCH_TICKETS_SUCCESS, FETCH_TICKETS_FAIL,
     PUT_TICKET_START, POST_TICKET_START, POST_TICKET_SUCCESS, POST_TICKET_FAIL,
-    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL, FETCH_SINGLE_TICKET_START, FETCH_SINGLE_TICKET_SUCCESS, FETCH_SINGLE_TICKET_FAIL, SET_USER_TYPE
+    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL, FETCH_SINGLE_TICKET_START,
+    FETCH_SINGLE_TICKET_SUCCESS, FETCH_SINGLE_TICKET_FAIL, SET_USER_TYPE
 } from '../actions'
 
 const initialState = {
@@ -21,6 +22,7 @@ export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_TYPE:
             return {
+                ...state,
                 userType: action.payload
             };
         case FETCH_TICKETS_START:
