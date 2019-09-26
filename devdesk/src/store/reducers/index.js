@@ -6,9 +6,9 @@ import {
 } from '../actions'
 
 const initialState = {
-    userType: '',
+    userType: 'helper',
     user: '',
-    ticketArray: '',
+    ticketArray: [],
     singleTicket: '',
     getError: '',
     postError: '',
@@ -35,8 +35,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isGetting: false,
-                ticketArray: [],
-                userType: '',
+                ticketArray: action.payload,
                 user: '',
             };
         case FETCH_TICKETS_FAIL:

@@ -7,7 +7,7 @@ export const FETCH_TICKETS_FAIL = 'FETCH_TICKETS_FAIL';
 export const fetchTickets = () => dispatch => {
     dispatch({ type: FETCH_TICKETS_START });
     axiosWithAuth().get('/tickets')
-        .then(res => console.log(res))
+        .then(res => dispatch({ type: FETCH_TICKETS_SUCCESS, payload: res.data }))
         .catch(err => console.log(err))
 }
 
