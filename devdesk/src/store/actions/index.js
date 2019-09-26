@@ -6,7 +6,7 @@ export const FETCH_TICKETS_FAIL = 'FETCH_TICKETS_FAIL';
 
 export const fetchTickets = () => dispatch => {
     dispatch({ type: FETCH_TICKETS_START });
-    axiosWithAuth().get('url')
+    axiosWithAuth().get('/tickets')
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }
