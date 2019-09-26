@@ -4,6 +4,7 @@ import com.lambdaschool.devdeskqueue.models.User;
 import com.lambdaschool.devdeskqueue.models.UserRoles;
 import com.lambdaschool.devdeskqueue.services.RoleService;
 import com.lambdaschool.devdeskqueue.services.UserService;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -27,6 +29,8 @@ import java.util.ArrayList;
 // client then goes to login end point
 
 @RestController
+@ApiIgnore
+@Api(hidden = true)
 public class OpenController
 {
     private static final Logger logger = LoggerFactory.getLogger(OpenController.class);

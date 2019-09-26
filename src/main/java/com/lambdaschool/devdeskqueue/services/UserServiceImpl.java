@@ -1,11 +1,8 @@
 package com.lambdaschool.devdeskqueue.services;
 
-import com.lambdaschool.devdeskqueue.models.Role;
-import com.lambdaschool.devdeskqueue.models.User;
-import com.lambdaschool.devdeskqueue.models.UserRoles;
+import com.lambdaschool.devdeskqueue.models.*;
 import com.lambdaschool.devdeskqueue.exceptions.ResourceFoundException;
 import com.lambdaschool.devdeskqueue.exceptions.ResourceNotFoundException;
-import com.lambdaschool.devdeskqueue.models.Useremail;
 import com.lambdaschool.devdeskqueue.repository.RoleRepository;
 import com.lambdaschool.devdeskqueue.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +111,7 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
     @Transactional
     @Override
-    public User saveStudent(User student)
+    public User saveStudent(UserMinimum student)
     {
         if (userrepos.findByUsername(student.getUsername()) != null)
         {
@@ -127,21 +124,20 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         // Setting student role
         ArrayList<UserRoles> students = new ArrayList<>();
-        students.add(new UserRoles(new User(), new Role("student")));
+        Role studRole = rolerepos.findByNameIgnoreCase("student");
+        students.add(new UserRoles(newStudent, studRole));
         newStudent.setUserroles(students);
 
-        for (Useremail ue : student.getUseremails())
-        {
-            newStudent.getUseremails()
-                    .add(new Useremail(newStudent, ue.getUseremail()));
-        }
+        // Add student email
+        newStudent.getUseremails()
+                .add(new Useremail(newStudent, student.getEmail()));
 
         return userrepos.save(newStudent);
     }
 
     @Transactional
     @Override
-    public User saveHelper(User helper)
+    public User saveHelper(UserMinimum helper)
     {
         if (userrepos.findByUsername(helper.getUsername()) != null)
         {
@@ -152,18 +148,18 @@ public class UserServiceImpl implements UserDetailsService, UserService
         newHelper.setUsername(helper.getUsername());
         newHelper.setPasswordNoEncrypt(helper.getPassword());
 
-        // Setting student role
-        ArrayList<UserRoles> students = new ArrayList<>();
-        students.add(new UserRoles(new User(), new Role("helper")));
-        newHelper.setUserroles(students);
+        // Setting helper role
+        ArrayList<UserRoles> helpers = new ArrayList<>();
+        Role studRole = rolerepos.findByNameIgnoreCase("helper");
+        helpers.add(new UserRoles(newHelper, studRole));
+        newHelper.setUserroles(helpers);
 
-        for (Useremail ue : helper.getUseremails())
-        {
-            newHelper.getUseremails()
-                    .add(new Useremail(newHelper, ue.getUseremail()));
-        }
+        // Add student email
+        newHelper.getUseremails()
+                .add(new Useremail(newHelper, helper.getEmail()));
 
-        return userrepos.save(newHelper);
+        User createdHelper = userrepos.save(newHelper);
+        return createdHelper;
     }
 
 

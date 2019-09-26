@@ -1,10 +1,8 @@
 package com.lambdaschool.devdeskqueue;
 
-import com.lambdaschool.devdeskqueue.models.Role;
-import com.lambdaschool.devdeskqueue.models.User;
-import com.lambdaschool.devdeskqueue.models.UserRoles;
-import com.lambdaschool.devdeskqueue.models.Useremail;
+import com.lambdaschool.devdeskqueue.models.*;
 import com.lambdaschool.devdeskqueue.services.RoleService;
+import com.lambdaschool.devdeskqueue.services.TicketService;
 import com.lambdaschool.devdeskqueue.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +20,9 @@ public class SeedData implements CommandLineRunner
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TicketService ticketService;
 
 
     @Override
@@ -51,6 +52,12 @@ public class SeedData implements CommandLineRunner
                 .add(new Useremail(stud1, "mjherich@gmail.com"));
         userService.save(stud1);
 
+        // student
+        User stud2 = new User("alice", "bob", students);
+        stud1.getUseremails()
+                .add(new Useremail(stud1, "alice@bob.com"));
+        userService.save(stud2);
+
         // helper
         ArrayList<UserRoles> helpers = new ArrayList<>();
         helpers.add(new UserRoles(new User(), helperRole));
@@ -58,5 +65,14 @@ public class SeedData implements CommandLineRunner
         helper1.getUseremails()
                 .add(new Useremail(helper1, "john@gmail.com"));
         userService.save(helper1);
+
+        // Create tickets
+        User student = userService.findByName("Matt");
+        Ticket ticket1 = new Ticket("Help with deployment", "back-end", "This is the description of the problem.", student);
+        ticketService.save(ticket1);
+        Ticket ticket2 = new Ticket("Can't set up useContext", "React.js", "This is the description of the problem.", student);
+        ticketService.save(ticket2);
+//        Ticket ticket3 = new Ticket("Need help with environment variables", "DevOps", "This is the description of the problem.", stud2);
+//        ticketService.save(ticket3);
     }
 }

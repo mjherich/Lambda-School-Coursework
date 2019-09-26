@@ -1,6 +1,7 @@
 package com.lambdaschool.devdeskqueue.controllers;
 
 import com.lambdaschool.devdeskqueue.models.User;
+import com.lambdaschool.devdeskqueue.models.UserMinimum;
 import com.lambdaschool.devdeskqueue.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,18 +175,41 @@ public class UserController
             produces = {"application/json"})
     public ResponseEntity<?> addNewStudent(HttpServletRequest request, @Valid
     @RequestBody
-            User newstudent) throws URISyntaxException
+            UserMinimum newstudent) throws URISyntaxException
     {
         logger.trace(request.getMethod()
                 .toUpperCase() + " " + request.getRequestURI() + " accessed");
 
-        newstudent = userService.saveStudent(newstudent);
+        User student = userService.saveStudent(newstudent);
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{userid}")
-                .buildAndExpand(newstudent.getUserid())
+                .buildAndExpand(student.getUserid())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/createHelper",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewHelper(HttpServletRequest request, @Valid
+    @RequestBody
+            UserMinimum newHelper) throws URISyntaxException
+    {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User helper = userService.saveHelper(newHelper);
+
+        // set the location header for the newly created resource
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{userid}")
+                .buildAndExpand(helper.getUserid())
                 .toUri();
         responseHeaders.setLocation(newUserURI);
 
