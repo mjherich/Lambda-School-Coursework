@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from 'axios'
 import * as yup from "yup";
 
+import { setUserType } from '../../store/actions';
+
 const Login = (props) => {
     const { loginValues } = props;
 
@@ -31,25 +33,25 @@ const Login = (props) => {
     };
 
     const validationSchema = yup.object().shape({
-      username: yup.string()
-          .test(
-              "username",
-              "Please enter a username at least 8 characters long.",
-              value => value !== undefined && value.length >= 8,
-          ),
-      password: yup.string()
-          .test(
-              "password",
-              "Please enter a password at least 8 characters long.",
-              value => value !== undefined && value.length >= 8,
-          ),
-      userType: yup.string().required("Please choose a user type."),
-  });
+        username: yup.string()
+            .test(
+                "username",
+                "Please enter a username at least 8 characters long.",
+                value => value !== undefined && value.length >= 8,
+            ),
+        password: yup.string()
+            .test(
+                "password",
+                "Please enter a password at least 8 characters long.",
+                value => value !== undefined && value.length >= 8,
+            ),
+        userType: yup.string().required("Please choose a user type."),
+    });
 
     return (
         <>
             <Link to="/">Homepage</Link>
-            <FormDiv className="login-form">
+            <div className="login-form">
                 <Formik
                     initialValues={loginValues}
                     onSubmit={onSubmit}
@@ -86,7 +88,7 @@ const Login = (props) => {
                         )
                     }}
                 />
-            </FormDiv>
+            </div>
         </>
     )
 }
