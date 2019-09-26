@@ -154,6 +154,10 @@ public class UserServiceImpl implements UserDetailsService, UserService
         helpers.add(new UserRoles(newHelper, studRole));
         newHelper.setUserroles(helpers);
 
+        // Add student email
+        newHelper.getUseremails()
+                .add(new Useremail(newHelper, helper.getEmail()));
+
         User createdHelper = userrepos.save(newHelper);
         return createdHelper;
     }
