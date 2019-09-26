@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import axiosWithAuth from '../../utils/axiosWithAuth';
+import { postTicket } from '../../store/actions'
 
 const initialTicket = {
-    id: '',
-    title: '',
+    name: '',
     description: '',
-    answer: '',
     category: '',
-    closed: false,
-    student: '',
-    helper: ''
 }
 
-const AddTicket = () => {
+const AddTicket = (props) => {
     const [ticket, setTicket] = useState(initialTicket);
 
     const handleChange = (e) => {
@@ -24,14 +21,9 @@ const AddTicket = () => {
     }
 
     const handleSubmit = (e) => {
-        //axiosWithAuth post request here after adding StudentID and randomly assigning ticket id
         e.preventDefault();
-        axiosWithAuth().post('url', {
-            ...ticket, id: Date.now(), student: //!Need ID!
-        })
-            .then(res => console.log(res))
-            .catch(err => console.log('AddTicket.js: Post: ', err));
-        //need to move this to actions folder
+        console.log(ticket)
+        props.postTicket(ticket);
         setTicket(initialTicket);
     }
 
@@ -40,7 +32,7 @@ const AddTicket = () => {
             <h2>Add Ticket Form</h2>
             <form onSubmit={handleSubmit}>
                 <label>Title</label>
-                <input className='inputs' type='text' name='title' placeholder='Title' value={ticket.title} onChange={handleChange} />
+                <input className='inputs' type='text' name='name' placeholder='Title' value={ticket.title} onChange={handleChange} />
                 <label>Category</label>
                 <select className='inputs' name='category' onChange={handleChange} value={ticket.category}>
                     <option>Select a category</option>
@@ -59,4 +51,4 @@ const AddTicket = () => {
     )
 }
 
-export default AddTicket;
+export default connect(null, { postTicket })(AddTicket);

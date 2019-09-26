@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 const DynamicTicket = (props) => {
     const [ticket, setTicket] = useState({});
@@ -19,4 +20,11 @@ const DynamicTicket = (props) => {
     )
 }
 
-export default DynamicTicket;
+
+const mapStateToProps = (state) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, {})(DynamicTicket);

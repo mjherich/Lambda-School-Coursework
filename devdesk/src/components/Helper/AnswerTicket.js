@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux';
 
 import ticketArray from '../../MockData'
 import axiosWithAuth from '../../utils/axiosWithAuth';
@@ -35,4 +36,10 @@ const AnswerTicket = () => {
     )
 }
 
-export default AnswerTicket;
+const mapStateToProps = (state) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, {})(AnswerTicket);
