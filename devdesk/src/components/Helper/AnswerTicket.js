@@ -18,7 +18,7 @@ const AnswerTicket = (props) => {
         //axiosWithAuth put request here- change answer, helper id, and closed properties
         props.putTicket(id, answer);
         setAnswer('');
-        //redirect to dashboard or individual ticket route to see updated ticket
+        props.history.push('/helper-dashboard');
     }
 
     return (

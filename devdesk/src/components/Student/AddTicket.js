@@ -21,9 +21,9 @@ const AddTicket = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(ticket)
         props.postTicket(ticket);
         setTicket(initialTicket);
+        props.history.push('/student-dashboard');
     }
 
     return (
