@@ -24,7 +24,7 @@ const AnswerTicket = (props) => {
     return (
         <div className='form-div'>
             <h2>Answer Ticket Form</h2>
-            <div>
+            <div className='form-ticket'>
                 <h3>{singleTicket.name}</h3>
                 <p>{singleTicket.category}</p>
                 <p>{singleTicket.description}</p>
