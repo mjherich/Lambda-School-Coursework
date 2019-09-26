@@ -12,7 +12,7 @@
 
 /* Dashboard Styles */
 .dashboard {
-  background: rgb(141,233,105, 0.5) ;
+  background: rgb(141,233,105, 0.7) ;
   border-radius:20px;
   border:2px solid black;
   width: 80%;
@@ -107,7 +107,7 @@
 /* Dynamic Ticket Styles */
 
 .dynamic-ticket{
-  background: rgb(141,233,105, 0.5) ;
+  background: rgb(141,233,105, 0.7) ;
   border-radius:20px;
   border:2px solid black;
   width: 40%;
@@ -142,7 +142,7 @@
 /* Form Styles  DASHBOARD  */
 
 .form-div{
-  background: rgb(141,233,105, 0.5) ;
+  background: rgb(141,233,105, 0.7) ;
   border-radius:20px;
   border:2px solid black;
   width: 80%;
@@ -170,11 +170,6 @@
   padding:2%;
 }
 
-.row-form{
-  display:flex;
-  flex-direction:row !important;
-}
-
 .form-div input, .form-div select, .form-div textarea {
  padding: 2%;
  margin:2% 0%;
@@ -199,11 +194,12 @@
 
  
  .login-form {
-    background: #74BF56;
+  background: rgb(141,233,105, 0.7) ;
     margin: 0 auto;
     width: 16rem;
     height: 20rem;
-    border-radius: 10px;
+    border-radius:20px;
+  border:2px solid black;
     margin-top: 2rem;
     padding: 1rem;
     display: flex;
