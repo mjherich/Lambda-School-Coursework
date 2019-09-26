@@ -28,7 +28,7 @@ export const POST_TICKET_FAIL = 'POST_TICKET_FAIL';
 
 export const postTicket = (ticket) => dispatch => {
     dispatch({ type: POST_TICKET_START });
-    axiosWithAuth().post('url', ticket)
+    axiosWithAuth().post('/create', ticket)
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }
