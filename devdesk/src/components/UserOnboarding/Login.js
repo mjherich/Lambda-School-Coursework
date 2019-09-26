@@ -1,59 +1,8 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import styled from "styled-components";
 
-const FormDiv = styled.div `
-  background: #74BF56;
-  margin: 0 auto;
-  width: 16rem;
-  height: 20rem;
-  border-radius: 10px;
-  margin-top: 2rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-
-  form {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;   
-  }
-
-  .form-title {
-    margin-bottom: 2rem;
-
-    h2 {
-        font-size: 1.3rem;
-    }
-  }
-  .field {
-    margin-bottom: 1rem;
-
-    &:nth-last-of-type(1) {
-        margin-bottom: 2rem;
-    }
-
-    .radio {
-        height: 1.5rem;
-    }
-
-    p { /* Error messages. */
-        color: red;
-    }
-  .submit-button {
-    
-    bottom: 0;
-}
-
-}
-
-`;
 
 
 
@@ -68,7 +17,7 @@ export default function Login(props) {
       }
 
       console.log(userToPost); // In lieu of an axios.post...      
-      props.history.push("/login/");
+      props.history.push("../student-dashboard/");
   };
 
   const validationSchema = yup.object().shape({
@@ -90,7 +39,7 @@ export default function Login(props) {
   return (
       <>
           <Link to="/">Homepage</Link>
-          <FormDiv className="login-form">
+          <div className="login-form">
               <Formik 
                   initialValues={loginValues}
                   onSubmit={onSubmit}
@@ -127,7 +76,7 @@ export default function Login(props) {
                       )
                   }}
               />
-          </FormDiv>
+          </div>
       </>
   )
 }

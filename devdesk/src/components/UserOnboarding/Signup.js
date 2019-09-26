@@ -1,57 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import styled from "styled-components";
 
-const StyledFormikDiv = styled.div`
-        background: #74BF56;
-        margin: 0 auto;
-        width: 16rem;
-        height: 20rem;
-        border-radius: 10px;
-        margin-top: 2rem;
-        padding: 1rem;
-        display: flex;
-        justify-content: center;
-        padding-bottom: 3rem;
-
-    form {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-         /* Necessary for "position: absolute" on button to work! */
-    }
-
-    .form-title {
-        margin-bottom: 2rem;
-
-        h2 {
-            font-size: 3rem;
-        }
-    }
-
-    .field {
-        margin-bottom: 1rem;
-
-        &:nth-last-of-type(1) {
-            margin-bottom: 2rem;
-        }
-
-        .radio {
-            height: 1.5rem;
-        }
-
-        p { /* Error messages. */
-            color: red;
-        }
-    }
-
-    .submit-button {
-       
-    }
-`;
 
 export default function Signup(props) {
     const initialSignupValues = {
@@ -90,7 +40,7 @@ export default function Signup(props) {
     });
 
     return (
-            <StyledFormikDiv className="signup-form">
+            <div className="login-form">
                 <Formik 
                     initialValues={signupValues}
                     onSubmit={onSubmit}
@@ -127,6 +77,6 @@ export default function Signup(props) {
                         )
                     }}
                 />
-            </StyledFormikDiv>
+            </div>
     )
 }
