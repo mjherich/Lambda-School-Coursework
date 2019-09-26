@@ -36,8 +36,7 @@ const StyledNavBar = styled.div`
     }
 
     .dropdown {
-        background: darkgrey;
-        height: 25rem;
+        background: #333333;
         position: absolute;
         top: 4rem;
         right: 0;
@@ -51,6 +50,22 @@ const StyledNavBar = styled.div`
         transition: width 0.5s;
 
         overflow: hidden;
+
+        .link-button {
+            background: #6A6A6A;
+            margin: 0.5rem;
+            height: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 3px;
+
+            a {
+                text-decoration: none;
+                color: #8DE969;
+            }
+
+        }
     }
 `;
 
@@ -67,7 +82,6 @@ export default function NavBar(props) {
         <StyledNavBar className="nav-bar">
             <div className="menu-and-hamburger">
                 <div className="menu">
-                    <h5>MENU</h5>
                 </div>
                 <div className="hamburger" onClick={toggleDropDown}>
                     <div></div>
