@@ -193,26 +193,26 @@ public class UserController
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-//    @PostMapping(value = "/createHelper",
-//            consumes = {"application/json"},
-//            produces = {"application/json"})
-//    public ResponseEntity<?> addNewHelper(HttpServletRequest request, @Valid
-//    @RequestBody
-//            User newHelper) throws URISyntaxException
-//    {
-//        logger.trace(request.getMethod()
-//                .toUpperCase() + " " + request.getRequestURI() + " accessed");
-//
-//        newHelper = userService.saveHelper(newHelper);
-//
-//        // set the location header for the newly created resource
-//        HttpHeaders responseHeaders = new HttpHeaders();
-//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{userid}")
-//                .buildAndExpand(newHelper.getUserid())
-//                .toUri();
-//        responseHeaders.setLocation(newUserURI);
-//
-//        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
-//    }
+    @PostMapping(value = "/createHelper",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addNewHelper(HttpServletRequest request, @Valid
+    @RequestBody
+            UserMinimum newHelper) throws URISyntaxException
+    {
+        logger.trace(request.getMethod()
+                .toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        User helper = userService.saveHelper(newHelper);
+
+        // set the location header for the newly created resource
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{userid}")
+                .buildAndExpand(helper.getUserid())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+    }
 }

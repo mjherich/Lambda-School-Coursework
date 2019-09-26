@@ -124,12 +124,13 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         // Setting student role
         ArrayList<UserRoles> students = new ArrayList<>();
-        students.add(new UserRoles(newStudent, new Role("student")));
+        Role studRole = rolerepos.findByNameIgnoreCase("student");
+        students.add(new UserRoles(newStudent, studRole));
         newStudent.setUserroles(students);
 
         // Add student email
-//        newStudent.getUseremails()
-//                .add(new Useremail(newStudent, student.getEmail()));
+        newStudent.getUseremails()
+                .add(new Useremail(newStudent, student.getEmail()));
 
         return userrepos.save(newStudent);
     }
@@ -147,10 +148,11 @@ public class UserServiceImpl implements UserDetailsService, UserService
         newHelper.setUsername(helper.getUsername());
         newHelper.setPasswordNoEncrypt(helper.getPassword());
 
-        // Setting student role
-        ArrayList<UserRoles> students = new ArrayList<>();
-        students.add(new UserRoles(new User(), new Role("helper")));
-        newHelper.setUserroles(students);
+        // Setting helper role
+        ArrayList<UserRoles> helpers = new ArrayList<>();
+        Role studRole = rolerepos.findByNameIgnoreCase("helper");
+        helpers.add(new UserRoles(newHelper, studRole));
+        newHelper.setUserroles(helpers);
 
         User createdHelper = userrepos.save(newHelper);
         return createdHelper;
