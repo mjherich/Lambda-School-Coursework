@@ -88,8 +88,6 @@ export default function Login(props) {
   });
 
   return (
-      <>
-          <Link to="/">Homepage</Link>
           <FormDiv className="login-form">
               <Formik 
                   initialValues={loginValues}
@@ -128,6 +126,5 @@ export default function Login(props) {
                   }}
               />
           </FormDiv>
-      </>
   )
 }
