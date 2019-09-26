@@ -1,14 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 
-const TicketCard = ({ ticket, userType }) => {
+const TicketCard = ({ ticket, userType, history }) => {
+
+    const toForm = (e) => {
+        history.push('/answer-ticket');
+    }
 
     return (
         <div className='ticket-card'>
-            <h3>{ticket.name}</h3>
-            <p>Category: {ticket.category}</p>
-            <p>Status: {!ticket.active ? 'Closed' : 'Open'}</p>
-            {userType === 'helper' ? <button>Answer Ticket</button> : null}
+            <Link className='ticket-link' to={`/ticket/${ticket.ticketid}`} >
+                <div>
+                    <h3>{ticket.name}</h3>
+                    <p>Category: {ticket.category}</p>
+                    <p>Status: {!ticket.active ? 'Closed' : 'Open'}</p>
+                </div>
+            </Link>
+            {userType === 'helper' ? <button onClick={toForm}>Answer Ticket</button> : null}
         </div>
     );
 }

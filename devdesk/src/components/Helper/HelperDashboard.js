@@ -11,7 +11,7 @@ const HelperDashboard = (props) => {
     return (
         <div className='dashboard'>
             <h2>Helper Dashboard</h2>
-            <TicketList />
+            <TicketList history={props.history} />
         </div>
     )
 }

@@ -6,7 +6,7 @@ import {
 } from '../actions'
 
 const initialState = {
-    userType: '',
+    userType: 'helper',
     user: '',
     ticketArray: [],
     singleTicket: '',
