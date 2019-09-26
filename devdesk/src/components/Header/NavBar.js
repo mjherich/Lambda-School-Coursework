@@ -28,7 +28,7 @@ const StyledNavBar = styled.div`
             div {
                 min-height: 3px;
                 width: 100%;
-                background: white;
+                background: #8DE969;
             }
 
             cursor: pointer;
