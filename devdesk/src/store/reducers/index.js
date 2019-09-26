@@ -1,7 +1,7 @@
 import {
     FETCH_TICKETS_START, FETCH_TICKETS_SUCCESS, FETCH_TICKETS_FAIL,
     PUT_TICKET_START, POST_TICKET_START, POST_TICKET_SUCCESS, POST_TICKET_FAIL,
-    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL, FETCH_SINGLE_TICKET_START, FETCH_SINGLE_TICKET_SUCCESS, FETCH_SINGLE_TICKET_FAIL
+    PUT_TICKET_SUCCESS, PUT_TICKET_FAIL, FETCH_SINGLE_TICKET_START, FETCH_SINGLE_TICKET_SUCCESS, FETCH_SINGLE_TICKET_FAIL, SET_USER_TYPE
 } from '../actions'
 
 const initialState = {
@@ -19,6 +19,10 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case SET_USER_TYPE:
+            return {
+                userType: action.payload
+            };
         case FETCH_TICKETS_START:
             return {
                 ...state,
@@ -29,9 +33,9 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isGetting: false,
-                ticketArray: ,
-                userType: ,
-                user: ,
+                ticketArray: [],
+                userType: '',
+                user: '',
             };
         case FETCH_TICKETS_FAIL:
             return {
@@ -49,7 +53,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isGetting: false,
-                singleTicket: ,
+                singleTicket: '',
             };
         case FETCH_SINGLE_TICKET_FAIL:
             return {
@@ -67,7 +71,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isPosting: false,
-                ticketArray: ,
+                ticketArray: '',
             };
         case POST_TICKET_FAIL:
             return {
@@ -85,7 +89,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isPutting: false,
-                ticketArray: ,
+                ticketArray: '',
             };
         case PUT_TICKET_FAIL:
             return {

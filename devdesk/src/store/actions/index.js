@@ -15,7 +15,7 @@ export const FETCH_SINGLE_TICKET_START = 'FETCH_SINGLE_TICKET_START';
 export const FETCH_SINGLE_TICKET_SUCCESS = 'FETCH_SINGLE_TICKET_SUCCESS';
 export const FETCH_SINGLE_TICKET_FAIL = 'FETCH_SINGLE_TICKET_FAIL';
 
-export const fetchTickets = () => dispatch => {
+export const fetchSingleTickets = () => dispatch => {
     dispatch({ type: FETCH_SINGLE_TICKET_START });
     axiosWithAuth().get('url')
         .then(res => console.log(res))
@@ -42,4 +42,13 @@ export const putTicket = (ticket) => dispatch => {
     axiosWithAuth().post(`url/${ticket.id}`, ticket)
         .then(res => console.log(res))
         .catch(err => console.log(err))
+}
+
+export const SET_USER_TYPE = 'SET_USER_TYPE'
+
+export const setUserType = (userType) => {
+    return {
+        type: SET_USER_TYPE,
+        payload: userType
+    }
 }

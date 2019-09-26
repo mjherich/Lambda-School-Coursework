@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import axios from 'axios'
 import * as yup from "yup";
 import styled from "styled-components";
+
+import { setUserType } from '../../store/actions'
 
 const FormDiv = styled.div`
   background: #74BF56;
@@ -64,25 +67,31 @@ const Login = (props) => {
         const userToPost = {
             username: formValues.username,
             password: formValues.password,
-            userType: formValues.userType,
+
         }
 
         console.log(userToPost); // In lieu of an axios.post...      
+        axios.post('https://lambda-dev-desk-queue.herokuapp.com/login', `grant_type=password&username=${userToPost.username}&password=${userToPost.password}`, {
+            headers: {
+
+                // btoa is converting our client id/client secret into base64
+                Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+
+            },
+        })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
         props.history.push("/login/");
     };
 
     const validationSchema = yup.object().shape({
-        username: yup.string()
-            .test(
-                "username",
-                "Please enter a username at least 8 characters long.",
-                value => value !== undefined && value.length > 8,
-            ),
+
         password: yup.string()
             .test(
                 "password",
                 "Please enter a password at least 8 characters long.",
-                value => value !== undefined && value.length > 8,
+                value => value !== undefined && value.length > 4,
             ),
         userType: yup.string().required("Please choose a user type."),
     });
