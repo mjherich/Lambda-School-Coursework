@@ -1,15 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import TicketCard from './TicketCard'
-import ticketArray from '../../MockData';
 
-const TicketList = () => {
+const TicketList = (props) => {
     return (
         <div className='ticket-grid'>
-            {ticketArray.map(ticket => <Link className='ticket-link' to={`/ticket/${ticket.id}`} ><TicketCard key={ticket.id} ticket={ticket} /> </Link>)}
+            {props.ticketArray.map(ticket => <Link className='ticket-link' to={`/ticket/${ticket.id}`} ><TicketCard key={ticket.ticketid} ticket={ticket} /> </Link>)}
         </div>
     )
 }
 
-export default TicketList;
+const mapStateToProps = state => {
+    return {
+        ticketArray: state.ticketArray
+    }
+}
+
+export default connect(mapStateToProps, {})(TicketList);

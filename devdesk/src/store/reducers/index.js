@@ -8,7 +8,7 @@ import {
 const initialState = {
     userType: '',
     user: '',
-    ticketArray: '',
+    ticketArray: [],
     singleTicket: '',
     getError: '',
     postError: '',
@@ -35,8 +35,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isGetting: false,
-                ticketArray: [],
-                userType: '',
+                ticketArray: action.payload,
                 user: '',
             };
         case FETCH_TICKETS_FAIL:
