@@ -31,7 +31,7 @@ export default function NavBar(props) {
         <StyledNavBar>
             <nav>
                 <div className="link-button">
-                    <Link to="/">Home</Link>
+                    <a href="https://joshuaxedgerton.netlify.com/home.html">Home</a>
                 </div>
                 <div className="link-button">
                     <Link to="/signup">Signup</Link>
