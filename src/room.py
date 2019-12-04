@@ -11,3 +11,9 @@ class Room:
     self.e_to = None
     self.s_to = None
     self.w_to = None
+    self.items = []
+  def show_items(self):
+    if len(self.items) > 0:
+      return f'Available items: {self.items}'
+    else:
+      return 'No items in this room.'

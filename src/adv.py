@@ -60,6 +60,7 @@ player = Player("Matt", room['outside'])
 while True:
     print(f'===========\nCurrently in: {player.current_room.name}')
     print(wrapper.fill(text=player.current_room.description))
+    print(player.current_room.show_items())
     direction = input('===========\nWhere do you want to go? (n, e, s, w)\n')
     if direction == 'n':
         if player.current_room.n_to != None:
