@@ -1,4 +1,8 @@
 from room import Room
+from player import Player
+
+import textwrap
+import time
 
 # Declare all the rooms
 
@@ -37,7 +41,11 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 
+# Textwrapper for description in repl
+wrapper = textwrap.TextWrapper(width=50)
+
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Matt", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +57,36 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    print(f'===========\nCurrently in: {player.current_room.name}')
+    print(wrapper.fill(text=player.current_room.description))
+    direction = input('===========\nWhere do you want to go? (n, e, s, w)\n')
+    if direction == 'n':
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+        else:
+            print('There is no room north of your position, explore elsewhere!')
+            time.sleep(2)
+    elif direction == 'e':
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+        else:
+            print('There is no room east of your position, explore elsewhere!')
+            time.sleep(2)
+    elif direction == 's':
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+        else:
+            print('There is no room south of your position, explore elsewhere!')
+            time.sleep(2)
+    elif direction == 'w':
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+        else:
+            print('There is no room west of your position, explore elsewhere!')
+            time.sleep(2)
+    elif direction == 'q':
+        break
+    else:
+        print('You must enter a valid direction.')
+        time.sleep(2)
