@@ -14,6 +14,6 @@ class Room:
     self.items = []
   def show_items(self):
     if len(self.items) > 0:
-      return f'Available items: {self.items}'
+      return f'Available items: {", ".join([item.name for item in self.items])}'
     else:
       return 'No items in this room.'

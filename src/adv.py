@@ -1,8 +1,18 @@
 from room import Room
 from player import Player
+from item import Item
 
 import textwrap
 import time
+
+# Create items
+items = {
+    "treasure": Item('Treasure', 'An ancient treasure chest.'),
+    "sword": Item('Sword', 'This sword is stuck in a stone.'),
+    "coal": Item('Coal', 'Use this coal to start fire.'),
+    "candy": Item('Candy', 'A candy cane all by itself.'),
+    "pokemon": Item('Goldeen', 'A wild Goldeen appears!'),
+}
 
 # Declare all the rooms
 
@@ -37,6 +47,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add items to treasure room
+for item in items:
+    room['treasure'].items.append(items[item])
+
 #
 # Main
 #
@@ -58,35 +72,58 @@ player = Player("Matt", room['outside'])
 #
 # If the user enters "q", quit the game.
 while True:
-    print(f'===========\nCurrently in: {player.current_room.name}')
+    print(f'\n====================\nCurrently in: {player.current_room.name}')
     print(wrapper.fill(text=player.current_room.description))
-    print(player.current_room.show_items())
-    direction = input('===========\nWhere do you want to go? (n, e, s, w)\n')
-    if direction == 'n':
+    print(f'\n{player.current_room.show_items()}')
+    direction = input('Where do you want to go? (n, e, s, w): ').split()
+    if len(direction) == 2:
+        if direction[0] == 'get' or direction[0] == 'take':
+            found = False
+            for i in range(len(player.current_room.items)):
+                item = player.current_room.items[i]
+                if direction[1] == item.name:
+                    player.items.append(player.current_room.items.pop(i))
+                    item.on_take()
+                    found = True
+                    break
+            if not found:# i == len(player.current_room.items)-1:
+                print(f'\n{direction[1]} not found in {player.current_room.name}.')
+        elif direction[0] == 'drop':
+            found = False
+            for i in range(len(player.items)):
+                item = player.items[i]
+                if direction[1] == item.name:
+                    player.current_room.items.append(player.items.pop(i))
+                    item.on_drop()
+                    found = True
+                    break
+            if not found:# i == len(player.current_room.items)-1:
+                print(f'\n{direction[1]} not found in your bag.')
+    elif direction[0] == 'n':
         if player.current_room.n_to != None:
             player.current_room = player.current_room.n_to
         else:
             print('There is no room north of your position, explore elsewhere!')
             time.sleep(2)
-    elif direction == 'e':
+    elif direction[0] == 'e':
         if player.current_room.e_to != None:
             player.current_room = player.current_room.e_to
         else:
             print('There is no room east of your position, explore elsewhere!')
             time.sleep(2)
-    elif direction == 's':
+    elif direction[0] == 's':
         if player.current_room.s_to != None:
             player.current_room = player.current_room.s_to
         else:
             print('There is no room south of your position, explore elsewhere!')
             time.sleep(2)
-    elif direction == 'w':
+    elif direction[0] == 'w':
         if player.current_room.w_to != None:
             player.current_room = player.current_room.w_to
         else:
             print('There is no room west of your position, explore elsewhere!')
             time.sleep(2)
-    elif direction == 'q':
+    elif direction[0] == 'q':
         break
     else:
         print('You must enter a valid direction.')
