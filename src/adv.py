@@ -123,6 +123,8 @@ while True:
         else:
             print('There is no room west of your position, explore elsewhere!')
             time.sleep(2)
+    elif user_input[0] == 'i' or user_input[0] == 'inventory':
+        print(player.show_items())
     elif user_input[0] == 'q':
         break
     else:

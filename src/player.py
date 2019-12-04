@@ -5,3 +5,8 @@ class Player:
     self.name = name
     self.current_room = current_room
     self.items = []
+  def show_items(self):
+    if len(self.items) > 0:
+      return f'\nYou currently have: {", ".join([item.name for item in self.items])}'
+    else:
+      return '\nYour inventory is empty. Explore the world some more.'
