@@ -76,6 +76,7 @@ while True:
     print(wrapper.fill(text=player.current_room.description))
     print(f'\n{player.current_room.show_items()}')
     user_input = input('Where do you want to go? (n, e, s, w): ').split()
+    # Take/get or drop Item commands
     if len(user_input) == 2:
         if user_input[0] == 'get' or user_input[0] == 'take':
             found = False
@@ -99,32 +100,38 @@ while True:
                     break
             if not found:# i == len(player.current_room.items)-1:
                 print(f'\n{user_input[1]} not found in your bag.')
+    # Move North command
     elif user_input[0] == 'n':
         if player.current_room.n_to != None:
             player.current_room = player.current_room.n_to
         else:
             print('There is no room north of your position, explore elsewhere!')
             time.sleep(2)
+    # Move East command
     elif user_input[0] == 'e':
         if player.current_room.e_to != None:
             player.current_room = player.current_room.e_to
         else:
             print('There is no room east of your position, explore elsewhere!')
             time.sleep(2)
+    # Move South command
     elif user_input[0] == 's':
         if player.current_room.s_to != None:
             player.current_room = player.current_room.s_to
         else:
             print('There is no room south of your position, explore elsewhere!')
             time.sleep(2)
+    # Move West command
     elif user_input[0] == 'w':
         if player.current_room.w_to != None:
             player.current_room = player.current_room.w_to
         else:
             print('There is no room west of your position, explore elsewhere!')
             time.sleep(2)
+    # Show inventory command
     elif user_input[0] == 'i' or user_input[0] == 'inventory':
         print(player.show_items())
+    # Quit game command
     elif user_input[0] == 'q':
         break
     else:
