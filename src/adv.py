@@ -1,17 +1,26 @@
 from room import Room
 from player import Player
-from item import Item
+from item import Item, Treasure, Weapon
 
 import textwrap
 import time
+import random
 
 # Create items
 items = {
-    "treasure": Item('Treasure', 'An ancient treasure chest.'),
-    "sword": Item('Sword', 'This sword is stuck in a stone.'),
     "coal": Item('Coal', 'Use this coal to start fire.'),
-    "candy": Item('Candy', 'A candy cane all by itself.'),
-    "pokemon": Item('Goldeen', 'A wild Goldeen appears!'),
+}
+treasures = {
+    "chest": Treasure('Chest', 'An ancient treasure chest.', 1000000),
+    "candy": Treasure('Candy', 'A candy cane all by itself.', 10),
+    "pokemon": Treasure('Goldeen', 'A wild Goldeen appears!', 9000),
+}
+weapons = {
+    "launcher": Weapon('Launcher', 'A rocket launcher.', 100),
+    "pistol": Weapon('Pistol', 'A .45 magnum', 8),
+    "sword": Weapon('Sword', 'This sword is stuck in a stone.', 5),
+    "dagger": Weapon('Dagger', 'A glorified butter knife.', 3),
+    "pan": Weapon('Pan', 'Not very effective.', 1),
 }
 
 # Declare all the rooms
@@ -47,9 +56,13 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-# Add items to treasure room
-for item in items:
-    room['treasure'].items.append(items[item])
+# Add Treasures to treasure room
+for treasure in treasures:
+    room['treasure'].items.append(treasures[treasure])
+
+# Place weapons in random rooms
+for weapon in weapons:
+    room[random.choice(list(room.keys()))].items.append(weapons[weapon])
 
 #
 # Main
