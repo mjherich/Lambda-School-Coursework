@@ -29,7 +29,7 @@ def merge_sort( arr ):
     # TO-DO
     l = len(arr)
     
-    if l == 1:
+    if l == 1 or l == 0:
         return arr
 
     left = arr[:math.floor(l/2)]
