@@ -3,7 +3,20 @@
 import math
 
 def recipe_batches(recipe, ingredients):
-  pass 
+  batches = 0
+  no_more_ingredients = False
+
+  while not no_more_ingredients:
+    for ingredient in recipe:
+      if ingredient in ingredients and ingredients[ingredient] >= recipe[ingredient]:
+        ingredients[ingredient] -= recipe[ingredient]
+      else:
+        no_more_ingredients = True
+
+    if no_more_ingredients is False:
+      batches += 1
+
+  return batches
 
 
 if __name__ == '__main__':
