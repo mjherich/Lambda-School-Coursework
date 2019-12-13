@@ -33,4 +33,27 @@ This is a recursive function that decrements by 1 and terminates at 0, starting 
 
 ## Exercise II
 
+n = # floors in building
+f is what we are searching for
+🥚 breaks if floor_dropped_from >= f else doesn't break
+_________
+|◼ ◼ ◼ ◼| n = 10
+|◼ ◼ ◼ ◼| n = 9
+|◼ ◼ ◼ ◼| n = 8
+|◼ ◼ ◼ ◼| n = 7
+|◼ ◼ ◼ ◼| n = 6
+|◼ ◼ ◼ ◼| n = 5 
+|◼ ◼ ◼ ◼| n = 4
+|◼ ◼ ◼ ◼| n = 3
+|◼ ◼ ◼ ◼| n = 2
+|◼ ◼ ◼ ◼| n = 1
+|◼ ◼ ◼ ◼| n = 0
 
+To find f we should...
+1) Start at floor n/2, call that f and set f'=0                                                                           # O(1)
+2) Drop 🥚 and see if it breaks     # This will loop over and over until f-f'==0, where f' is the last floor you tested   # O(1)
+    2.1) If f-f'==0 we can't go up or down anymore so return last f where egg dropped and didn't break                    # O(1)
+    2.2) If breaks: Go down (f-f')/2 floors and repeat step 2                                                             # O(log n)
+         If intact: Go up (f-f')/2 floors and check if the egg breaks from there
+
+The above algorithm is effectively binary search since the number of floors we are testing (search space n) halves every iteration, therefore the overall time complexity would be O(log n).
