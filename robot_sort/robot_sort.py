@@ -1,5 +1,3 @@
-import time
-
 class SortingRobot:
     def __init__(self, l):
         """
