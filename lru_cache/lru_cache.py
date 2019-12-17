@@ -25,11 +25,9 @@ class LRUCache:
     """
     def get(self, key):
         if key in self.storage:
-            node = self.cache.head
-            while node.value[0] is not key:
-                node = node.next
+            node = self.storage[key]
             self.cache.move_to_front(node)
-            return self.storage[key]
+            return self.storage[key].value[1]
         return None
 
     """
@@ -44,15 +42,12 @@ class LRUCache:
     """
     def set(self, key, value):
         if key in self.storage:
-            node = self.cache.head
-            while node.value[0] is not key:
-                node = node.next
+            node = self.storage[key]
             node.value[1] = value
-            self.storage[key] = value
             self.cache.move_to_front(node)
         else:
             self.cache.add_to_head([key, value])
-            self.storage[key] = value
+            self.storage[key] = self.cache.head
             # Remove last element in cache from self.storage and self.cache if length is over limit, else size++
             if self.size + 1 > self.limit:
                 del self.storage[self.cache.tail.value[0]]
