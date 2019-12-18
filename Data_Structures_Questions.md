@@ -18,9 +18,16 @@ Answer the following questions for each of the data structures you implemented a
 
 1. What is the runtime complexity of `insert`? 
 
+- Assuming the tree is balanced or AVL tree, O(log_2 n)
+- If unbalanced then the worst case would be O(h), where h is the height of the tree
+
 2. What is the runtime complexity of `contains`?
 
+- O(log_2 n) or O(h), following the same reasoning from above.
+
 3. What is the runtime complexity of `get_max`? 
+
+- O(log_2 n) or O(h), following the same reasoning from above.
 
 ## Heap
 
