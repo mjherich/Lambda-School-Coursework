@@ -25,11 +25,9 @@ class RingBuffer:
         # TODO: Your code here
         prev = self.storage.tail
         # Keep appending prev until prev is head
-        while prev is not self.storage.head:
-            # if prev.value is not None:
+        while prev is not None:
             list_buffer_contents.append(prev.value)
             prev = prev.prev
-        list_buffer_contents.append(self.storage.head.value)
 
         return list_buffer_contents
 
