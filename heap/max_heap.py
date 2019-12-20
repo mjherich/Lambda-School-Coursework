@@ -1,4 +1,6 @@
 from math import floor
+import unittest
+from unittest.mock import MagicMock
 
 class Heap:
     def __init__(self):
@@ -24,17 +26,49 @@ class Heap:
             parent_index = self.get_parent_index(index)
 
     def delete(self):
-        pass
+        ret = self.storage[0]
+        self.storage[0] = self.storage[-1]
+        del self.storage[-1]
+        index = 0
+        while True:
+            left_index = self.get_left_child_index(index)
+            right_index = self.get_right_child_index(index)
+            if left_index < self.get_size() and right_index < self.get_size(): # Both children exist
+                if self.storage[left_index] >= self.storage[right_index]: # left child bigger than right
+                    if self.storage[left_index] >= self.storage[index]:
+                        index = self._sift_down(index, 'left')
+                    else:
+                        break
+                else:                                                     # right child bigger than left
+                    if self.storage[right_index] > self.storage[index]:
+                        index = self._sift_down(index, 'right')
+                    else:
+                        break
+            elif left_index < self.get_size() and right_index >= self.get_size(): # Only left exists
+                if self.storage[left_index] >= self.storage[index]:
+                    index = self._sift_down(index, 'left')
+                else:
+                    break
+            elif left_index >= self.get_size(): # No children exist, so break out of loop
+                break
+        return ret
 
     def get_max(self):
-        pass
+        return self.storage[0]
 
     def get_size(self):
-        pass
+        return len(self.storage)
 
     def _bubble_up(self, index):
         parent_index = self.get_parent_index(index)
         self.storage[index], self.storage[parent_index] = self.storage[parent_index], self.storage[index]
 
-    def _sift_down(self, index):
-        pass
+    def _sift_down(self, index, direction):
+        if direction == 'left':
+            left_index = self.get_left_child_index(index)
+            self.storage[index], self.storage[left_index] = self.storage[left_index], self.storage[index]
+            return left_index # Returns the new index
+        elif direction == 'right':
+            right_index = self.get_right_child_index(index)
+            self.storage[index], self.storage[right_index] = self.storage[right_index], self.storage[index]
+            return right_index # Returns the new index
