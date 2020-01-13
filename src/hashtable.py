@@ -52,17 +52,22 @@ class HashTable:
         Fill this in.
         '''
         idx = self._hash_mod(key)
-        new_item = LinkedPair(key, value)
         if self.storage[idx] is None:
-            self.storage[idx] = new_item
+            self.storage[idx] = LinkedPair(key, value)
         else:
             item = self.storage[idx]
-            while item.next is not None:
+            # Loop over each node in the list and check if key matches
+            # If we get to the end then add a new node
+
+            while item is not None:
                 if item.key is key:
                     item.value = value
                     return
-                item = item.next
-            item.next = new_item
+                if item.next is None:
+                    item.next = LinkedPair(key, value)
+                    return
+                else:
+                    item = item.next
 
 
     def remove(self, key):
