@@ -51,8 +51,18 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
-
+        idx = self._hash_mod(key)
+        new_item = LinkedPair(key, value)
+        if self.storage[idx] is None:
+            self.storage[idx] = new_item
+        else:
+            item = self.storage[idx]
+            while item.next is not None:
+                if item.key is key:
+                    item.value = value
+                    return
+                item = item.next
+            item.next = new_item
 
 
     def remove(self, key):
@@ -63,7 +73,19 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        idx = self._hash_mod(key)
+        if self.storage[idx].key is key:
+            next_node = self.storage[idx].next
+            self.storage[idx] = next_node
+        else:
+            item = self.storage[idx]
+            while item.key is not key:
+                prev = item
+                item = item.next
+                if item is None:
+                    print(f"No item found with key {key}")
+                    return None
+            prev.next = item.next
 
 
     def retrieve(self, key):
@@ -74,7 +96,18 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        idx = self._hash_mod(key)
+        if self.storage[idx] is None:
+            return None
+        elif self.storage[idx].key is key:
+            return self.storage[idx].value
+        else:
+            item = self.storage[idx]
+            while item.key is not key:
+                if item.next is None:
+                    return None
+                item = item.next
+            return item.value
 
 
     def resize(self):
@@ -84,7 +117,22 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        self.capacity *= 2
+        new_storage = [None] * self.capacity
+        for item in self.storage:
+            if item is not None:
+                old_node = item
+                while old_node is not None:
+                    idx = self._hash_mod(old_node.key)
+                    if new_storage[idx] is None:
+                        new_storage[idx] = LinkedPair(old_node.key, old_node.value)
+                    else:
+                        node = new_storage[idx]
+                        while node.next is not None:
+                            node = node.next
+                        node.next = LinkedPair(item.key, item.value)
+                    old_node = old_node.next
+        self.storage = new_storage
 
 
 
