@@ -128,7 +128,7 @@ class HashTable:
         for item in self.storage:
             # Only items that have stuff matter
             if item is not None:
-                # This is the node from tstorage
+                # This is the node from old storage
                 old_node = item
                 while old_node is not None:
                     # Get new index to use for new_storage
@@ -141,6 +141,7 @@ class HashTable:
                             node = node.next
                         node.next = LinkedPair(old_node.key, old_node.value)
                     old_node = old_node.next
+        # Update storage
         self.storage = new_storage
 
 
