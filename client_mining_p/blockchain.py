@@ -107,19 +107,31 @@ node_identifier = str(uuid4()).replace('-', '')
 blockchain = Blockchain()
 
 
-@app.route('/mine', methods=['GET'])
+@app.route('/mine', methods=['POST'])
 def mine():
-    # Run the proof of work algorithm to get the next proof
-    proof = blockchain.proof_of_work(blockchain.last_block)
-    # Forge the new Block by adding it to the chain with the proof
-    previous_hash = blockchain.hash(blockchain.last_block)
-    block = blockchain.new_block(proof, previous_hash)
+    data = request.get_json()
+    # Check that the response contains both proof and id
+    if "proof" not in data or "block_id" not in data:
+        error = {
+            "error": "Requires both proof and id in the request"
+        }
+        return jsonify(error), 422
 
-    response = {
-        'new_block': block
-    }
+    # Check if proof is valid for the block id
+    block = blockchain.chain[data["block_id"]-1]
+    proof = data["proof"]
+    is_valid = blockchain.valid_proof(json.dumps(block), proof)
 
-    return jsonify(response), 200
+    # If the block is valid then forge it and append to the chain
+    if is_valid:
+        previous_hash = blockchain.hash(blockchain.last_block)
+        forged_block = blockchain.new_block(proof, previous_hash)
+        return jsonify(forged_block), 200
+    else:
+        error = {
+            "error": "Not a valid proof of work"
+        }
+        return error, 400
 
 
 @app.route('/chain', methods=['GET'])
