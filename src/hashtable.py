@@ -1,3 +1,5 @@
+import math
+
 # '''
 # Linked List hash table key/value pair
 # '''
@@ -14,6 +16,7 @@ class HashTable:
     '''
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
+        self.entries = 0
         self.storage = [None] * capacity
 
 
@@ -37,6 +40,8 @@ class HashTable:
             h = (h * 33) + ord(c)
         return h
 
+    def _load_factor(self):
+        return self.entries / self.capacity
 
     def _hash_mod(self, key):
         '''
@@ -54,9 +59,16 @@ class HashTable:
 
         Fill this in.
         '''
+        # First check if load factor is over 0.7
+        lf = self._load_factor()
+        if lf > 0.7:
+            self.resize(2)
+        elif lf < 0.2:
+            self.resize(0.5)
         idx = self._hash_mod(key)
         if self.storage[idx] is None:
             self.storage[idx] = LinkedPair(key, value)
+            self.entries += 1
         else:
             item = self.storage[idx]
             # Loop over each node in the list and check if key matches
@@ -68,6 +80,7 @@ class HashTable:
                     return
                 if item.next is None:
                     item.next = LinkedPair(key, value)
+                    self.entries += 1
                     return
                 else:
                     item = item.next
@@ -94,6 +107,7 @@ class HashTable:
                     print(f"No item found with key {key}")
                     return None
             prev.next = item.next
+        self.entries -= 1
 
 
     def retrieve(self, key):
@@ -118,14 +132,15 @@ class HashTable:
             return item.value
 
 
-    def resize(self):
+    def resize(self, factor=2):
         '''
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
 
         Fill this in.
         '''
-        self.capacity *= 2
+        new_capacity = math.floor(self.capacity * factor)
+        self.capacity = new_capacity
         new_storage = [None] * self.capacity
         # Loop over each index in old storage
         for item in self.storage:
