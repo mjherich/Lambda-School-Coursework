@@ -78,7 +78,7 @@ if __name__ == '__main__':
         # TODO: If the server responds with a 'message' 'New Block Forged'
         # add 1 to the number of coins mined and print it.  Otherwise,
         # print the message from the server.
-        print(data)
+
         if "forged_block" in data:
             minted += 1
             print(f"You found a block!\
