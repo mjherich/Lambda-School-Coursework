@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 
 import AppContext from './state/AppContext'
 import Login from './components/Login';
-import UserDashboard from './components/UserDashboard';
+import UserDashboard from './components/UserDashboard/UserDashboard';
 
 function App() {
   const [state, setState] = React.useState({ id: "" });
