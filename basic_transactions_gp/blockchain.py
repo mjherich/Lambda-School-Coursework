@@ -4,6 +4,7 @@ from time import time
 from uuid import uuid4
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 
 
 class Blockchain(object):
@@ -125,6 +126,7 @@ blockchain = Blockchain()
 
 
 @app.route('/transactions/new', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def new_transaction():
     data = request.get_json()
 
@@ -141,6 +143,7 @@ def new_transaction():
     return jsonify(response), 201
 
 @app.route('/mine', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def mine():
     data = request.get_json()
     # Check that the response contains both proof and id
@@ -179,6 +182,7 @@ def mine():
 
 
 @app.route('/chain', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def full_chain():
     response = {
         # TODO: Return the chain and its current length
@@ -189,6 +193,7 @@ def full_chain():
 
 
 @app.route('/last_block', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def last_block():
     return jsonify(blockchain.last_block), 200
 
