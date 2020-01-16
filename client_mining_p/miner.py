@@ -3,6 +3,7 @@ import requests
 
 import sys
 import json
+import time
 
 
 def proof_of_work(block):
@@ -17,7 +18,7 @@ def proof_of_work(block):
     proof = 0
     while valid_proof(block_string, proof) is False:
         proof += 1
-    print(block_string)
+
     return proof
 
 
@@ -35,12 +36,7 @@ def valid_proof(block_string, proof):
     guess = f"{block_string}{proof}".encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
 
-    if guess_hash[:6] == "000000":
-        print(guess_hash)
-        return True
-    else:
-        return False
-    # return guess_hash[:5] == "00000"
+    return guess_hash[:6] == "000000"
 
 minted = 0
 if __name__ == '__main__':
@@ -68,10 +64,12 @@ if __name__ == '__main__':
             print(r)
             break
         block_id = data["index"]
-        print(f"Mining block {block_id+1}")
+        print(f"\nMining block {block_id+1}")
+        
         # TODO: Get the block from `data` and use it to look for a new proof
+        start_time = time.time()
         new_proof = proof_of_work(data)
-        print(new_proof)
+        time_to_mine = time.time() - start_time
         # When found, POST it to the server {"proof": new_proof, "id": id}
         post_data = {"proof": new_proof, "block_id": block_id}
 
@@ -80,7 +78,12 @@ if __name__ == '__main__':
         # TODO: If the server responds with a 'message' 'New Block Forged'
         # add 1 to the number of coins mined and print it.  Otherwise,
         # print the message from the server.
-        if "message" in data and data["message"] == "New Block Forged":
+        print(data)
+        if "forged_block" in data:
             minted += 1
-            print(f"You found a block!\nTotal coins mined: {minted}")
+            print(f"You found a block!\
+                \nTime to mine: {time_to_mine}\
+                \nTotal coins mined: {minted}")
+        else:
+            print(data["message"])
         pass

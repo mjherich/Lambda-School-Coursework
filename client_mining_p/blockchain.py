@@ -94,7 +94,7 @@ class Blockchain(object):
         """
         guess = f"{block_string}{proof}".encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
-        print(guess_hash)
+
         return guess_hash[:6] == "000000"
 
 # Instantiate our Node
@@ -126,11 +126,12 @@ def mine():
     if is_valid:
         previous_hash = blockchain.hash(blockchain.last_block)
         forged_block = blockchain.new_block(proof, previous_hash)
+        print("New block mined")
         response = {
             "message": "New Block Forged",
             "forged_block": forged_block
         }
-        return jsonify(forged_block), 200
+        return jsonify(response), 200
     else:
         error = {
             "message": "Not a valid proof of work"
