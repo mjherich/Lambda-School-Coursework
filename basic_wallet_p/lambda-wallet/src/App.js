@@ -1,9 +1,10 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import './App.css';
 import Container from '@material-ui/core/Container';
 
 import AppContext from './state/AppContext'
 import Login from './components/Login';
+import UserDashboard from './components/UserDashboard';
 
 function App() {
   const [state, setState] = React.useState({ id: "" });
@@ -11,7 +12,11 @@ function App() {
     <div className="App">
       <AppContext.Provider value={{state, setState}}>
         <Container className="main-container">
-          {state.id === "" ? <Login /> : <p>Logged in as {state.id}</p>}
+          {state.id === "" ?
+            <Login />
+            :
+            <UserDashboard />
+          }
         </Container>
       </AppContext.Provider>
     </div>
