@@ -94,7 +94,7 @@ class Blockchain(object):
         """
         guess = f"{block_string}{proof}".encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
-
+        print(guess_hash)
         return guess_hash[:6] == "000000"
 
 # Instantiate our Node
@@ -113,23 +113,27 @@ def mine():
     # Check that the response contains both proof and id
     if "proof" not in data or "block_id" not in data:
         error = {
-            "error": "Requires both proof and id in the request"
+            "message": "Requires both proof and id in the request"
         }
         return jsonify(error), 422
 
     # Check if proof is valid for the block id
     block = blockchain.chain[data["block_id"]-1]
     proof = data["proof"]
-    is_valid = blockchain.valid_proof(json.dumps(block), proof)
+    is_valid = blockchain.valid_proof(json.dumps(block, sort_keys=True), proof)
 
     # If the block is valid then forge it and append to the chain
     if is_valid:
         previous_hash = blockchain.hash(blockchain.last_block)
         forged_block = blockchain.new_block(proof, previous_hash)
+        response = {
+            "message": "New Block Forged",
+            "forged_block": forged_block
+        }
         return jsonify(forged_block), 200
     else:
         error = {
-            "error": "Not a valid proof of work"
+            "message": "Not a valid proof of work"
         }
         return error, 400
 
