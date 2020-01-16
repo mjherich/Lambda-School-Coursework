@@ -163,11 +163,11 @@ def mine():
         previous_hash = blockchain.hash(blockchain.last_block)
         forged_block = blockchain.new_block(proof, previous_hash)
 
-        # blockchain.new_transaction(
-        #     sender="0",
-        #     recipient=data["id"],
-        #     amount=100
-        # )
+        blockchain.new_transaction(
+            sender="block_reward",
+            recipient=data["id"],
+            amount=100
+        )
         print("New block mined")
         response = {
             "message": "New Block Forged",
