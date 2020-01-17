@@ -23,7 +23,7 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = random.randint(0,999999999999)
+    proof = random.randint(-sys.maxsize,sys.maxsize)
     last_hash = hashlib.sha256(f'{last_proof}'.encode()).hexdigest()
     while valid_proof(last_hash, proof) is False:
         proof += 1
