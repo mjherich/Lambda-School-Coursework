@@ -21,6 +21,21 @@ export default function UserDashboard() {
     return userTransactions;
   }
 
+  const calculateBalance = userTransactions => {
+    let amount = 0;
+    let id = ctx.state.id;
+    userTransactions.forEach(block => {
+      block.blockTransactions.forEach(t => {
+        if (t.recipient === id) {
+          amount += t.amount;
+        } else {
+          amount -= t.amount;
+        }
+      })
+    })
+    return amount;
+  }
+
   useEffect(() => {
     axios
       .get('http://localhost:5000/chain')
@@ -39,18 +54,15 @@ export default function UserDashboard() {
   return (
     <Box>
       <Typography variant="h4">Logged in as {ctx.state.id}</Typography><br/>
-      <div className="balance">
+      <div>
         {ctx.state.chain ? (
           <div className="user-info">
-            <p>Your Balance: </p>
+            <Typography variant="h3">Your Balance: {calculateBalance(ctx.state.userTransactions)}</Typography>
             <Transactions />
           </div>
         ) : (
           <p>Fetching Chain...</p>
         )}
-      </div>
-      <div className="transactions">
-        
       </div>
     </Box>
   )
