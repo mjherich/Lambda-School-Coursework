@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 import AppContext from '../../state/AppContext';
@@ -53,7 +54,8 @@ export default function UserDashboard() {
 
   return (
     <Box>
-      <Typography variant="h4">Logged in as {ctx.state.id}</Typography><br/>
+      <Typography variant="h4">Logged in as {ctx.state.id}</Typography>
+      <Button variant="contained" color="secondary" onClick={() => ctx.setState({ ...ctx.state, id: "" })}>Change ID</Button>
       <div>
         {ctx.state.chain ? (
           <div className="user-info">

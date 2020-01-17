@@ -26,7 +26,6 @@ export default function Transactions() {
 
   return (
     <div className="user-transactions">
-      <Typography variant="h3">Your Transactions</Typography>
       {ctx.state.userTransactions.length > 0 ? (
         <StickyHeadTable rows={createRows(ctx.state.userTransactions)} />
       ) : (
