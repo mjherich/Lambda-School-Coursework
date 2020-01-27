@@ -7,7 +7,13 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-        pass
+        self.registers = [[0] * 8] * 8  # List for storing registers R0 - R7
+                                        # R5: Interrupt Mask (IM), R6: Interrupt Status (IS), R7: Stack Pointer (SP)
+        self.PC = [0] * 8               # Program Counter, address of the currently executing instruction
+        self.IR = [0] * 8               # Instruction Register, contains a copy of the currently executing instruction
+        self.MAR = [0] * 8              # Memory Address Register, holds the memory address we're reading or writing
+        self.MDR = [0] * 8              # Memory Data Register, holds the value to write or the value just read
+        self.FL = []                    # Flags
 
     def load(self):
         """Load a program into memory."""
