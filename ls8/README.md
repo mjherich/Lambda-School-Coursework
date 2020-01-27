@@ -65,6 +65,11 @@ but you'll have to implement those three above instructions first!
 * Read this whole file.
 * Skim the spec.
 
+**File Structure**
+- `cpu.py` - This file contains the "brains" or implementation details of LS8.
+- `ls8.py` - This file bootstraps the LS8 emulator.
+- `examples/` - This directory contains various `.ls8` files which can be used to test the functionality of the LS8 emulator.
+
 ## Step 1: Add the constructor to `cpu.py`
 
 Add list properties to the `CPU` class to hold 256 bytes of memory and 8
