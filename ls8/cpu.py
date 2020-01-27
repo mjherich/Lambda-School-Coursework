@@ -9,11 +9,8 @@ class CPU:
         """Construct a new CPU."""
         self.registers = [[0] * 8] * 8  # List for storing registers R0 - R7
                                         # R5: Interrupt Mask (IM), R6: Interrupt Status (IS), R7: Stack Pointer (SP)
-        self.PC = [0] * 8               # Program Counter, address of the currently executing instruction
-        self.IR = [0] * 8               # Instruction Register, contains a copy of the currently executing instruction
-        self.MAR = [0] * 8              # Memory Address Register, holds the memory address we're reading or writing
-        self.MDR = [0] * 8              # Memory Data Register, holds the value to write or the value just read
-        self.FL = []                    # Flags
+        self.ram = [[0] * 8] * 256      # Ram contains 256 bytes of memory
+        self.pc = [0] * 8               # Program Counter, address of the currently executing instruction
 
     def load(self):
         """Load a program into memory."""
@@ -36,6 +33,12 @@ class CPU:
             self.ram[address] = instruction
             address += 1
 
+    def ram_read(self, MAR):
+        return self.ram[MAR]
+
+    def ram_write(self, MAR, MDR):
+        memory_block = self.ram[MAR]
+        memory_block = MDR
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
