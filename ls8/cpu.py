@@ -11,6 +11,11 @@ class CPU:
                                   # R5: Interrupt Mask (IM), R6: Interrupt Status (IS), R7: Stack Pointer (SP)
         self.ram = [0] * 256      # Ram contains 256 bytes of memory
         self.pc = 0               # Program Counter, address of the currently executing instruction
+        self._instructions = {
+            "LDI": 0b10000010,
+            "PRN": 0b01000111,
+            "HLT": 0b00000001
+        }
 
     def load(self):
         """Load a program into memory."""
@@ -71,4 +76,22 @@ class CPU:
 
     def run(self):
         """Run the CPU."""
-        pass
+        PC = self.pc
+        halted = False
+        while not halted:
+            # Get the instruction from ram and store in local instruction register
+            IR = self.ram[PC]
+            # Get operands
+            operand_a = self.ram[PC + 1]
+            operand_b = self.ram[PC + 2]
+            # Run the correct operation
+            if IR == self._instructions["LDI"]:
+                self.registers[operand_a] = operand_b
+                PC += 3
+            elif IR == self._instructions["PRN"]:
+                print(self.registers[operand_a])
+                PC += 2
+            elif IR == self._instructions["HLT"]:
+                halted = True
+            else:
+                raise Exception(f"Command {IR} does not exist")
