@@ -17,33 +17,34 @@ class CPU:
             "HLT": 0b00000001
         }
 
-    def load(self):
+    def load(self, filename):
         """Load a program into memory."""
+        try:
+            address = 0
+            with open(filename) as f:
+                for line in f:
+                    # Ignore comments
+                    comment_split = line.split("#")
+                    num = comment_split[0].strip()
 
-        address = 0
+                    if num == "":
+                        continue
 
-        # For now, we've just hardcoded a program:
+                    value = int(num)
 
-        program = [
-            # From print8.ls8
-            0b10000010, # LDI R0,8
-            0b00000000,
-            0b00001000,
-            0b01000111, # PRN R0
-            0b00000000,
-            0b00000001, # HLT
-        ]
+                    self.ram_write(address, value)
+                    address += 1
+            print(f"File {filename} successfully loaded into memory: ", cpu.ram)
 
-        for instruction in program:
-            self.ram[address] = instruction
-            address += 1
+        except FileNotFoundError:
+            print(f"{sys.argv[0]}: {filename} not found")
+            sys.exit(2)
 
     def ram_read(self, MAR):
         return self.ram[MAR]
 
     def ram_write(self, MAR, MDR):
-        memory_block = self.ram[MAR]
-        memory_block = MDR
+        self.ram[MAR] = MDR
 
     def alu(self, op, reg_a, reg_b):
         """ALU operations."""
@@ -95,3 +96,32 @@ class CPU:
                 halted = True
             else:
                 raise Exception(f"Command {IR} does not exist")
+
+    def load_memory(self, filename):
+        try:
+            address = 0
+            with open(filename) as f:
+                for line in f:
+                    # Ignore comments
+                    comment_split = line.split("#")
+                    num = comment_split[0].strip()
+
+                    if num == "":
+                        continue
+
+                    value = int(num)
+
+                    self.ram_write(address, value)
+                    print("Ram Written")
+                    address += 1
+
+        except FileNotFoundError:
+            print(f"{sys.argv[0]}: {filename} not found")
+            sys.exit(2)
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Usage: file.py filename", file=sys.stderr)
+        sys.exit(1)
+    cpu = CPU()
+    cpu.load(sys.argv[1])
