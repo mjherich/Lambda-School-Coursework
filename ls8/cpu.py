@@ -7,10 +7,10 @@ class CPU:
 
     def __init__(self):
         """Construct a new CPU."""
-        self.registers = [[0] * 8] * 8  # List for storing registers R0 - R7
-                                        # R5: Interrupt Mask (IM), R6: Interrupt Status (IS), R7: Stack Pointer (SP)
-        self.ram = [[0] * 8] * 256      # Ram contains 256 bytes of memory
-        self.pc = [0] * 8               # Program Counter, address of the currently executing instruction
+        self.registers = [0] * 8  # List for storing registers R0 - R7
+                                  # R5: Interrupt Mask (IM), R6: Interrupt Status (IS), R7: Stack Pointer (SP)
+        self.ram = [0] * 256      # Ram contains 256 bytes of memory
+        self.pc = 0               # Program Counter, address of the currently executing instruction
 
     def load(self):
         """Load a program into memory."""
