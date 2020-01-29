@@ -6,28 +6,31 @@ PRINT_NUM       = 3
 SAVE            = 4
 PRINT_REGISTER  = 5  # Saves a value to a register
 ADD             = 6
+PUSH            = 7
+POP             = 8
 
-memory = [
-    PRINT_BEEJ,
-    SAVE,       # Saves the value 65 to register 2
-    65,
-    2,
-    SAVE,       # Saves the value 20 to register 3
-    20,
-    1,
-    ADD,        # Adds the value from register 2 to register 3
-    2,
-    3,
-    PRINT_REGISTER,  # Print the value in register 2
-    2,
-    PRINT_BEEJ,
-    PRINT_BEEJ,
-    PRINT_BEEJ,
-    HALT,
-]
+# memory = [
+#     PRINT_BEEJ,
+#     SAVE,       # Saves the value 65 to register 2
+#     65,
+#     2,
+#     SAVE,       # Saves the value 20 to register 3
+#     20,
+#     1,
+#     ADD,        # Adds the value from register 2 to register 3
+#     2,
+#     3,
+#     PRINT_REGISTER,  # Print the value in register 2
+#     2,
+#     PRINT_BEEJ,
+#     PRINT_BEEJ,
+#     PRINT_BEEJ,
+#     HALT,
+# ]
 
-register = [0] * 8
-
+memory = [0] * 256
+registers = [0] * 8
+SP = 0
 pc = 0
 running = True
 
@@ -79,16 +82,34 @@ while running:
     elif command == SAVE:
         num = memory[pc+1]
         reg = memory[pc+2]
-        register[reg] = num
+        registers[reg] = num
         pc += 3
     elif command == ADD:
         reg_a = memory[pc+1]
         reg_b = memory[pc+2]
-        register[reg_a] += register[reg_b]
+        registers[reg_a] += registers[reg_b]
         pc += 3
     elif command == PRINT_REGISTER:
         reg = memory[pc + 1]
-        print(register[reg])
+        print(registers[reg])
+        pc += 2
+    elif command == PUSH:
+        reg = memory[pc + 1]
+        val = registers[reg]
+        # Decrement the SP
+        registers[SP] -= 1
+        # Copy the value in the given register to the address pointed to by the 
+        memory[registers[SP]] = val
+        # Increment PC by 3
+        pc += 2
+    elif command == POP:
+        reg = memory[pc + 1]
+        # Copy the value from the address pointed to by SP to the given register
+        val = memory[registers[SP]]
+        registers[reg] = val
+        # Increment the SP
+        registers[SP] += 1
+        # Increment PC by 2
         pc += 2
     else:
         print(f"Error: Unkown command: {command}")
