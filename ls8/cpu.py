@@ -7,6 +7,8 @@ LDI = 0b10000010
 PRN = 0b01000111
 MUL = 0b10100010
 HLT = 0b00000001
+PUSH = 0b01000101
+POP = 0b01000110
 
 class CPU:
     """Main CPU class."""
@@ -15,6 +17,7 @@ class CPU:
         """Construct a new CPU."""
         self.registers = [0] * 8    # List for storing registers R0 - R7
                                     # R5: Interrupt Mask (IM), R6: Interrupt Status (IS), R7: Stack Pointer (SP)
+        self.registers[7] = 0xF4    # Initialize stack pointer at R7 to 0xF4
         self.ram = [0] * 256        # Ram contains 256 bytes of memory
         self.pc = 0                 # Program Counter, address of the currently executing instruction
         self._halted = False        # Used for run(), set to False in HLT()
@@ -23,6 +26,8 @@ class CPU:
         self.branch_table[PRN] = self.handle_PRN
         self.branch_table[MUL] = self.handle_MUL
         self.branch_table[HLT] = self.handle_HLT
+        self.branch_table[PUSH] = self.handle_PUSH
+        self.branch_table[POP] = self.handle_POP
 
 
     def load(self, filename):
@@ -58,31 +63,38 @@ class CPU:
         """ALU operations."""
 
         if op == "ADD":
-            self.reg[reg_a] += self.reg[reg_b]
+            self.registers[reg_a] += self.registers[reg_b]
         #elif op == "SUB": etc
         else:
             raise Exception("Unsupported ALU operation")
 
     def handle_LDI(self, operand_a, operand_b):
-        print(f"running LDI: store {operand_b} in register {operand_a}")
         self.registers[operand_a] = operand_b
         self.pc += 3
 
     def handle_PRN(self, operand_a, operand_b):
-        print(f"running PRN: print register {operand_a}")
         print(self.registers[operand_a])
         self.pc += 2
 
     def handle_MUL(self, operand_a, operand_b):
-        print(f"running MUL: multiply registers {operand_a} and {operand_b} and store result in {operand_a}")
         product = self.registers[operand_a] * self.registers[operand_b]
         self.registers[operand_a] = product
         self.pc += 3
 
     def handle_HLT(self, operand_a, operand_b):
-        print("running HLT")
         self._halted = True
 
+    def handle_PUSH(self, operand_a, operand_b):
+        # Increment stack counter located at R7
+        self.registers[7] += 1
+        val = self.registers[operand_a]
+        self.ram[self.registers[7]] = val
+        self.pc += 2
+
+    def handle_POP(self, operand_a, operand_b):
+        # All this should do is decrement the stack pointer, no need to reset the val to 0
+        self.registers[7] -= 1
+        self.pc += 2
 
     def trace(self):
         """
