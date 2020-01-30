@@ -9,8 +9,8 @@ HLT = 0b00000001    # Halt execution of the program
 # ALU opcodes
 MUL = 0b10100010    # Multiply operands
 DIV = 0b10100011    # Divide operands
-ADD = 0b10100011    # Add operands
-SUB = 0b10100011    # Subtract operands
+ADD = 0b10100000    # Add operands
+SUB = 0b10100001    # Subtract operands
 # Stack opcodes
 PUSH = 0b01000101   # Push value from register to stack
 POP = 0b01000110    # Pop value from top of stack
@@ -118,7 +118,7 @@ class CPU:
         self.registers[7] -= 1
         # Get value
         val = self.registers[operand_a]
-        self.ram[self.registers[7]] = val
+        self.ram_write(self.registers[7], val)
         self.pc += 2
 
     def handle_POP(self, operand_a, operand_b):
@@ -130,16 +130,24 @@ class CPU:
         self.pc += 2
 
     def handle_CALL(self, operand_a, operand_b):
-        # All this should do is decrement the stack pointer, no need to reset the val to 0
+        # Push the address of the instruction directly after operand_a onto stack
+        address = self.pc + 2
         self.registers[7] -= 1
-        self.pc += 2
+        self.ram_write(self.registers[7], address)
+        # Set PC to val stored in registers[operand_a]
+        self.pc = self.registers[operand_a]
 
     def handle_RET(self, operand_a, operand_b):
-        pass
+        # Return from subroutine
+        # Pop the value from the top of the stack and store it in the PC.
+        return_address = self.registers[7]
+        self.pc = self.ram_read(return_address)
+        # Increase stack pointer by one (stack is stored growing downwards from top of ram)
+        self.registers[7] += 1
 
     def trace(self):
         """
-        Handy function to print out the CPU state. You might want to call this
+        Handy function to print out the CPU state. You migh t want to call this
         from run() if you need help debugging.
         """
 
@@ -153,7 +161,7 @@ class CPU:
         ), end='')
 
         for i in range(8):
-            print(" %02X" % self.reg[i], end='')
+            print(" %02X" % self.registers[i], end='')
 
         print()
 
@@ -163,13 +171,17 @@ class CPU:
         while not self._halted:
             # Get the instruction from ram and store in local instruction register
             IR = self.ram_read(self.pc)
+            # print("IR: ", format(IR, "08b"))
             # Get operands
             operand_a = self.ram_read(self.pc + 1)
+            # print("operand_a: ", format(operand_a, "08b"))
             operand_b = self.ram_read(self.pc + 2)
+            # print("operand_b: ", format(operand_b, "08b"))
             # Run the correct operation using the branch table
             try:
                 self.branch_table[IR](operand_a, operand_b)
             except:
+                self.trace()
                 raise Exception(f"Command {IR} does not exist")
 
 
