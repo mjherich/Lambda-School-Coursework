@@ -3,12 +3,20 @@
 import sys
 
 # Opcodes for branch table
-LDI = 0b10000010
-PRN = 0b01000111
-MUL = 0b10100010
-HLT = 0b00000001
-PUSH = 0b01000101
-POP = 0b01000110
+LDI = 0b10000010    # Load value to register
+PRN = 0b01000111    # Print value stored in register
+HLT = 0b00000001    # Halt execution of the program
+# ALU opcodes
+MUL = 0b10100010    # Multiply operands
+DIV = 0b10100011    # Divide operands
+ADD = 0b10100011    # Add operands
+SUB = 0b10100011    # Subtract operands
+# Stack opcodes
+PUSH = 0b01000101   # Push value from register to stack
+POP = 0b01000110    # Pop value from top of stack
+# Call opcodes
+CALL = 0b01010000   # Push address of the instruction directly after opcode to the stack
+RET = 0b00010001    # Pop the value from the top of the stack
 
 class CPU:
     """Main CPU class."""
@@ -25,9 +33,14 @@ class CPU:
         self.branch_table[LDI] = self.handle_LDI
         self.branch_table[PRN] = self.handle_PRN
         self.branch_table[MUL] = self.handle_MUL
+        self.branch_table[DIV] = self.handle_DIV
+        self.branch_table[ADD] = self.handle_ADD
+        self.branch_table[SUB] = self.handle_SUB
         self.branch_table[HLT] = self.handle_HLT
         self.branch_table[PUSH] = self.handle_PUSH
         self.branch_table[POP] = self.handle_POP
+        self.branch_table[CALL] = self.handle_CALL
+        self.branch_table[RET] = self.handle_RET
 
 
     def load(self, filename):
@@ -64,7 +77,12 @@ class CPU:
 
         if op == "ADD":
             self.registers[reg_a] += self.registers[reg_b]
-        #elif op == "SUB": etc
+        elif op == "SUB":
+            self.registers[reg_a] -= self.registers[reg_b]
+        elif op == "MUL":
+            self.registers[reg_a] *= self.registers[reg_b]
+        elif op == "DIV":
+            self.registers[reg_a] /= self.registers[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -77,8 +95,19 @@ class CPU:
         self.pc += 2
 
     def handle_MUL(self, operand_a, operand_b):
-        product = self.registers[operand_a] * self.registers[operand_b]
-        self.registers[operand_a] = product
+        self.alu("MUL", operand_a, operand_b)
+        self.pc += 3
+
+    def handle_DIV(self, operand_a, operand_b):
+        self.alu("DIV", operand_a, operand_b)
+        self.pc += 3
+
+    def handle_ADD(self, operand_a, operand_b):
+        self.alu("ADD", operand_a, operand_b)
+        self.pc += 3
+
+    def handle_SUB(self, operand_a, operand_b):
+        self.alu("SUB", operand_a, operand_b)
         self.pc += 3
 
     def handle_HLT(self, operand_a, operand_b):
@@ -95,6 +124,14 @@ class CPU:
         # All this should do is decrement the stack pointer, no need to reset the val to 0
         self.registers[7] -= 1
         self.pc += 2
+
+    def handle_CALL(self, operand_a, operand_b):
+        # All this should do is decrement the stack pointer, no need to reset the val to 0
+        self.registers[7] -= 1
+        self.pc += 2
+
+    def handle_RET(self, operand_a, operand_b):
+        pass
 
     def trace(self):
         """
