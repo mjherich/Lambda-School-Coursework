@@ -114,15 +114,19 @@ class CPU:
         self._halted = True
 
     def handle_PUSH(self, operand_a, operand_b):
-        # Increment stack counter located at R7
-        self.registers[7] += 1
+        # Decrease stack pointer located at R7 by 1
+        self.registers[7] -= 1
+        # Get value
         val = self.registers[operand_a]
         self.ram[self.registers[7]] = val
         self.pc += 2
 
     def handle_POP(self, operand_a, operand_b):
-        # All this should do is decrement the stack pointer, no need to reset the val to 0
-        self.registers[7] -= 1
+        # Store val to address stored in registers[operand_a]
+        val = self.ram_read(self.registers[7])
+        self.registers[operand_a] = val
+        # Increase the stack pointer (R7) by one
+        self.registers[7] += 1
         self.pc += 2
 
     def handle_CALL(self, operand_a, operand_b):
