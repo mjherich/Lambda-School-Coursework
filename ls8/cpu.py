@@ -267,8 +267,8 @@ class CPU:
         pass
 
     def handle_JMP(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        # Set pc to address stored in given register
+        self.pc = self.registers[operand_a]
 
     def handle_JNE(self, operand_a, operand_b):
         # TODO Implement this
@@ -304,7 +304,7 @@ class CPU:
         while not self._halted:
             # Get the instruction from ram and store in local instruction register
             IR = self.ram_read(self.pc)
-            # print("IR: ", format(IR, "08b"))
+            print("IR: ", format(IR, "08b"))
             # Get operands
             operand_a = self.ram_read(self.pc + 1)
             # print("operand_a: ", format(operand_a, "08b"))
