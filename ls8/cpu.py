@@ -14,6 +14,7 @@ class CPU:
         self.registers[7] = 0xF4    # Initialize stack pointer at R7 to 0xF4
         self.ram = [0] * 256        # Ram contains 256 bytes of memory
         self.pc = 0                 # Program Counter, address of the currently executing instruction
+        self.fl = [0] * 8           # Flags register, FL bits: 00000LGE (less than, greater than and equal to bits set after CMP)
         self._halted = False        # Used for run(), set to False in HLT()
         self.branch_table = {}
         # Opcode handlers
@@ -98,6 +99,41 @@ class CPU:
             self.registers[reg_a] *= self.registers[reg_b]
         elif op == "DIV":
             self.registers[reg_a] /= self.registers[reg_b]
+        elif op == "CMP":
+            if self.registers[reg_a] == self.registers[reg_b]:
+                # Set equal flag
+                self.fl[7] = 1
+                # Clear other flags
+                self.fl[6] = 0
+                self.fl[5] = 0
+            elif self.registers[reg_a] < self.registers[reg_b]:
+                # Set less than flag
+                self.fl[5] = 1
+                # Clear other flags
+                self.fl[7] = 0
+                self.fl[6] = 0
+            elif self.registers[reg_a] > self.registers[reg_b]:
+                # Set greater than flag
+                self.fl[6] = 1
+                # Clear other flags
+                self.fl[7] = 0
+                self.fl[5] = 0
+        elif op =="AND":
+            self.registers[reg_a] &= self.registers[reg_b]
+        elif op =="OR":
+            self.registers[reg_a] |= self.registers[reg_b]
+        elif op =="XOR":
+            self.registers[reg_a] ^= self.registers[reg_b]
+        elif op =="NOT":
+            # For unsigned bitwise not use mask
+            m = 0b11111111
+            self.registers[reg_a] ^= m
+        elif op =="SHL":
+            self.registers[reg_a] <<= self.registers[reg_b]
+        elif op =="SHR":
+            self.registers[reg_a] >>= self.registers[reg_b]
+        elif op =="MOD":
+            self.registers[reg_a] %= self.registers[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -143,36 +179,36 @@ class CPU:
         self.pc += 3
         
     def handle_MOD(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("MOD", operand_a, operand_b)
+        self.pc += 3
 
     def handle_CMP(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("CMP", operand_a, operand_b)
+        self.pc += 3
 
     def handle_AND(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("AND", operand_a, operand_b)
+        self.pc += 3
 
     def handle_NOT(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("NOT", operand_a, operand_b)
+        self.pc += 2
 
     def handle_OR(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("OR", operand_a, operand_b)
+        self.pc += 3
 
     def handle_SHL(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("SHL", operand_a, operand_b)
+        self.pc += 3
 
     def handle_SHR(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("SHR", operand_a, operand_b)
+        self.pc += 3
 
     def handle_XOR(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("XOR", operand_a, operand_b)
+        self.pc += 3
 
     def handle_DEC(self, operand_a, operand_b):
         # TODO Implement this
@@ -227,8 +263,12 @@ class CPU:
 
     # Flag handlers
     def handle_JEQ(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        # If equal flag is set (true), jump to the address stored in the given register.
+        if self.fl[7] == 1:
+            # Jump to operand_a
+            self.pc = self.registers[operand_a]
+        else:
+            self.pc += 2
 
     def handle_JGE(self, operand_a, operand_b):
         # TODO Implement this
@@ -247,12 +287,15 @@ class CPU:
         pass
 
     def handle_JMP(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        # Set pc to address stored in given register
+        self.pc = self.registers[operand_a]
 
     def handle_JNE(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        # If E flag is clear (false, 0), jump to the address stored in the given register.
+        if self.fl[7] == 0:
+            self.pc = self.registers[operand_a]
+        else:
+            self.pc += 2
 
     def handle_LD(self, operand_a, operand_b):
         # TODO Implement this
@@ -284,7 +327,6 @@ class CPU:
         while not self._halted:
             # Get the instruction from ram and store in local instruction register
             IR = self.ram_read(self.pc)
-            # print("IR: ", format(IR, "08b"))
             # Get operands
             operand_a = self.ram_read(self.pc + 1)
             # print("operand_a: ", format(operand_a, "08b"))
