@@ -118,6 +118,22 @@ class CPU:
                 # Clear other flags
                 self.fl[7] = 0
                 self.fl[5] = 0
+        elif op =="AND":
+            self.registers[reg_a] &= self.registers[reg_b]
+        elif op =="OR":
+            self.registers[reg_a] |= self.registers[reg_b]
+        elif op =="XOR":
+            self.registers[reg_a] ^= self.registers[reg_b]
+        elif op =="NOT":
+            # For unsigned bitwise not use mask
+            m = 0b11111111
+            self.registers[reg_a] ^= m
+        elif op =="SHL":
+            self.registers[reg_a] <<= self.registers[reg_b]
+        elif op =="SHR":
+            self.registers[reg_a] >>= self.registers[reg_b]
+        elif op =="MOD":
+            self.registers[reg_a] %= self.registers[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -163,36 +179,36 @@ class CPU:
         self.pc += 3
         
     def handle_MOD(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("MOD", operand_a, operand_b)
+        self.pc += 3
 
     def handle_CMP(self, operand_a, operand_b):
         self.alu("CMP", operand_a, operand_b)
         self.pc += 3
 
     def handle_AND(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("AND", operand_a, operand_b)
+        self.pc += 3
 
     def handle_NOT(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("NOT", operand_a, operand_b)
+        self.pc += 2
 
     def handle_OR(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("OR", operand_a, operand_b)
+        self.pc += 3
 
     def handle_SHL(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("SHL", operand_a, operand_b)
+        self.pc += 3
 
     def handle_SHR(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("SHR", operand_a, operand_b)
+        self.pc += 3
 
     def handle_XOR(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("XOR", operand_a, operand_b)
+        self.pc += 3
 
     def handle_DEC(self, operand_a, operand_b):
         # TODO Implement this
