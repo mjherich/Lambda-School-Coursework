@@ -2,21 +2,7 @@
 
 import sys
 
-# Opcodes for branch table
-LDI = 0b10000010    # Load value to register
-PRN = 0b01000111    # Print value stored in register
-HLT = 0b00000001    # Halt execution of the program
-# ALU opcodes
-MUL = 0b10100010    # Multiply operands
-DIV = 0b10100011    # Divide operands
-ADD = 0b10100000    # Add operands
-SUB = 0b10100001    # Subtract operands
-# Stack opcodes
-PUSH = 0b01000101   # Push value from register to stack
-POP = 0b01000110    # Pop value from top of stack
-# Call opcodes
-CALL = 0b01010000   # Push address of the instruction directly after opcode to the stack
-RET = 0b00010001    # Pop the value from the top of the stack
+from opcodes import * 
 
 class CPU:
     """Main CPU class."""
@@ -30,17 +16,46 @@ class CPU:
         self.pc = 0                 # Program Counter, address of the currently executing instruction
         self._halted = False        # Used for run(), set to False in HLT()
         self.branch_table = {}
+        # Opcode handlers
         self.branch_table[LDI] = self.handle_LDI
+        self.branch_table[ST] = self.handle_ST
         self.branch_table[PRN] = self.handle_PRN
+        self.branch_table[PRA] = self.handle_PRA
+        self.branch_table[NOP] = self.handle_NOP
+        self.branch_table[HLT] = self.handle_HLT
+        # ALU opcode handlers
         self.branch_table[MUL] = self.handle_MUL
         self.branch_table[DIV] = self.handle_DIV
         self.branch_table[ADD] = self.handle_ADD
         self.branch_table[SUB] = self.handle_SUB
-        self.branch_table[HLT] = self.handle_HLT
+        self.branch_table[MOD] = self.handle_MOD
+        self.branch_table[CMP] = self.handle_CMP
+        self.branch_table[AND] = self.handle_AND
+        self.branch_table[NOT] = self.handle_NOT
+        self.branch_table[OR] = self.handle_OR
+        self.branch_table[SHL] = self.handle_SHL
+        self.branch_table[SHR] = self.handle_SHR
+        self.branch_table[XOR] = self.handle_XOR
+        self.branch_table[DEC] = self.handle_DEC
+        self.branch_table[INC] = self.handle_INC
+        # Stack opcode handlers
         self.branch_table[PUSH] = self.handle_PUSH
         self.branch_table[POP] = self.handle_POP
+        # Call opcode handlers
         self.branch_table[CALL] = self.handle_CALL
         self.branch_table[RET] = self.handle_RET
+        # Interrupt opcode handlers
+        self.branch_table[INT] = self.handle_INT
+        self.branch_table[IRET] = self.handle_IRET
+        # Flag opcode handlers
+        self.branch_table[JEQ] = self.handle_JEQ
+        self.branch_table[JGE] = self.handle_JGE
+        self.branch_table[JGT] = self.handle_JGT
+        self.branch_table[JLE] = self.handle_JLE
+        self.branch_table[JLT] = self.handle_JLT
+        self.branch_table[JMP] = self.handle_JMP
+        self.branch_table[JNE] = self.handle_JNE
+        self.branch_table[LD] = self.handle_LD
 
 
     def load(self, filename):
@@ -86,14 +101,31 @@ class CPU:
         else:
             raise Exception("Unsupported ALU operation")
 
+    # Start handlers
     def handle_LDI(self, operand_a, operand_b):
         self.registers[operand_a] = operand_b
         self.pc += 3
+
+    def handle_ST(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
 
     def handle_PRN(self, operand_a, operand_b):
         print(self.registers[operand_a])
         self.pc += 2
 
+    def handle_PRA(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_NOP(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_HLT(self, operand_a, operand_b):
+        self._halted = True
+
+    # ALU handlers
     def handle_MUL(self, operand_a, operand_b):
         self.alu("MUL", operand_a, operand_b)
         self.pc += 3
@@ -109,10 +141,48 @@ class CPU:
     def handle_SUB(self, operand_a, operand_b):
         self.alu("SUB", operand_a, operand_b)
         self.pc += 3
+        
+    def handle_MOD(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
 
-    def handle_HLT(self, operand_a, operand_b):
-        self._halted = True
+    def handle_CMP(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
 
+    def handle_AND(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_NOT(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_OR(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_SHL(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_SHR(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_XOR(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_DEC(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+    
+    def handle_INC(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+    
+    # Stack handlers
     def handle_PUSH(self, operand_a, operand_b):
         # Decrease stack pointer located at R7 by 1
         self.registers[7] -= 1
@@ -129,6 +199,7 @@ class CPU:
         self.registers[7] += 1
         self.pc += 2
 
+    # Call handlers
     def handle_CALL(self, operand_a, operand_b):
         # Push the address of the instruction directly after operand_a onto stack
         address = self.pc + 2
@@ -144,6 +215,48 @@ class CPU:
         self.pc = self.ram_read(return_address)
         # Increase stack pointer by one (stack is stored growing downwards from top of ram)
         self.registers[7] += 1
+
+    # Interrupt handlers
+    def handle_INT(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_IRET(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    # Flag handlers
+    def handle_JEQ(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_JGE(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_JGT(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_JLE(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_JLT(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_JMP(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_JNE(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
+
+    def handle_LD(self, operand_a, operand_b):
+        # TODO Implement this
+        pass
 
     def trace(self):
         """
