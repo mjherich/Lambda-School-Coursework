@@ -247,8 +247,12 @@ class CPU:
 
     # Flag handlers
     def handle_JEQ(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        # If equal flag is set (true), jump to the address stored in the given register.
+        if self.fl[7] == 1:
+            # Jump to operand_a
+            self.pc = self.registers[operand_a]
+        else:
+            self.pc += 2
 
     def handle_JGE(self, operand_a, operand_b):
         # TODO Implement this
@@ -271,8 +275,11 @@ class CPU:
         self.pc = self.registers[operand_a]
 
     def handle_JNE(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        # If E flag is clear (false, 0), jump to the address stored in the given register.
+        if self.fl[7] == 0:
+            self.pc = self.registers[operand_a]
+        else:
+            self.pc += 2
 
     def handle_LD(self, operand_a, operand_b):
         # TODO Implement this
@@ -304,7 +311,6 @@ class CPU:
         while not self._halted:
             # Get the instruction from ram and store in local instruction register
             IR = self.ram_read(self.pc)
-            print("IR: ", format(IR, "08b"))
             # Get operands
             operand_a = self.ram_read(self.pc + 1)
             # print("operand_a: ", format(operand_a, "08b"))

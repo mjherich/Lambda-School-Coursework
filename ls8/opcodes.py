@@ -37,4 +37,4 @@ JLE = 0b01011001    # If less-than flag or equal flag is set (true), jump to the
 JLT = 0b01011000    # If less-than flag is set (true), jump to the address stored in the given register.
 JMP = 0b01010100    # Jump to the address stored in the given register.
 JNE = 0b01010110    # If E flag is clear (false, 0), jump to the address stored in the given register.
-LD = 0b01010110     # Loads registerA with the value at the memory address stored in registerB.
+LD = 0b10000011     # Loads registerA with the value at the memory address stored in registerB.
