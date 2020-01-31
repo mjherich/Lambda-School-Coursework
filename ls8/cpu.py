@@ -14,6 +14,7 @@ class CPU:
         self.registers[7] = 0xF4    # Initialize stack pointer at R7 to 0xF4
         self.ram = [0] * 256        # Ram contains 256 bytes of memory
         self.pc = 0                 # Program Counter, address of the currently executing instruction
+        self.fl = [0] * 8           # Flags register, FL bits: 00000LGE (less than, greater than and equal to bits set after CMP)
         self._halted = False        # Used for run(), set to False in HLT()
         self.branch_table = {}
         # Opcode handlers
@@ -98,6 +99,25 @@ class CPU:
             self.registers[reg_a] *= self.registers[reg_b]
         elif op == "DIV":
             self.registers[reg_a] /= self.registers[reg_b]
+        elif op == "CMP":
+            if self.registers[reg_a] == self.registers[reg_b]:
+                # Set equal flag
+                self.fl[7] = 1
+                # Clear other flags
+                self.fl[6] = 0
+                self.fl[5] = 0
+            elif self.registers[reg_a] < self.registers[reg_b]:
+                # Set less than flag
+                self.fl[5] = 1
+                # Clear other flags
+                self.fl[7] = 0
+                self.fl[6] = 0
+            elif self.registers[reg_a] > self.registers[reg_b]:
+                # Set greater than flag
+                self.fl[6] = 1
+                # Clear other flags
+                self.fl[7] = 0
+                self.fl[5] = 0
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -147,8 +167,8 @@ class CPU:
         pass
 
     def handle_CMP(self, operand_a, operand_b):
-        # TODO Implement this
-        pass
+        self.alu("CMP", operand_a, operand_b)
+        self.pc += 3
 
     def handle_AND(self, operand_a, operand_b):
         # TODO Implement this
