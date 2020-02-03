@@ -13,14 +13,14 @@ Boilerplate code for a basic CRUD API on table 'items' with the following db sch
 1. Clone this repository.
 2. run `npm install` to install packages and dependencies.
 3. Determine your preferred table name and modify `/items` folder and subsequent references to item/items. Currently, the single table is set as `/items`. The following files would need to be modified.
-	 - [ ] **/*items*** ---> your prefered table_name
-		 - [ ] **/items/*items*-model.js**
-		 - [ ] **/items/*items*-router.js**
-	 - [ ] **/knexfile.js** ---> set development.connection.filename to your new table_name
-	 - [ ] **/database/migrations/20191126121200_*items*.js**
-	 - [ ] **/seeds/01-*items*.js** ---> update the seed file name and contents
-	 - [ ] **/api/server.js** ---> update line 6 to import your new file name
-	 - [ ] **/api/middleware.js** ---> update references to 'items' table
+	 - [X] **/*items*** ---> your prefered table_name
+		 - [X] **/items/*items*-model.js**
+		 - [X] **/items/*items*-router.js**
+	 - [X] **/knexfile.js** ---> set development.connection.filename to your new table_name
+	 - [X] **/database/migrations/20191126121200_*items*.js**
+	 - [X] **/seeds/01-*items*.js** ---> update the seed file name and contents
+	 - [X] **/api/server.js** ---> update line 6 to import your new file name
+	 - [X] **/api/middleware.js** ---> update references to 'items' table
 4. Run `npm install knex -g` to install Knex globally.
 5. Run `knex migrate:rollback` to reset any previous changes.
 6. Run `knex migrate:latest` to setup the migration file.

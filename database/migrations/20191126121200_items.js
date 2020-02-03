@@ -1,19 +1,37 @@
 
 exports.up = function(knex) {
   return knex.schema
-    .createTable('items', items => {
-      items.increments();
-      items
-        .string('name', 255)
+    .createTable('rooms', rooms => {
+      rooms
+        .integer('room_id')
         .notNullable()
-        .unique();
-      items
-        .text('description').notNullable();
-      items
-        .string('category').notNullable();
-      items
-        .text('image');
-      items
+        .unique()
+      rooms
+        .string('title', 255)
+        .notNullable()
+        // .unique();
+      rooms
+        .text('description')
+        .notNullable()
+      rooms
+        .string('coordinates');
+      rooms
+        .integer('n_to');
+      rooms
+        .integer('s_to');
+      rooms
+        .integer('e_to');
+      rooms
+        .integer('w_to');
+      rooms
+        .text('items')
+      rooms
+        .decimal('cooldown');
+      rooms
+        .text('errors');
+      rooms
+        .text('messages');
+      rooms
         .timestamps(); // will create two columns: created_at, updated_at
     })
 };
@@ -22,3 +40,13 @@ exports.down = function(knex, Promise) {
   return knex.schema
     .dropTableIfExists('items')
 };
+
+
+// id -yes
+// title -yes
+// description -yes
+// coordinates -yes
+// exits
+// cooldown
+// errors
+// messages
