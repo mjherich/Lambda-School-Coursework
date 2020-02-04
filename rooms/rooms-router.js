@@ -31,6 +31,13 @@ const {
 } = require('../api/middleware.js')
 const axios = require('axios')
 
+// Use this object to print the opposite of a direction (e.g. oppositeDirection.n => 's')
+const opposite = {
+  n: 's',
+  s: 'n',
+  e: 'w',
+  w: 'e'
+}
 
 router.get('/rooms', (req, res) => {
   Rooms.find()
@@ -54,7 +61,7 @@ router.get('/init', async (req, res) => {
   // grab token
 
   let token = req.headers.authorization
-  console.log(token)
+  // console.log(token)
   let auth = {
     headers: {
       Authorization: `Token ${token}`
@@ -63,21 +70,27 @@ router.get('/init', async (req, res) => {
 
   // This try catch is for Lambda's init. If error, it's from lambda, not our API
   try {
+
+
     // use init lambda function to get room data
     const player = await axios('https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', auth);
 
-    // cons
-    // put player data in player location
+    // grab player location from init endpoint and store it into player table
     let player_data = { 'current_room': player.data.room_id }
     await Players.edit(token, player_data)
-    // console.log('player', player)
 
-
+    // this try catch is to find possible room on database based of player current info
     try {
       possible_room = await Rooms.findById(player.data.room_id)
-      console.log('possible_room', possible_room, player.data)
+      // console.log('possible_room', possible_room, player.data)
+      // If room exists, return player data
+      if(possible_room !== undefined) {
+        return res.status(200).json({ player: player.data, message: "findbyId worked. Room already existed" })
+      }
 
-      if (possible_room === undefined) {
+      // else if player current room not in db, add it to db
+      else if (possible_room === undefined) {
+        // processing
         let room_data = {}
         room_data['room_id'] = player.data.room_id
         room_data['title'] = player.data.title
@@ -90,26 +103,19 @@ router.get('/init', async (req, res) => {
 
         player.data.exits.forEach(exit => {
           room_data[exit] = -1
-
-          // exit === 'n' ? room_data['n'] = -1 : null
-          // exit === 's' ? room_data['s'] = -1 : null
-          // exit === 'e' ? room_data['e'] = -1 : null
-          // exit === 'w' ? room_data['w'] = -1 : null
         })
-
+        // add room to db
         try {
           let added_room = await Rooms.add(room_data)
-          return res.status(200).json({ added_room, message: "rooms add" })
+          return res.status(200).json({ added_room: room_data['room_id'], message: "room did not exist. added room to db" })
         } catch {
           return res.status(500).json({ messsage: 'Could not add room to database' })
         }
       }
 
-      else {
-        return res.status(200).json({ player: player.data, message: "findbyId" })
-      }
+
     } catch {
-      return res.status(500).json({ message: "Database error" })
+      return res.status(500).json({ message: "Database error while trying to find room" })
     }
 
   } catch (err) {
@@ -121,92 +127,156 @@ router.get('/init', async (req, res) => {
 // move player to new room and return all data about that room
 // INPUT: 'direction'
 
-router.get('/move', async (req, res) => {
+router.post('/move', async (req, res) => {
+  let direction = req.body.direction
 
 
-  // Get direction and room info from body
-
-  // Query database to find room info in database, specifically the directions
-  //If direction has room_id, add it to body object
-
-  // In the axios call getting the next room
-  //Add room to database if not already
-  // If direction === s, current room n === new room 
-  //If direction === n, current room s === new room
+  // Grab token
+  let token = req.headers.authorization
   let auth = {
-    headers: {
-      Authorization: `Token ${req.headers.authorization}`
+      headers: {
+        Authorization: `Token ${token}`
+      }
     }
-  }
-  let reqBody = {
-    body: {
-      direction: req.body.direction,
-      // next_room_id: req.body.next_room_id
-    }
-  }
-  // Query our table for the current room id and get back all the data we have on it
-  // knex... room
-  let room = Rooms.findById()
-  let moveToKnownRoom = false
-  if (room[req.direction] === -1) {
-    // Do nothing
-  } else if (room[req.direction] === null) {
-    // Respond with 500 error
-  } else {
-    reqBody.body.next_room_id = room[req.direction]
-    moveToKnownRoom = true
+  console.log('body', req.body)
+  // wiseman object
+  let wiseman = {
+    'direction': req.body.direction,
   }
 
-  // Hit the endpoint with reqBody
+  // get player location info, specifcally current room id
+  let player = await Players.findById(token)
+  // console.log('PLAYER', player) 
+  // using player current room id, find that room in the database
+  let last_room = await Rooms.findById(player.current_room)
+
+
+
+
+  // using that room, find direction (n,s,e,w) req.body
+  let possible_exit = last_room[direction]
+  // console.log(player, last_room)
+  // if last_room[req.body.direction] is not -1 or null, add to wiseman
+  if (possible_exit !== -1 && possible_exit !== null) {
+    wiseman['next_room_id'] = `${possible_exit}`
+  }
+
+
+  // We DON'T know the room id in direction we are moving
+  // {
+  //   'direction': 'n'
+  // }
+  // We know the room id in direction we are moving
+  // {
+  //   'direction': 'n'
+  //   'next_room_id': 51
+  // }
+
+
+
+
   try {
-    const player = await axios('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', auth, reqBody);
-    return res.status(200).json(player.data);
+    // hit move endpoint with req.body.direction
+    const newRoom = await axios.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', wiseman, auth);
+
+    
+    let newRoomData = newRoom.data
+
+    // Initial state
+    newRoomData['n'] = null
+    newRoomData['s'] = null
+    newRoomData['e'] = null
+    newRoomData['w'] = null
+
+    console.log('NEW ROOM DATA', newRoomData)
+
+    // check database to see if room is there
+    let newRoomExist = await Rooms.findById(newRoomData['room_id'])
+
+    if(newRoomExist === undefined) {
+
+  
+      newRoomData.exits.forEach(exit => {
+        newRoomData[exit] = -1
+      })
+
+      newRoomData[opposite[direction]] = last_room['room_id']
+      // save to db
+
+      delete newRoomData['players']
+      delete newRoomData['exits']
+
+      let itemsArr = newRoomData['items']
+      let errorsArr = newRoomData['errors']
+      let messagesArr = newRoomData['messages']
+        
+
+      newRoomData['items'] = ""
+      newRoomData['errors'] = ""
+      newRoomData['messages'] = ""
+
+      itemsArr.forEach(item => {
+        newRoomData['items'] = newRoomData['items'] + item +','
+      })
+
+      errorsArr.forEach(err => {
+        newRoomData['errors'] = newRoomData['errors'] + err +','
+      })
+      messagesArr.forEach(message => {
+        newRoomData['messages'] = newRoomData['messages'] + message +','
+      })
+
+
+      console.log(newRoomData)
+      await Rooms.add(newRoomData)
+      // Update last room direction value
+      
+    }
+
+    else {
+      newRoomData['n'] = newRoomExist['n']
+      newRoomData['s'] = newRoomExist['s']
+      newRoomData['e'] = newRoomExist['e']
+      newRoomData['w'] = newRoomExist['w']
+      newRoomData[opposite[direction]] = last_room['room_id']
+      // save to db
+      delete newRoomData['players']
+      delete newRoomData['exits']
+
+      let itemsArr = newRoomData['items']
+      let errorsArr = newRoomData['errors']
+      let messagesArr = newRoomData['messages']
+        
+
+      newRoomData['items'] = ""
+      newRoomData['errors'] = ""
+      newRoomData['messages'] = ""
+
+      itemsArr.forEach(item => {
+        newRoomData['items'] = newRoomData['items'] + item +','
+      })
+
+      errorsArr.forEach(err => {
+        newRoomData['errors'] = newRoomData['errors'] + err +','
+      })
+      messagesArr.forEach(message => {
+        newRoomData['messages'] = newRoomData['messages'] + message +','
+      })
+      await Rooms.edit(newRoomData['room_id'], newRoomData)
+    }
+
+    let updatedPlayerLocation = await Players.edit(token, {current_room:newRoomData.room_id})
+    let updated = {
+      [direction]: newRoomData['room_id']
+    }
+
+
+    await Rooms.edit(last_room['room_id'], updated)
+    return res.status(200).json(newRoomData)
+
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json({e, message:"ERROR WITH AXIOS PROBABLY"});
   }
-  // Get back data on the room we went to
-  // Use that data to update our knowledge of the map in the db
-  if (!moveToKnownRoom) {
-    // Create a new room entry with the data returned from above axios call
-  }
-
-
-  let toBeSaved = {}
-  toBeSaved[room_id] = player.data.room_id
-  toBeSaved[title] = player.data.title
-  toBeSaved[description] = player.data.description
-  toBeSaved[coordinates] = player.data.coordinates
-  player.data.exits.forEach(exit => {
-    if (exit === 'n') {
-      toBeSaved['n'] = -1
-    } else {
-      toBeSaved['n'] = null
-    }
-    if (exit === 's') {
-      toBeSaved['s'] = -1
-    } else {
-      toBeSaved['s'] = null
-    }
-    if (exit === 'e') {
-      toBeSaved['e'] = -1
-    } else {
-      toBeSaved['e'] = null
-    }
-    if (exit === 'w') {
-      toBeSaved['w'] = -1
-    } else {
-      toBeSaved['w'] = null
-    }
-  })
-  toBeSaved[room_id] = player.data.room_id
-  toBeSaved[room_id] = player.data.room_id
-  toBeSaved[room_id] = player.data.room_id
-  toBeSaved[room_id] = player.data.room_id
-
-  if (req.body.next_room_id) {
-    Rooms.findById(req.body.next_room_id)
-  }
-
 })
 
 

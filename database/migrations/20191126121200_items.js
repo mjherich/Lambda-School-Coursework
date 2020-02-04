@@ -14,6 +14,10 @@ exports.up = function(knex) {
         .text('description')
         .notNullable()
       rooms
+        .integer('elevation')
+      rooms
+        .string('terrain')
+      rooms
         .string('coordinates');
       rooms
         .integer('n');
