@@ -1,3 +1,15 @@
+class Player:
+    """
+    Holds the player state necessary for the script
+    """
+    def __init__(self, name, cur_room, exits):
+        self.name = name
+        self.prev_room = None
+        self.prev_direction = None
+        self.cur_room = cur_room
+        self.exits = exits
+
+
 class Graph:
     """
     Represent a graph as a dictionary of vertices mapping labels to edges.
