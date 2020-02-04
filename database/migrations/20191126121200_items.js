@@ -16,13 +16,13 @@ exports.up = function(knex) {
       rooms
         .string('coordinates');
       rooms
-        .integer('n_to');
+        .integer('n');
       rooms
-        .integer('s_to');
+        .integer('s');
       rooms
-        .integer('e_to');
+        .integer('e');
       rooms
-        .integer('w_to');
+        .integer('w');
       rooms
         .text('items')
       rooms
@@ -40,13 +40,3 @@ exports.down = function(knex, Promise) {
   return knex.schema
     .dropTableIfExists('items')
 };
-
-
-// id -yes
-// title -yes
-// description -yes
-// coordinates -yes
-// exits
-// cooldown
-// errors
-// messages

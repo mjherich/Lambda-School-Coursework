@@ -12,8 +12,8 @@ function find() {
   return db('rooms')
 }
 
-function findById(id) {
-  return db('rooms').where('id', id).first()
+function findById(room_id) {
+  return db('rooms').where('room_id', room_id).first()
 }
 
 function add(room) {
