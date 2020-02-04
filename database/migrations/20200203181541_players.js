@@ -8,17 +8,17 @@
 exports.up = function(knex) {
   return knex.schema
     .createTable('players', player => {
-      players
+      player
         .integer('player_id')
         .notNullable()
         .unique()
-      players
+      player
         .string('name', 255)
-        .notNullable()
-      players
+        // .notNullable()
+      player
         .integer('current_room')
-        .notNullable()
-      players
+        // .notNullable()
+      player
         .timestamps(); // will create two columns: created_at, updated_at
     })
 };
