@@ -94,11 +94,44 @@ class SortingRobot:
 
     def sort(self):
         """
-        Sort the robot's list.
+        Sort the robot's list. Implement bubble sort forwards and backwards.
         """
-        # Fill this out
-        pass
+        while True:
+            self.set_light_off() # The light will signify if we swap an item
+            while self.can_move_right(): # Sorting largest items from left to right
+                self.swap_item()
+                self.move_right()
+            
+                if self.compare_item() == 1: # This means the item the robot is holding is larger than the one in the list, we should shuffle it left
+                    self.swap_item()
+                    self.set_light_on() # Swap occurred
 
+                self.move_left()
+                self.swap_item() # Place the smaller value
+                self.move_right()
+
+            # Check if robot swapped an item, if not the list is sorted
+            if not self.light_is_on():
+                break
+
+            self.set_light_off() # Reset light
+            self.move_left() # Don't need to check rightmost item, already sorted
+
+            while self.can_move_left(): # Sorting smallest items from right to left
+                self.swap_item()
+                self.move_left()
+
+                if self.compare_item() == -1: # This means the item the robot is holding is bigger than the one in the list so swap and move to right
+                    self.swap_item()
+                    self.set_light_on() # Swap occurred
+
+                self.move_right()
+                self.swap_item() # Place the larger value
+                self.move_left()
+
+            # Check if robot swapped an item, if not the list is sorted
+            if not self.light_is_on():
+                break
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
