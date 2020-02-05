@@ -61,4 +61,4 @@ typings/
 .next
 
 # databases
-database/items.db3
+database/rooms.db3
