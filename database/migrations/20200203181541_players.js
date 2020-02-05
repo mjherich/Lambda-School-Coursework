@@ -9,7 +9,7 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('players', player => {
       player
-        .integer('player_id')
+        .string('player_id')
         .notNullable()
         .unique()
       player
