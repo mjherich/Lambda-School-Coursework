@@ -2,12 +2,9 @@ class Player:
     """
     Holds the player state necessary for the script
     """
-    def __init__(self, name, cur_room, exits, requests_session):
+    def __init__(self, name, cur_room, requests_session):
         self.name = name
-        self.prev_room = None
-        self.prev_direction = None
         self.cur_room = cur_room
-        self.exits = exits
         self.requests = requests_session
 
 
@@ -35,11 +32,13 @@ class Graph:
         """
         Add a directed edge to the graph.
         """
-        if v1 in self.vertices and v2 in self.vertices:
+        # if v1 in self.vertices and v2 in self.vertices:
+        if v1 != '-1':
             self.vertices[v1][direction] = v2
+        if v2 != '-1':
             self.vertices[v2][OPPOSITE_DIRECTION[direction]] = v1
-        else:
-            raise IndexError("One or both of the vertices does not exist")
+        # else:
+        #     raise IndexError("One or both of the vertices does not exist")
 
     def get_neighbors(self, vertex_id):
         """

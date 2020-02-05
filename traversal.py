@@ -1,11 +1,9 @@
 from util import Player, Graph, Queue, Stack
-from secrets import *
-
-import time, requests, pdb
+from secrets import matt, API_URL
+import json
+import time, requests, pdb, random
 import multiprocessing as mp
 
-API_URL = "http://39ca3396.ngrok.io"
-LS_API_URL = "https://lambda-treasure-hunt.herokuapp.com"
 OPPOSITE_DIRECTION = {
     'n': 's',
     's': 'n',
@@ -14,50 +12,11 @@ OPPOSITE_DIRECTION = {
 }
 
 # === Initialize local script state ===
-# Hit /init and get back state of Players (player name and what room they are in), store locally
-
-# Load Player instances
-players = []
-
-requests_blaine = requests.Session()
-requests_blaine.headers.update({
-    "Authorization": BLAINE_TOKEN
-})
-# r = requests_blaine.get(API_URL+"/api/rooms/init")
-# player_data = r.json()["player"]
-# players.append(Player("Blaine", player_data['room_id'], player_data['exits'], requests_blaine))
-
-requests_bryan = requests.Session()
-requests_bryan.headers.update({
-    "Authorization": BRYAN_TOKEN
-})
-# r = requests_bryan.get(API_URL+"/api/rooms/init")
-# player_data = r.json()["player"]
-# players.append(Player("Bryan", player_data['room_id'], player_data['exits'], requests_bryan))
-
-requests_matt = requests.Session()
-requests_matt.headers.update({
-    "Authorization": MATT_TOKEN
-})
-r = requests_matt.get(API_URL+"/api/rooms/init")
-player_data = r.json()["player"]
-players.append(Player("Matt", player_data['room_id'], player_data['exits'], requests_matt))
-
-requests_sean = requests.Session()
-requests_sean.headers.update({
-    "Authorization": SEAN_TOKEN
-})
-# r = requests_sean.get(API_URL+"/api/rooms/init")
-# player_data = r.json()["player"]
-# players.append(Player("Sean", player_data['room_id'], player_data['exits'], requests_sean))
-
-# FORMAT OF CUSTOM requests session
-# res = requests_matt.get(API_URL+"/api/rooms/init")
 
 # Initialize the local graph
 g = Graph()
 # Hit the /api/rooms/adlist endpoint and update the local graph with the returned adjacency list
-r = requests_matt.get(API_URL+"/api/rooms/adlist")
+r = matt.requests.get(API_URL+"/api/rooms/adlist")
 ad_list = r.json()
 
 # Add vertices
@@ -66,70 +25,110 @@ for room_id in ad_list:
     if room_id not in g.vertices:
         g.add_vertex(room_id)
 
-
 # Add edges
 for room_id in ad_list:
     neighbors = ad_list[room_id]
-    # print(neighbors)
     for i in range(len(neighbors)):
         neighbor = neighbors[i]
-        # id of neighbors
         neighbor_direction = list(neighbor.keys())
         neighbor_direction = neighbor_direction[0]
 
         neighbor_id = neighbor[neighbor_direction]
         
         g.add_edge(room_id, str(neighbor_id), neighbor_direction)
+        
+# === Find nearest unvisited room ===
+# Main function
+def find_nearest_unvisited(player, visited):
+    room_id = player.cur_room
+    neighbors = g.get_neighbors(room_id)
+    q = Queue()
 
-
-# === Traversal using Multiprocessing ===
-# Main function which gets called in separate processes for each player
-def move(player):
-    """
-    Takes in a Player object and determines the next move to take to traverse the graph
-    Then waits until the cooldown has elapsed before re-enqueuing to the player queue
-    """
-    # TODO: Find a direction
-
-
-# Create player queue and enqueue all players
-"""
-The player queue will contain players whose cooldown is zero.
-Players will automatically be enqued by subsequent processes when the cooldown has finished.
-"""
-player_q = Queue()
-# TESTING WITH player: MATT
-player_q.enqueue(players[2])
-# for player in players:
-#     player_q.enqueue([player["name"], player["current_room"], player["exits"]])
-
-# Main loop
-# Create visited set to keep track of the number of rooms we know
-visited = {room for room in g}
-while len(visited) < 500:
-
-    # Keep checking size of player queue every 200ms
-    p = None
-    while p is None:
-        if player_q.size() > 0:
-            name, prev_room, prev_direction, cur_room, cur_exits  = player_q.dequeue()
-            # If we move to a new room update the local graph and visited set
-            if cur_room not in visited:
-                visited.add(cur_room)
-                g.add_vertex(cur_room)
-                # Connect previous room with current room using prev_direction
-                g.add_edge(prev_room, cur_room, prev_direction)
-                # Connect current room with previous room using opposite of prev_direction
-                g.add_edge(cur_room, prev_room, OPPOSITE_DIRECTION[prev_direction])
+    # FORMAT OF QUEUE: [ [directions], [room_ids] ]
+    # Initialize queue
+    for direction in neighbors:
+        if neighbors[direction] == '-1':
+            # Return to main calling function
+            print(f'Found next unvisited room 1 move away.')
+            return [direction]
         else:
-            time.sleep(0.2)
+            # [directions to new location, new room id]
+            room_id = neighbors[direction]
+            q.enqueue( [ [direction], [room_id] ] )
 
-    # Now we have a player with no cooldown so figure out the best direction to go in the graph...
-    # Spin up a new process which will handle moving a player and waiting for cooldown to enqueue to player_q
-    process = mp.Process(target=move, args=(p,))
-    process.start()
+    # START SEARCH
+    while q.size() > 0:
+        directions, room_ids = q.dequeue()
+        last_room_id = room_ids[-1]
+        # Get neighbors
+        neighbors = g.get_neighbors(last_room_id)
+        neighbors_keys = list(neighbors.keys())
+        random.shuffle(neighbors_keys)
+        for direction in neighbors_keys:
+            r_id = neighbors[direction]
+            if r_id == '-1':
+                directions.append(direction)
+                print(f'Found next unvisited room {len(directions)} moves away.')
+                return directions
+            elif r_id not in room_ids:
+                new_directions = list(directions)
+                new_directions.append(direction)
+                new_room_ids = list(room_ids)
+                new_room_ids.append(r_id)
+                q.enqueue([ new_directions, new_room_ids ])
 
-    # After starting the process, the move function will work in the background and this main loop
-    # will continue processing players and making new threads...
-    # Once the move function moves the player it will wait for the cooldown to elapse before enqueuing
-    # the player back to player_q
+item_counter = 0
+def pick_up_items(arr):
+    for item in arr:
+        cooldown = 0
+        # we don't want tiny treasure because it takes up space and we can't pick up more than 10
+        if item != 'tiny treasure' or item_counter < 8:
+            #pick up Item
+            post_data = {"name": item}
+            headers= {"Authorization": "Token ***********************" } #we need to put the token here
+            r = requests.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', data=post_data, headers=headers)
+            response = r.json()
+            #set cooldown
+            cooldown = response["cooldown"]
+            print('response', response)
+            #print errors if any
+            if len(response["errors"]) > 0:
+                print("can't pick up Item", item, response["errors"])
+                #print error cooldown message
+                print('error cooldown ' + str(response["cooldown"]) + ' seconds')
+            else:
+                item_counter += 1 # if no errors, item was picked up
+                #print normal cooldown message
+                print('pick up item cooldown ' + str(response["cooldown"]) + ' seconds')
+        else:
+            print('ERROR: item was tiny treasure or our pack is full')
+        
+        #cooldown
+        time.sleep(cooldown)
+        
+def move(player, direction, visited):
+    """ 
+    Just moves the player and updates the visited set
+    """
+    print("Made it to move()", f"moving {direction}")
+
+    json_obj = json.dumps({'direction': direction})
+    r = player.requests.post(API_URL+'/api/rooms/move', json={'direction': direction}, allow_redirects=True, stream=True, timeout=100)
+    res = r.json()
+    print('res', res)
+    pdb.set_trace()
+    # After moving:
+        # Add room_id to visited set
+        # Update player.cur_room
+        # Sleep for cooldown seconds
+    # --pick up items--
+    # if len(res["items"]) > 0:
+        # pick_up_items(res["items"])
+
+visited = {room for room in g.vertices}
+# Main script loop which calls find_nearest_unvisited()
+player = matt
+while len(visited) < 500:
+    path = find_nearest_unvisited(player, visited) # path is a list of directions
+    for direction in path:
+        move(player, direction, visited)
