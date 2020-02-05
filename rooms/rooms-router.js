@@ -39,12 +39,39 @@ const opposite = {
   w: 'e'
 }
 
-router.get('/rooms', (req, res) => {
-  Rooms.find()
-    .then(rooms => res.json(rooms))
-    .catch(err => res.json(err))
-})
 
+
+router.get('/adlist', async (req, res) => {
+  let rooms = await Rooms.find()
+  let adlist = {}
+  try{
+    for(let room in rooms) {
+      let room_id = rooms[room].room_id
+
+
+      let n = {n: rooms[room].n}
+      let s = {s:rooms[room].s}
+      let e = {e: rooms[room].e}
+      let w = {w:rooms[room].w}
+
+
+      if(!adlist[room]) {
+        adlist[room_id] = []
+        if(n.n !== null && n.n !== -1) adlist[room_id].push(n)
+        if(s.s !== null && s.s !== -1) adlist[room_id].push(s)
+        if(e.e !== null && e.e !== -1) adlist[room_id].push(e)
+        if(w.w !== null && w.w !== -1) adlist[room_id].push(w)
+      }
+
+    }
+    res.json(adlist)
+
+  }
+  catch(e) {
+    res.status(500).json(e)
+  }
+
+})
 
 router.get('/players', (req, res) => {
   Players.find()
@@ -344,5 +371,11 @@ router.delete('/:id', (req, res) => {
       res.status(500).json({ message: 'Error removing the room.' })
     })
 })
+
+
+
+
+
+
 
 module.exports = router;
