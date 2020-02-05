@@ -62,10 +62,10 @@ router.get('/adlist', async (req, res) => {
         if(room_id === 23) console.log(room_id)
 
         adlist[room_id] = []
-        if(n.n !== null && n.n !== -1) adlist[room_id].push(n)
-        if(s.s !== null && s.s !== -1) adlist[room_id].push(s)
-        if(e.e !== null && e.e !== -1) adlist[room_id].push(e)
-        if(w.w !== null && w.w !== -1) adlist[room_id].push(w)
+        if(n.n !== null) adlist[room_id].push(n)
+        if(s.s !== null) adlist[room_id].push(s)
+        if(e.e !== null) adlist[room_id].push(e)
+        if(w.w !== null) adlist[room_id].push(w)
       }
 
     }
