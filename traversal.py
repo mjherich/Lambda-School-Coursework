@@ -5,7 +5,7 @@ import time, requests, pdb
 import multiprocessing as mp
 
 API_URL = "http://39ca3396.ngrok.io"
-LS_API_URL = ""
+LS_API_URL = "https://lambda-treasure-hunt.herokuapp.com"
 OPPOSITE_DIRECTION = {
     'n': 's',
     's': 'n',
@@ -23,17 +23,17 @@ requests_blaine = requests.Session()
 requests_blaine.headers.update({
     "Authorization": BLAINE_TOKEN
 })
-r = requests_blaine.get(API_URL+"/api/rooms/init")
-player_data = r.json()["player"]
-players.append(Player("Blaine", player_data['room_id'], player_data['exits'], requests_blaine))
+# r = requests_blaine.get(API_URL+"/api/rooms/init")
+# player_data = r.json()["player"]
+# players.append(Player("Blaine", player_data['room_id'], player_data['exits'], requests_blaine))
 
 requests_bryan = requests.Session()
 requests_bryan.headers.update({
     "Authorization": BRYAN_TOKEN
 })
-r = requests_bryan.get(API_URL+"/api/rooms/init")
-player_data = r.json()["player"]
-players.append(Player("Bryan", player_data['room_id'], player_data['exits'], requests_bryan))
+# r = requests_bryan.get(API_URL+"/api/rooms/init")
+# player_data = r.json()["player"]
+# players.append(Player("Bryan", player_data['room_id'], player_data['exits'], requests_bryan))
 
 requests_matt = requests.Session()
 requests_matt.headers.update({
@@ -47,19 +47,39 @@ requests_sean = requests.Session()
 requests_sean.headers.update({
     "Authorization": SEAN_TOKEN
 })
-r = requests_sean.get(API_URL+"/api/rooms/init")
-player_data = r.json()["player"]
-players.append(Player("Sean", player_data['room_id'], player_data['exits'], requests_sean))
+# r = requests_sean.get(API_URL+"/api/rooms/init")
+# player_data = r.json()["player"]
+# players.append(Player("Sean", player_data['room_id'], player_data['exits'], requests_sean))
 
 # FORMAT OF CUSTOM requests session
 # res = requests_matt.get(API_URL+"/api/rooms/init")
 
 # Initialize the local graph
 g = Graph()
-# Hit the /graph endpoint and update the local graph with the returned adjacency list
-# r = requests_matt.get(API_URL+"/api/ad_list")
-# res = r.json()
-# TODO: Copy the adjacency list from the API response into the local graph
+# Hit the /api/rooms/adlist endpoint and update the local graph with the returned adjacency list
+r = requests_matt.get(API_URL+"/api/rooms/adlist")
+ad_list = r.json()
+
+# Add vertices
+for room_id in ad_list:
+    # Add room_id as a vertex if not in g
+    if room_id not in g.vertices:
+        g.add_vertex(room_id)
+
+
+# Add edges
+for room_id in ad_list:
+    neighbors = ad_list[room_id]
+    # print(neighbors)
+    for i in range(len(neighbors)):
+        neighbor = neighbors[i]
+        # id of neighbors
+        neighbor_direction = list(neighbor.keys())
+        neighbor_direction = neighbor_direction[0]
+
+        neighbor_id = neighbor[neighbor_direction]
+        
+        g.add_edge(room_id, str(neighbor_id), neighbor_direction)
 
 
 # === Traversal using Multiprocessing ===
@@ -76,12 +96,12 @@ def move(player):
 """
 The player queue will contain players whose cooldown is zero.
 Players will automatically be enqued by subsequent processes when the cooldown has finished.
-
-Format: [PLAYER_NAME, PREVIOUS_ROOM, PREVIOUS_DIRECTION, CURRENT_ROOM, CURRENT_ROOM_EXITS]
 """
 player_q = Queue()
-for player in players:
-    player_q.enqueue([player["name"], player["current_room"], player["exits"]])
+# TESTING WITH player: MATT
+player_q.enqueue(players[2])
+# for player in players:
+#     player_q.enqueue([player["name"], player["current_room"], player["exits"]])
 
 # Main loop
 # Create visited set to keep track of the number of rooms we know

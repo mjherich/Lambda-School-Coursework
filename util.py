@@ -11,6 +11,12 @@ class Player:
         self.requests = requests_session
 
 
+OPPOSITE_DIRECTION = {
+    'n': 's',
+    's': 'n',
+    'e': 'w',
+    'w': 'e'
+}
 class Graph:
     """
     Represent a graph as a dictionary of vertices mapping labels to edges.
@@ -31,6 +37,7 @@ class Graph:
         """
         if v1 in self.vertices and v2 in self.vertices:
             self.vertices[v1][direction] = v2
+            self.vertices[v2][OPPOSITE_DIRECTION[direction]] = v1
         else:
             raise IndexError("One or both of the vertices does not exist")
 
