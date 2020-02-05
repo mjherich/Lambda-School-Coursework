@@ -1,5 +1,5 @@
 const db = require('../database/db-config.js');
-const Items = require('../items/items-model.js');
+const Rooms = require('../rooms/rooms-model.js');
 
 module.exports = {
   validateItemId,
@@ -7,7 +7,7 @@ module.exports = {
 }
 
 function validateItemId(req, res, next) {
-  Items.findById(req.params.id)
+  Rooms.findById(req.params.id)
     .then(response => {
       if (response) {
         res.id = response
