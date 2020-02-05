@@ -1,3 +1,6 @@
+// change 335, n,s need to be null
+
+
 // Initialize player
 // Store current location in player-room 
 // If current location not in room database, put it in
@@ -55,7 +58,9 @@ router.get('/adlist', async (req, res) => {
       let w = {w:rooms[room].w}
 
 
-      if(!adlist[room]) {
+      if(!adlist[room_id]) {
+        if(room_id === 23) console.log(room_id)
+
         adlist[room_id] = []
         if(n.n !== null && n.n !== -1) adlist[room_id].push(n)
         if(s.s !== null && s.s !== -1) adlist[room_id].push(s)
@@ -78,6 +83,7 @@ router.get('/players', (req, res) => {
     .then(players => res.json(players))
     .catch(err => res.json(err))
 })
+
 
 
 
@@ -155,156 +161,141 @@ router.get('/init', async (req, res) => {
 // INPUT: 'direction'
 
 router.post('/move', async (req, res) => {
-  let direction = req.body.direction
-
-
   // Grab token
   let token = req.headers.authorization
-  let auth = {
-      headers: {
-        Authorization: `Token ${token}`
-      }
-    }
-  console.log('body', req.body)
-  // wiseman object
-  let wiseman = {
-    'direction': req.body.direction,
-  }
 
+  let auth = {
+    headers: {
+      Authorization: `Token ${token}`
+    }
+  }
+  let direction = req.body.direction
+  
   // get player location info, specifcally current room id
   let player = await Players.findById(token)
-  // console.log('PLAYER', player) 
   // using player current room id, find that room in the database
   let last_room = await Rooms.findById(player.current_room)
+  // Check to see if user is trying to move in a direction that is null
+  checkInvalidMove = last_room[direction]
+  if (checkInvalidMove === null) {
+    res.status(400).json({"Message": "Can't move this way dumbass"})
+    return
+  } else {  // Else user input a valid location so continue
+
+    // postBody object (the body to be included in the axios post to the heroku API)
+    let postBody = {
+      'direction': req.body.direction,
+    }
+
+    // Does our db know the room_id in the direction the user wants to go?
+    let possible_exit = last_room[direction]
+    // If we know the room id the user is trying to move to, add to postBody to get wise explorer bonus
+    if (possible_exit !== -1 && possible_exit !== null) {
+      postBody['next_room_id'] = `${possible_exit}`
+    }
+
+    // hit /move endpoint with postBody as the body
+    try {
+      const newRoom = await axios.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', postBody, auth);
+
+      let newRoomData = newRoom.data
+
+      // Initial state
+      newRoomData['n'] = null
+      newRoomData['s'] = null
+      newRoomData['e'] = null
+      newRoomData['w'] = null
+
+      // check database to see if room is there [MATT: WE ALREADY DID THIS ABOVE, JUST CHECK IF next_room_id IS IN postBody]; consider refactoring
+      let newRoomExist = await Rooms.findById(newRoomData['room_id'])
+
+      if (newRoomExist === undefined) {
+        newRoomData.exits.forEach(exit => {
+          newRoomData[exit] = -1
+        })
+
+        newRoomData[opposite[direction]] = last_room['room_id']
+        // save to db
+
+        delete newRoomData['players']
+        delete newRoomData['exits']
+
+        let itemsArr = newRoomData['items']
+        let errorsArr = newRoomData['errors']
+        let messagesArr = newRoomData['messages']
+
+        newRoomData['items'] = ""
+        newRoomData['errors'] = ""
+        newRoomData['messages'] = ""
+
+        itemsArr.forEach(item => {
+          newRoomData['items'] = newRoomData['items'] + item +','
+        })
+
+        errorsArr.forEach(err => {
+          newRoomData['errors'] = newRoomData['errors'] + err +','
+        })
+        messagesArr.forEach(message => {
+          newRoomData['messages'] = newRoomData['messages'] + message +','
+        })
 
 
-
-
-  // using that room, find direction (n,s,e,w) req.body
-  let possible_exit = last_room[direction]
-  // console.log(player, last_room)
-  // if last_room[req.body.direction] is not -1 or null, add to wiseman
-  if (possible_exit !== -1 && possible_exit !== null) {
-    wiseman['next_room_id'] = `${possible_exit}`
-  }
-
-
-  // We DON'T know the room id in direction we are moving
-  // {
-  //   'direction': 'n'
-  // }
-  // We know the room id in direction we are moving
-  // {
-  //   'direction': 'n'
-  //   'next_room_id': 51
-  // }
-
-
-
-
-  try {
-    // hit move endpoint with req.body.direction
-    const newRoom = await axios.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', wiseman, auth);
-
-    
-    let newRoomData = newRoom.data
-
-    // Initial state
-    newRoomData['n'] = null
-    newRoomData['s'] = null
-    newRoomData['e'] = null
-    newRoomData['w'] = null
-
-    console.log('NEW ROOM DATA', newRoomData)
-
-    // check database to see if room is there
-    let newRoomExist = await Rooms.findById(newRoomData['room_id'])
-
-    if(newRoomExist === undefined) {
-
-  
-      newRoomData.exits.forEach(exit => {
-        newRoomData[exit] = -1
-      })
-
-      newRoomData[opposite[direction]] = last_room['room_id']
-      // save to db
-
-      delete newRoomData['players']
-      delete newRoomData['exits']
-
-      let itemsArr = newRoomData['items']
-      let errorsArr = newRoomData['errors']
-      let messagesArr = newRoomData['messages']
+        console.log(newRoomData)
+        await Rooms.add(newRoomData)
+        // Update last room direction value
         
+      } else {
+        newRoomData['n'] = newRoomExist['n']
+        newRoomData['s'] = newRoomExist['s']
+        newRoomData['e'] = newRoomExist['e']
+        newRoomData['w'] = newRoomExist['w']
+        newRoomData[opposite[direction]] = last_room['room_id']
+        // save to db
+        delete newRoomData['players']
+        delete newRoomData['exits']
 
-      newRoomData['items'] = ""
-      newRoomData['errors'] = ""
-      newRoomData['messages'] = ""
+        let itemsArr = newRoomData['items']
+        let errorsArr = newRoomData['errors']
+        let messagesArr = newRoomData['messages']
+          
 
-      itemsArr.forEach(item => {
-        newRoomData['items'] = newRoomData['items'] + item +','
-      })
+        newRoomData['items'] = ""
+        newRoomData['errors'] = ""
+        newRoomData['messages'] = ""
 
-      errorsArr.forEach(err => {
-        newRoomData['errors'] = newRoomData['errors'] + err +','
-      })
-      messagesArr.forEach(message => {
-        newRoomData['messages'] = newRoomData['messages'] + message +','
-      })
+        itemsArr.forEach(item => {
+          newRoomData['items'] = newRoomData['items'] + item +','
+        })
+
+        errorsArr.forEach(err => {
+          newRoomData['errors'] = newRoomData['errors'] + err +','
+        })
+        messagesArr.forEach(message => {
+          newRoomData['messages'] = newRoomData['messages'] + message +','
+        })
+        await Rooms.edit(newRoomData['room_id'], newRoomData)
+      }
+
+      let updatedPlayerLocation = await Players.edit(token, {current_room:newRoomData.room_id})
+      let updated = {
+        [direction]: newRoomData['room_id']
+      }
 
 
-      console.log(newRoomData)
-      await Rooms.add(newRoomData)
-      // Update last room direction value
-      
+      await Rooms.edit(last_room['room_id'], updated)
+      return res.status(200).json(newRoomData)
+
+    } catch (e) {
+      return res.status(500).json({e, message:"ERROR WITH AXIOS PROBABLY"});
     }
-
-    else {
-      newRoomData['n'] = newRoomExist['n']
-      newRoomData['s'] = newRoomExist['s']
-      newRoomData['e'] = newRoomExist['e']
-      newRoomData['w'] = newRoomExist['w']
-      newRoomData[opposite[direction]] = last_room['room_id']
-      // save to db
-      delete newRoomData['players']
-      delete newRoomData['exits']
-
-      let itemsArr = newRoomData['items']
-      let errorsArr = newRoomData['errors']
-      let messagesArr = newRoomData['messages']
-        
-
-      newRoomData['items'] = ""
-      newRoomData['errors'] = ""
-      newRoomData['messages'] = ""
-
-      itemsArr.forEach(item => {
-        newRoomData['items'] = newRoomData['items'] + item +','
-      })
-
-      errorsArr.forEach(err => {
-        newRoomData['errors'] = newRoomData['errors'] + err +','
-      })
-      messagesArr.forEach(message => {
-        newRoomData['messages'] = newRoomData['messages'] + message +','
-      })
-      await Rooms.edit(newRoomData['room_id'], newRoomData)
-    }
-
-    let updatedPlayerLocation = await Players.edit(token, {current_room:newRoomData.room_id})
-    let updated = {
-      [direction]: newRoomData['room_id']
-    }
-
-
-    await Rooms.edit(last_room['room_id'], updated)
-    return res.status(200).json(newRoomData)
-
-  } catch (e) {
-    return res.status(500).json({e, message:"ERROR WITH AXIOS PROBABLY"});
   }
 })
+
+
+
+
+
+
 
 
 
