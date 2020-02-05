@@ -2,12 +2,13 @@ class Player:
     """
     Holds the player state necessary for the script
     """
-    def __init__(self, name, cur_room, exits):
+    def __init__(self, name, cur_room, exits, requests_session):
         self.name = name
         self.prev_room = None
         self.prev_direction = None
         self.cur_room = cur_room
         self.exits = exits
+        self.requests = requests_session
 
 
 class Graph:

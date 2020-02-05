@@ -111,3 +111,5 @@ dmypy.json
 n
 
 .vscode
+.curls
+secrets.py

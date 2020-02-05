@@ -1,8 +1,11 @@
 from util import Player, Graph, Queue, Stack
-import time, requests
+from secrets import *
+
+import time, requests, pdb
 import multiprocessing as mp
 
-API_URL = "http://localhost:6000"
+API_URL = "http://39ca3396.ngrok.io"
+LS_API_URL = ""
 OPPOSITE_DIRECTION = {
     'n': 's',
     's': 'n',
@@ -12,20 +15,50 @@ OPPOSITE_DIRECTION = {
 
 # === Initialize local script state ===
 # Hit /init and get back state of Players (player name and what room they are in), store locally
-r = requests.get(API_URL+"/api/init")
-res = r.json()
+
+# Load Player instances
 players = []
-# TODO
-for player in res:
-    # if player is not at room 0 we cannot continue
-    if player[]
-    players.append(Player(player["name"], player["previous_direction"]))
+
+requests_blaine = requests.Session()
+requests_blaine.headers.update({
+    "Authorization": BLAINE_TOKEN
+})
+r = requests_blaine.get(API_URL+"/api/rooms/init")
+player_data = r.json()["player"]
+players.append(Player("Blaine", player_data['room_id'], player_data['exits'], requests_blaine))
+
+requests_bryan = requests.Session()
+requests_bryan.headers.update({
+    "Authorization": BRYAN_TOKEN
+})
+r = requests_bryan.get(API_URL+"/api/rooms/init")
+player_data = r.json()["player"]
+players.append(Player("Bryan", player_data['room_id'], player_data['exits'], requests_bryan))
+
+requests_matt = requests.Session()
+requests_matt.headers.update({
+    "Authorization": MATT_TOKEN
+})
+r = requests_matt.get(API_URL+"/api/rooms/init")
+player_data = r.json()["player"]
+players.append(Player("Matt", player_data['room_id'], player_data['exits'], requests_matt))
+
+requests_sean = requests.Session()
+requests_sean.headers.update({
+    "Authorization": SEAN_TOKEN
+})
+r = requests_sean.get(API_URL+"/api/rooms/init")
+player_data = r.json()["player"]
+players.append(Player("Sean", player_data['room_id'], player_data['exits'], requests_sean))
+
+# FORMAT OF CUSTOM requests session
+# res = requests_matt.get(API_URL+"/api/rooms/init")
 
 # Initialize the local graph
 g = Graph()
 # Hit the /graph endpoint and update the local graph with the returned adjacency list
-r = requests.get(API_URL+"/api/ad_list")
-res = r.json()
+# r = requests_matt.get(API_URL+"/api/ad_list")
+# res = r.json()
 # TODO: Copy the adjacency list from the API response into the local graph
 
 
