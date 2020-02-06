@@ -104,7 +104,6 @@ router.get('/weighted', async (req,res) => {
         if(s.s !== null) adlist[room_id].push(s)
         if(e.e !== null) adlist[room_id].push(e)
         if(w.w !== null) adlist[room_id].push(w)
-        adlist[room_id].push(terrain)
       }
 
     }
