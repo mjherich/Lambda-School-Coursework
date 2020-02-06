@@ -1,6 +1,5 @@
 from util import Player, Graph, Queue, Stack
-from secrets import matt, API_URL
-import json
+from thesecrets import matt, MATT_TOKEN, API_URL
 import time, requests, pdb, random
 import multiprocessing as mp
 
@@ -110,25 +109,46 @@ def move(player, direction, visited):
     """ 
     Just moves the player and updates the visited set
     """
-    print("Made it to move()", f"moving {direction}")
+    print(f"moving {direction}")
+    # Save previous room to update graph after moving
+    prev_room = player.cur_room
 
-    json_obj = json.dumps({'direction': direction})
-    r = player.requests.post(API_URL+'/api/rooms/move', json={'direction': direction}, allow_redirects=True, stream=True, timeout=100)
+    payload = {'direction': direction}
+    r = player.requests.post(API_URL+'/api/rooms/move', json=payload)
     res = r.json()
-    print('res', res)
-    pdb.set_trace()
     # After moving:
-        # Add room_id to visited set
-        # Update player.cur_room
-        # Sleep for cooldown seconds
+    new_room_id = str(res['room_id'])
+    print(f"Moved to room {new_room_id}")
+    cooldown = res['cooldown']
+    # Add room_id to visited set
+    visited.add(new_room_id)
+    # Add new vertex if new_room_id is not present in g.vertices
+    if new_room_id not in g.vertices:
+        g.add_vertex(new_room_id)
+        # update the edges as well
+        g.add_edge(prev_room, new_room_id, direction)
+    # Update player.cur_room
+    player.cur_room = new_room_id
+    # Sleep for cooldown seconds
+    print(f"Cooling down for {cooldown} seconds")
+    time.sleep(cooldown)
     # --pick up items--
     # if len(res["items"]) > 0:
         # pick_up_items(res["items"])
 
+
 visited = {room for room in g.vertices}
 # Main script loop which calls find_nearest_unvisited()
 player = matt
+time.sleep(1)
 while len(visited) < 500:
     path = find_nearest_unvisited(player, visited) # path is a list of directions
+    print(f"Found shortest path \n {path}")
     for direction in path:
         move(player, direction, visited)
+
+
+# headers = {}
+# r = requests.post(API_URL+'/api/rooms/move', json={'direction': 's'})
+# res = r.json()
+# print('res', res)
