@@ -50,18 +50,12 @@ router.get('/adlist', async (req, res) => {
   try{
     for(let room in rooms) {
       let room_id = rooms[room].room_id
+     
       
-
-
-      let terrain = rooms[room].terrain
-
-      weight = 7.5
-      if(terrain === 'TRAP') weight = 30
-      
-      let n = {n: rooms[room].n, weight}
-      let s = {s:rooms[room].s, weight}
-      let e = {e: rooms[room].e, weight}
-      let w = {w:rooms[room].w, weight}
+      let n = {n: rooms[room].n}
+      let s = {s:rooms[room].s}
+      let e = {e: rooms[room].e}
+      let w = {w:rooms[room].w}
 
 
       if(!adlist[room_id]) {
@@ -93,12 +87,15 @@ router.get('/weighted', async (req,res) => {
       let room_id = rooms[room].room_id
 
       let terrain = rooms[room].terrain
-
-
-      let n = {n: rooms[room].n}
-      let s = {s:rooms[room].s}
-      let e = {e: rooms[room].e}
-      let w = {w:rooms[room].w}
+      
+     
+      weight = 7.5
+      if(terrain === 'TRAP') weight = 30
+      
+      let n = {n: rooms[room].n, weight}
+      let s = {s:rooms[room].s, weight}
+      let e = {e: rooms[room].e, weight}
+      let w = {w:rooms[room].w, weight}
 
 
       if(!adlist[room_id]) {
