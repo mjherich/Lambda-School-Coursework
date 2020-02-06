@@ -53,10 +53,15 @@ router.get('/adlist', async (req, res) => {
       
 
 
-      let n = {n: rooms[room].n}
-      let s = {s:rooms[room].s}
-      let e = {e: rooms[room].e}
-      let w = {w:rooms[room].w}
+      let terrain = rooms[room].terrain
+
+      weight = 7.5
+      if(terrain === 'TRAP') weight = 30
+      
+      let n = {n: rooms[room].n, weight}
+      let s = {s:rooms[room].s, weight}
+      let e = {e: rooms[room].e, weight}
+      let w = {w:rooms[room].w, weight}
 
 
       if(!adlist[room_id]) {
