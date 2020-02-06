@@ -50,6 +50,7 @@ router.get('/adlist', async (req, res) => {
   try{
     for(let room in rooms) {
       let room_id = rooms[room].room_id
+      
 
 
       let n = {n: rooms[room].n}
@@ -59,8 +60,6 @@ router.get('/adlist', async (req, res) => {
 
 
       if(!adlist[room_id]) {
-        if(room_id === 23) console.log(room_id)
-
         adlist[room_id] = []
         if(n.n !== null) adlist[room_id].push(n)
         if(s.s !== null) adlist[room_id].push(s)
@@ -77,6 +76,55 @@ router.get('/adlist', async (req, res) => {
   }
 
 })
+
+
+
+router.get('/weighted', async (req,res) => {
+  let rooms = await Rooms.find()
+  let adlist = {}
+  try{
+    for(let room in rooms) {
+
+      let room_id = rooms[room].room_id
+
+      let terrain = rooms[room].terrain
+
+
+      let n = {n: rooms[room].n}
+      let s = {s:rooms[room].s}
+      let e = {e: rooms[room].e}
+      let w = {w:rooms[room].w}
+
+
+      if(!adlist[room_id]) {
+        adlist[room_id] = []
+        if(n.n !== null) adlist[room_id].push(n)
+        if(s.s !== null) adlist[room_id].push(s)
+        if(e.e !== null) adlist[room_id].push(e)
+        if(w.w !== null) adlist[room_id].push(w)
+        adlist[room_id].push(terrain)
+      }
+
+    }
+    res.json(adlist)
+
+  }
+  catch(e) {
+    res.status(500).json(e)
+  }
+
+
+})
+
+
+
+
+
+
+
+
+
+
 
 router.get('/players', (req, res) => {
   Players.find()
@@ -161,6 +209,8 @@ router.get('/init', async (req, res) => {
 // INPUT: 'direction'
 
 router.post('/move', async (req, res) => {
+
+
   // Grab token
   let token = req.headers.authorization
 
@@ -187,6 +237,10 @@ router.post('/move', async (req, res) => {
       'direction': req.body.direction,
     }
 
+    console.log('BODY', postBody)
+
+
+
     // Does our db know the room_id in the direction the user wants to go?
     let possible_exit = last_room[direction]
     // If we know the room id the user is trying to move to, add to postBody to get wise explorer bonus
@@ -194,9 +248,15 @@ router.post('/move', async (req, res) => {
       postBody['next_room_id'] = `${possible_exit}`
     }
 
+
     // hit /move endpoint with postBody as the body
     try {
-      const newRoom = await axios.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', postBody, auth);
+
+      console.log('TEST1 ----------------------------')
+      console.log(postBody, auth)
+
+      const newRoom = await axios.post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', JSON.stringify(postBody), auth);
+      console.log('TEST2 ----------------------------')
 
       let newRoomData = newRoom.data
 
@@ -286,18 +346,11 @@ router.post('/move', async (req, res) => {
       return res.status(200).json(newRoomData)
 
     } catch (e) {
+      console.log(e)
       return res.status(500).json({e, message:"ERROR WITH AXIOS PROBABLY"});
     }
   }
 })
-
-
-
-
-
-
-
-
 
 router.get('/', (req, res) => {
   Rooms.find()
