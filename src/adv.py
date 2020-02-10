@@ -1,4 +1,27 @@
 from room import Room
+from player import Player
+from item import Item, Treasure, Weapon
+
+import textwrap
+import time
+import random
+
+# Create items
+items = {
+    "coal": Item('Coal', 'Use this coal to start fire.'),
+}
+treasures = {
+    "chest": Treasure('Chest', 'An ancient treasure chest.', 1000000),
+    "candy": Treasure('Candy', 'A candy cane all by itself.', 10),
+    "pokemon": Treasure('Goldeen', 'A wild Goldeen appears!', 9000),
+}
+weapons = {
+    "launcher": Weapon('Launcher', 'A rocket launcher.', 100),
+    "pistol": Weapon('Pistol', 'A .45 magnum', 8),
+    "sword": Weapon('Sword', 'This sword is stuck in a stone.', 5),
+    "dagger": Weapon('Dagger', 'A glorified butter knife.', 3),
+    "pan": Weapon('Pan', 'Not very effective.', 1),
+}
 
 # Declare all the rooms
 
@@ -33,11 +56,23 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# Add Treasures to treasure room
+for treasure in treasures:
+    room['treasure'].items.append(treasures[treasure])
+
+# Place weapons in random rooms
+for weapon in weapons:
+    room[random.choice(list(room.keys()))].items.append(weapons[weapon])
+
 #
 # Main
 #
 
+# Textwrapper for description in repl
+wrapper = textwrap.TextWrapper(width=50)
+
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Matt", room['outside'])
 
 # Write a loop that:
 #
@@ -49,3 +84,69 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+while True:
+    print(f'\n====================\nCurrently in: {player.current_room.name}')
+    print(wrapper.fill(text=player.current_room.description))
+    print(f'\n{player.current_room.show_items()}')
+    user_input = input('Where do you want to go? (n, e, s, w): ').split()
+    # Take/get or drop Item commands
+    if len(user_input) == 2:
+        if user_input[0].lower() == 'get' or user_input[0].lower() == 'take':
+            found = False
+            for i in range(len(player.current_room.items)):
+                item = player.current_room.items[i]
+                if user_input[1].lower() == item.name.lower():
+                    player.items.append(player.current_room.items.pop(i))
+                    item.on_take()
+                    found = True
+                    break
+            if not found:# i == len(player.current_room.items)-1:
+                print(f'\n{user_input[1]} not found in {player.current_room.name}.')
+        elif user_input[0].lower() == 'drop':
+            found = False
+            for i in range(len(player.items)):
+                item = player.items[i]
+                if user_input[1].lower() == item.name.lower():
+                    player.current_room.items.append(player.items.pop(i))
+                    item.on_drop()
+                    found = True
+                    break
+            if not found:# i == len(player.current_room.items)-1:
+                print(f'\n{user_input[1]} not found in your bag.')
+    # Move North command
+    elif user_input[0].lower() == 'n':
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to
+        else:
+            print('There is no room north of your position, explore elsewhere!')
+            time.sleep(2)
+    # Move East command
+    elif user_input[0].lower() == 'e':
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to
+        else:
+            print('There is no room east of your position, explore elsewhere!')
+            time.sleep(2)
+    # Move South command
+    elif user_input[0].lower() == 's':
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to
+        else:
+            print('There is no room south of your position, explore elsewhere!')
+            time.sleep(2)
+    # Move West command
+    elif user_input[0].lower() == 'w':
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to
+        else:
+            print('There is no room west of your position, explore elsewhere!')
+            time.sleep(2)
+    # Show inventory command
+    elif user_input[0].lower() == 'i' or user_input[0].lower() == 'inventory':
+        print(player.show_items())
+    # Quit game command
+    elif user_input[0].lower() == 'q' or user_input[0].lower() == 'quit':
+        break
+    else:
+        print('You must enter a valid direction.')
+        time.sleep(2)
