@@ -22,3 +22,14 @@ and does the following:
 import sys
 import calendar
 from datetime import datetime
+
+d = input("Enter a month to view it's calendar. Optionally specify the year as well.\n")
+ds = d.split(" ")
+if len(ds) == 1 and ds[0] == "":
+  print(calendar.month(datetime.now().year,datetime.now().month,3,1))
+else:
+  try:
+    m = datetime.strptime(ds[0], "%B")
+    print(calendar.month(int(ds[1]) or datetime.now().year,m.month,3,1))
+  except:
+    print('Incorrect input\nexample: \"March\" or \"February 2020\"')
