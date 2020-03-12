@@ -147,14 +147,14 @@ def new_transaction():
 def mine():
     data = request.get_json()
     # Check that the response contains both proof and id
-    if "proof" not in data or "block_id" not in data:
+    if "proof" not in data or "id" not in data:
         error = {
             "message": "Requires both proof and id in the request"
         }
         return jsonify(error), 422
 
     # Check if proof is valid for the block id
-    block = blockchain.chain[data["block_id"]-1]
+    block = blockchain.last_block
     proof = data["proof"]
     is_valid = blockchain.valid_proof(json.dumps(block, sort_keys=True), proof)
 

@@ -118,7 +118,7 @@ def mine():
         return jsonify(error), 422
 
     # Check if proof is valid for the block id
-    block = blockchain.chain[data["block_id"]-1]
+    block = blockchain.last_block
     proof = data["proof"]
     is_valid = blockchain.valid_proof(json.dumps(block, sort_keys=True), proof)
 
