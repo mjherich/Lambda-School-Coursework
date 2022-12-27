@@ -1,0 +1,11 @@
+mode,name,type,description
+NULLABLE,id,INTEGER,Unique comment ID
+NULLABLE,by,STRING,Username of commenter
+NULLABLE,author,STRING,Username of author
+NULLABLE,time,INTEGER,Unix time
+NULLABLE,time_ts,TIMESTAMP,Human readable time in UTC (format: YYYY-MM-DD hh:mm:ss)
+NULLABLE,text,STRING,Comment text
+NULLABLE,parent,INTEGER,Parent comment ID
+NULLABLE,deleted,BOOLEAN,Is deleted?
+NULLABLE,dead,BOOLEAN,Is dead?
+NULLABLE,ranking,INTEGER,Comment ranking

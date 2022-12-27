@@ -1,0 +1,13 @@
+mode,name,type,description
+NULLABLE,id,INTEGER,Unique story ID
+NULLABLE,by,STRING,Username of submitter
+NULLABLE,score,INTEGER,Story score
+NULLABLE,time,INTEGER,Unix time
+NULLABLE,time_ts,TIMESTAMP,Human readable time in UTC (format: YYYY-MM-DD hh:mm:ss)
+NULLABLE,title,STRING,Story title
+NULLABLE,url,STRING,Story url
+NULLABLE,text,STRING,Story text
+NULLABLE,deleted,BOOLEAN,Is deleted?
+NULLABLE,dead,BOOLEAN,Is dead?
+NULLABLE,descendants,INTEGER,Number of story descendants
+NULLABLE,author,STRING,Username of author
