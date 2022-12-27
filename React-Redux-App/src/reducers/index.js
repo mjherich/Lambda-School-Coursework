@@ -1,0 +1,1 @@
+export { qrReducer } from './qrReducer.js';
