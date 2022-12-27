@@ -1,0 +1,88 @@
+$dark-yellow: #e4be4d;
+$background: #1e1e1c;
+$form-underline: #525252;
+//text sizes
+$extra-large: 3.75rem;
+$large: 2rem;
+
+body {
+  background: $background;
+}
+
+.login-container {
+  // font-family: "Helvetica Neue bold";
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+  color: white;
+  z-index: 100;
+  background: $background;
+
+  a {
+    color: $dark-yellow;
+    text-decoration: none;
+  }
+  button {
+    text-decoration: none;
+    background: $dark-yellow;
+    width: 25%;
+    height: 50px;
+    margin-top: 15px;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    &:hover {
+      background: lighten($dark-yellow, 10%);
+    }
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+  p {
+    font-size: large;
+  }
+  .forgot {
+    color: $dark-yellow;
+  }
+  form {
+    width: 49%;
+    max-width: 720px;
+    padding-top: 4%;
+
+    input {
+      padding: 1%;
+      margin-top: 5px;
+      text-decoration: none;
+      background: $background;
+      color: white;
+      height: 35px;
+      border: none;
+      border-bottom: 1px solid $form-underline;
+      width: 65%;
+      font-size: 1.5rem;
+      margin-top: 5%;
+    }
+  }
+}
+.login-image {
+  width: 49%;
+  text-align: center;
+  max-width: 720px;
+  img {
+    z-index: 1;
+  }
+  .text-on-top {
+    padding-top: 5%;
+    position: absolute;
+    margin-left: 5%;
+    h1 {
+      color: $dark-yellow;
+      font-size: $extra-large;
+    }
+    h2 {
+      text-align: left;
+      font-size: $large;
+    }
+  }
+}

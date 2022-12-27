@@ -1,0 +1,9 @@
+[build]
+  base = "tabthursday/"
+  publish = "tabthursday/build"
+  command = "yarn build"
+
+  [[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200

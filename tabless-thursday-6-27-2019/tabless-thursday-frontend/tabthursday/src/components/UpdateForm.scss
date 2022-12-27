@@ -1,0 +1,77 @@
+$dark-yellow: #e4be4d;
+
+.update-form-container {
+  .modal-content {
+    height: 600px;
+    width: 500px;
+    background-color: #1e1e1c;
+    opacity: 0.9;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    .modal-header {
+      border-bottom: 0px;
+      .modal-title {
+        margin: 5px 0 10px 150px;
+      }
+    }
+    .modal-body {
+      text-align: center;
+      h1 {
+        margin: 0 0 30px 0;
+      }
+      h4 {
+        // text-align: left;
+        margin-bottom: 10px;
+      }
+      a {
+        text-decoration: none;
+        color: white;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        input {
+          text-decoration: none;
+          height: 40px;
+          width: 70%;
+          margin-bottom: 10px;
+          text-align: center;
+          color: darken($dark-yellow, 10%);
+          //   background: lighten(#5f697a, 10%);
+          // border-bottom: 1px solid darkgrey;
+        }
+        input::placeholder {
+          color: darken($dark-yellow, 10%);
+        }
+      }
+    }
+    .modal-footer {
+      border-top: none;
+      display: flex;
+      justify-content: space-around;
+      .cancel-btn {
+        font-size: 1.4rem;
+        height: 70px;
+        width: 150px;
+        background-color: #1e1e1c;
+        border: 2px solid $dark-yellow;
+        color: $dark-yellow;
+        padding-right: 1%; //to space out buttons
+        &:hover {
+          border-color: rgba(228, 190, 77, 0.5);
+        }
+      }
+      .update-btn {
+        font-size: 1.4rem;
+        height: 70px;
+        width: 150px;
+        background-color: $dark-yellow;
+        &:hover {
+          background: rgba(228, 190, 77, 0.5);
+        }
+      }
+    }
+  }
+}

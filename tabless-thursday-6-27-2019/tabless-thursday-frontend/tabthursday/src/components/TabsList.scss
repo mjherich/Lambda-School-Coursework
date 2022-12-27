@@ -1,0 +1,96 @@
+.tabslist-container {
+  display: flex;
+  margin-top: 75px;
+  background: #333334;
+  overflow: hidden;
+  height: 100%;
+  .category-container {
+    width: 300px;
+    height: 800px;
+    margin: 0 35px 100px 0;
+    border-radius: 6px;
+    background-color: #d7d7d7;
+    box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.15);
+    h2 {
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 20px;
+    }
+    &:first-child {
+      margin-left: 66px;
+    }
+    .tab-container {
+      height: 60px;
+      width: 276px;
+      margin: 8px 12px 8px 12px;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+      box-shadow: 0 1px 0 0 rgba(214, 214, 214, 1);
+      display: flex;
+      justify-content: flex-end;
+      overflow: hidden;
+      box-shadow: 3px 3px 3px black;
+      .tab-info {
+        margin-top: 5px;
+        margin-right: 5px;
+        a {
+          text-decoration: none;
+          overflow: hidden;
+          height: 19px;
+        }
+        .tab-title {
+          height: 19px;
+          display: block;
+          // width: 175.8px;
+          margin: 0 auto;
+          color: #1e1e1c;
+          font-family: 'Open Sans';
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 0.13px;
+          line-height: 22px;
+          overflow: hidden;
+        }
+        .tab-url {
+          height: 19px;
+          width: 181.8px;
+          margin: 2px auto;
+          color: #2b2b2b;
+          font-family: 'Open Sans';
+          font-size: 14px;
+          line-height: 19px;
+          overflow: hidden;
+          padding-top: 4px;
+        }
+      }
+    }
+    .new-tab-link {
+      text-decoration: none;
+      div {
+        margin: 15px auto;
+        color: #525252;
+        font-family: 'Open Sans';
+        font-size: 1.4rem;
+        letter-spacing: 0.13px;
+        line-height: 22px;
+      }
+    }
+  }
+  .title-hamburger-container {
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+    // margin-left: 5px;
+    // margin-right: 5px;
+    text-align: center;
+    width: 25px;
+    height: 15px;
+    margin: 22.5px 5px 22.5px 5px;
+    .hamburger {
+      width: 25px;
+      height: 3px;
+      background-color: grey;
+      margin: 2px 0;
+    }
+  }
+}
