@@ -1,3 +1,5 @@
+import math
+
 # '''
 # Linked List hash table key/value pair
 # '''
@@ -14,6 +16,7 @@ class HashTable:
     '''
     def __init__(self, capacity):
         self.capacity = capacity  # Number of buckets in the hash table
+        self.entries = 0
         self.storage = [None] * capacity
 
 
@@ -23,7 +26,7 @@ class HashTable:
 
         You may replace the Python hash with DJB2 as a stretch goal.
         '''
-        return hash(key)
+        return self._hash_djb2(key)
 
 
     def _hash_djb2(self, key):
@@ -32,8 +35,13 @@ class HashTable:
 
         OPTIONAL STRETCH: Research and implement DJB2
         '''
-        pass
+        h = 5381 # Arbitrary number that supposedly results in less collisions
+        for c in key:
+            h = (h * 33) + ord(c)
+        return h
 
+    def _load_factor(self):
+        return self.entries / self.capacity
 
     def _hash_mod(self, key):
         '''
@@ -51,8 +59,31 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        # First check if load factor is over 0.7
+        lf = self._load_factor()
+        if lf > 0.7:
+            self.resize(2)
+        elif lf < 0.2:
+            self.resize(0.5)
+        idx = self._hash_mod(key)
+        if self.storage[idx] is None:
+            self.storage[idx] = LinkedPair(key, value)
+            self.entries += 1
+        else:
+            item = self.storage[idx]
+            # Loop over each node in the list and check if key matches
+            # If we get to the end then add a new node
 
+            while item is not None:
+                if item.key is key:
+                    item.value = value
+                    return
+                if item.next is None:
+                    item.next = LinkedPair(key, value)
+                    self.entries += 1
+                    return
+                else:
+                    item = item.next
 
 
     def remove(self, key):
@@ -63,7 +94,20 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        idx = self._hash_mod(key)
+        if self.storage[idx].key is key:
+            next_node = self.storage[idx].next
+            self.storage[idx] = next_node
+        else:
+            item = self.storage[idx]
+            while item.key is not key:
+                prev = item
+                item = item.next
+                if item is None:
+                    print(f"No item found with key {key}")
+                    return None
+            prev.next = item.next
+        self.entries -= 1
 
 
     def retrieve(self, key):
@@ -74,17 +118,49 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        idx = self._hash_mod(key)
+        if self.storage[idx] is None:
+            return None
+        elif self.storage[idx].key is key:
+            return self.storage[idx].value
+        else:
+            item = self.storage[idx]
+            while item.key is not key:
+                if item.next is None:
+                    return None
+                item = item.next
+            return item.value
 
 
-    def resize(self):
+    def resize(self, factor=2):
         '''
         Doubles the capacity of the hash table and
         rehash all key/value pairs.
 
         Fill this in.
         '''
-        pass
+        new_capacity = math.floor(self.capacity * factor)
+        self.capacity = new_capacity
+        new_storage = [None] * self.capacity
+        # Loop over each index in old storage
+        for item in self.storage:
+            # Only items that have stuff matter
+            if item is not None:
+                # This is the node from old storage
+                old_node = item
+                while old_node is not None:
+                    # Get new index to use for new_storage
+                    idx = self._hash_mod(old_node.key)
+                    if new_storage[idx] is None:
+                        new_storage[idx] = LinkedPair(old_node.key, old_node.value)
+                    else:
+                        node = new_storage[idx]
+                        while node.next is not None:
+                            node = node.next
+                        node.next = LinkedPair(old_node.key, old_node.value)
+                    old_node = old_node.next
+        # Update storage
+        self.storage = new_storage
 
 
 
