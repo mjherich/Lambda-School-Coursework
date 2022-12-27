@@ -1,0 +1,243 @@
+.App {
+  background-image: url("components/images/geometric.jpg");
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: absolute;
+  background-size: cover;
+  min-height: 700px;
+}
+
+/* Dashboard Styles */
+.dashboard {
+  background: rgb(141,233,105, 0.7) ;
+  border-radius:20px;
+  border:2px solid black;
+  width: 80%;
+  margin: 2% auto;
+}
+
+.dash-title{
+  font-size:2rem;
+  padding:2% 0%;
+}
+
+.add-ticket-btn{
+  background: #74BF56;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+  text-decoration:none;
+  border: 2px solid black;
+}
+
+.ticket-grid {
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1%;
+  
+}
+
+.ticket-link {
+  text-decoration:none;
+  color: black;
+}
+
+.ticket-card  {
+  width:23%;
+  margin:1%;
+  padding:1%;
+  background:white;
+  color:black;
+  text-decoration:none;
+  background-image: url("components/images/geometric.jpg");
+}
+
+.ticket-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  padding: 30px;
+  background-color: white;
+  
+}
+
+.ticket-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.ticket-card p {
+ margin:4%;
+}
+
+.ticket-card button {
+  background: #74BF56;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+  text-decoration:none;
+  border: 2px solid black;
+}
+
+.ticket-header{
+  font-size:1.5rem;
+}
+
+.closed-ticket{
+  color:blue;
+}
+
+.open-ticket{
+  color:red;
+}
+
+/* Dynamic Ticket Styles */
+
+.dynamic-ticket{
+  background: rgb(141,233,105, 0.7) ;
+  border-radius:20px;
+  border:2px solid black;
+  width: 40%;
+  margin: 2% auto;
+}
+
+.dynamic-ticket h3 {
+  font-size:1.8rem;
+  margin-top:4%;
+}
+
+.dynamic-ticket p {
+  margin:4% 0%;
+}
+
+.dynamic-ticket button {
+  margin-bottom:4%;
+  background: #74BF56;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+  text-decoration:none;
+  border: 2px solid black;
+}
+
+
+/* Form Styles  DASHBOARD  */
+
+.form-div{
+  background: rgb(141,233,105, 0.7) ;
+  border-radius:20px;
+  border:2px solid black;
+  width: 80%;
+  margin: 2% auto;
+}
+
+.form-div h2{
+  font-size:2rem;
+  padding:2%;
+}
+
+.form-ticket h3{
+  font-size:1.5rem;
+}
+
+.form-ticket p{
+  margin:2%;
+}
+
+.form-div form {
+  display:flex;
+  flex-direction:column;
+  width: 60%;
+  margin: 0 auto;
+  padding:2%;
+}
+
+.form-div input, .form-div select, .form-div textarea {
+ padding: 2%;
+ margin:2% 0%;
+}
+
+ .form-div button {
+  background: #74BF56;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+  text-decoration:none;
+  border: 2px solid black;
+ }
+
+ /* Form Styles  SIGNUP/LOGIN  */
+
+
+ 
+ .login-form {
+  background: rgb(141,233,105, 0.7) ;
+    margin: 0 auto;
+    width: 16rem;
+    height: 20rem;
+    border-radius:20px;
+  border:2px solid black;
+    margin-top: 2rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+ }
+ form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;   
+}
+
+.form-title {
+  margin-bottom: 2rem;
+}
+.form-title h2 {
+      font-size: 1.3rem;
+  }
+  
+.field {
+  margin-bottom: 1rem;
+}
+
+
+.radio {
+  height: 1.5rem;
+}
+
+.submit-button button {
+  background: grey;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: lighter;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  bottom: 0;
+}
